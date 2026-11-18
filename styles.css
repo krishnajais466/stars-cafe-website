@@ -429,3 +429,127 @@ footer.reveal.visible .footer-bottom{animation:fadeUp .35s .35s ease both}
 
 /* Hover delay reset — same specificity as the stagger rules, later in file, so it wins */
 .menu-grid .menu-card:hover,.gallery-grid .gallery-card:hover,.pkg-grid .pkg:hover,.stats .stat:hover{transition-delay:0s}
+
+/* ================= BIG, OBVIOUS animations — 19 Nov 2026 =================
+   The earlier animations were invisible to the user: 0.25-0.3s, 2-4px lifts,
+   and a 1.5s safety timer in app.js that forced EVERY .reveal element
+   visible before the user ever scrolled. These rules make every animation
+   CLEARLY visible: 0.6-0.8s, 30-40px of movement, big hovers. This section
+   is last in the file, so it overrides the subtle versions above.
+   Colours, layout, content and functionality are unchanged. */
+@keyframes pageFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes heroTitleBig{from{opacity:0;transform:translateY(34px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes heroLogoBig{from{opacity:0;transform:scale(.7) rotate(-6deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes badgeBig{from{opacity:0;transform:scale(.6) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes chipPop{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1.05)}}
+@keyframes menuDrop{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}
+@keyframes linkSlideBig{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+
+/* Page load: whole page fades in clearly */
+body{animation:pageFadeIn .8s ease both}
+
+/* Scroll-in: big, slow, visible — 0.7s and 40px of movement */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1),box-shadow .35s ease}
+.reveal.visible{opacity:1;transform:none}
+/* Hovers stay snappy (0.35s) even though the entrance is slow (0.7s) */
+.reveal.visible:hover{transition-duration:.35s}
+.pkg.reveal{transform:translateY(40px) scale(.94)}
+.gallery-card.reveal{transform:translateY(36px) scale(.96)}
+.stat.reveal{transform:translateY(36px) scale(.95)}
+.notice.reveal{transform:translateY(36px)}
+footer.reveal{transform:translateY(36px)}
+.pkg.reveal.visible,.gallery-card.reveal.visible,.stat.reveal.visible,.notice.reveal.visible,footer.reveal.visible{transform:none}
+
+/* Staggered scroll-in: cards arrive one after another, clearly visible */
+.menu-grid .menu-card:nth-child(1),.gallery-grid .gallery-card:nth-child(1),.pkg-grid .pkg:nth-child(1),.stats .stat:nth-child(1){transition-delay:0ms}
+.menu-grid .menu-card:nth-child(2),.gallery-grid .gallery-card:nth-child(2),.pkg-grid .pkg:nth-child(2),.stats .stat:nth-child(2){transition-delay:90ms}
+.menu-grid .menu-card:nth-child(3),.gallery-grid .gallery-card:nth-child(3),.pkg-grid .pkg:nth-child(3),.stats .stat:nth-child(3){transition-delay:180ms}
+.menu-grid .menu-card:nth-child(4),.gallery-grid .gallery-card:nth-child(4),.stats .stat:nth-child(4){transition-delay:270ms}
+.menu-grid .menu-card:nth-child(5),.gallery-grid .gallery-card:nth-child(5){transition-delay:360ms}
+.menu-grid .menu-card:nth-child(6),.gallery-grid .gallery-card:nth-child(6){transition-delay:450ms}
+.menu-grid .menu-card:nth-child(n+7){transition-delay:540ms}
+/* Hovers must never wait for the stagger delay — reset it last, so it wins */
+.menu-grid .menu-card:hover,.gallery-grid .gallery-card:hover,.pkg-grid .pkg:hover,.stats .stat:hover{transition-delay:0s}
+
+/* Section headings slide in clearly when their panel becomes visible */
+.section-title{animation:headingSlide .7s ease backwards}
+.reveal.visible h2,.reveal.visible .section-title{animation:headingSlide .7s ease both}
+
+/* Hero: big staggered entrance on load — logo pops, title slides up 34px,
+   badges pop, CTA buttons arrive one by one */
+.hero{animation:heroFadeIn .8s ease both}
+.hero-logo{animation:heroLogoBig .8s ease both,heroFloat 5s ease-in-out 1s infinite}
+.hero h1{animation:heroTitleBig .8s .15s ease backwards}
+.hero-tag{animation:heroFadeIn .7s .35s ease backwards}
+.top-badge{animation:badgeBig .7s .5s ease backwards,badgeGlow 3s ease-in-out 1.5s infinite}
+.rating-badge{animation:badgeBig .7s .65s ease backwards}
+.hero .muted{animation:heroFadeIn .7s .75s ease backwards}
+.hero-cta .btn{animation:heroFadeIn .6s ease backwards}
+.hero-cta .btn:nth-child(1){animation-delay:.8s}
+.hero-cta .btn:nth-child(2){animation-delay:.95s}
+.hero-cta .btn:nth-child(3){animation-delay:1.1s}
+.hero-cta .btn:nth-child(4){animation-delay:1.25s}
+.hero-cta .btn:nth-child(5){animation-delay:1.4s}
+
+/* Hovers: CLEAR lift + scale + glow on everything clickable */
+.btn{transition:transform .35s ease,box-shadow .35s ease,background .35s ease}
+.btn:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 16px 34px rgba(109,63,160,.5)}
+.btn.secondary:hover{box-shadow:0 14px 30px rgba(91,58,41,.3)}
+.btn.brown:hover{box-shadow:0 16px 34px rgba(91,58,41,.5)}
+.menu-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 18px 36px rgba(91,58,41,.28)}
+.gallery-card:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 20px 38px rgba(91,58,41,.3)}
+.gallery-card:hover .gallery-img,.gallery-card:hover .gallery-photo{transform:scale(1.18)}
+.menu-card:hover .food-img,.menu-card:hover .food-photo{transform:scale(1.12)}
+.gallery-card:hover .gallery-body h3{color:var(--purple)}
+.pkg:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 34px rgba(91,58,41,.25)}
+.stat:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 16px 32px rgba(91,58,41,.22)}
+.dl-btn:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 32px rgba(91,58,41,.3)}
+.order-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 16px 32px rgba(91,58,41,.22)}
+.combo-panel:hover,.loyalty-panel:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 16px 32px rgba(91,58,41,.22)}
+.banner .btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 14px 30px rgba(0,0,0,.35)}
+nav.tabs a:hover{transform:translateY(-3px) scale(1.06)}
+main a:not(.btn):not(.dl-btn):not(.chip):not(.brand):hover{transform:translateY(-2px) scale(1.05);box-shadow:0 8px 18px rgba(91,42,134,.3)}
+footer a:not(.btn):hover{transform:translateY(-2px) scale(1.05)}
+.brand:hover img{transform:scale(1.1)}
+
+/* Tabs / category chips: clear pop when a tab becomes active, clear zoom on hover */
+.chip{transition:transform .3s ease,background .3s ease,color .3s ease}
+.chip:hover{transform:scale(1.08)}
+.chip.active{animation:chipPop .45s ease}
+.banner-nav button{transition:transform .3s ease,background .3s ease}
+.banner-nav button:hover{transform:scale(1.2)}
+.banner-nav button.active{animation:dotPop .35s ease}
+
+/* Hamburger menu: clear slide-down + links stagger in one by one */
+.mobile-menu.open{animation:menuDrop .45s ease both}
+.mobile-menu.open a{animation:linkSlideBig .4s ease both}
+.mobile-menu.open a:nth-child(1){animation-delay:0ms}
+.mobile-menu.open a:nth-child(2){animation-delay:60ms}
+.mobile-menu.open a:nth-child(3){animation-delay:120ms}
+.mobile-menu.open a:nth-child(4){animation-delay:180ms}
+.mobile-menu.open a:nth-child(5){animation-delay:240ms}
+.mobile-menu.open a:nth-child(6){animation-delay:300ms}
+.mobile-menu.open a:nth-child(7){animation-delay:360ms}
+.mobile-menu.open a:nth-child(8){animation-delay:420ms}
+.mobile-menu.open a:nth-child(9){animation-delay:480ms}
+.mobile-menu.open a:nth-child(10){animation-delay:540ms}
+.mobile-menu a{transition:background .3s ease,color .3s ease,transform .3s ease}
+.mobile-menu a:hover{transform:translateX(6px)}
+
+/* Banner re-animates clearly on every rotation */
+.banner{animation:bannerIn .7s ease both}
+
+/* Reduced motion: keep the kill-switch working for the new animations too */
+@media(prefers-reduced-motion:reduce){
+  body{animation:none}
+  .hero,.hero-logo,.hero h1,.hero-tag,.top-badge,.rating-badge,.hero .muted,.hero-cta .btn,.banner,.mobile-menu.open,.mobile-menu.open a{animation:none!important}
+  .reveal{transition-duration:.01ms!important}
+}
+
+/* 100% Pure Veg badge — Indian veg mark (green dot in a square), next to the
+   4.9 star badge in the hero and in the footer / location section. */
+.veg-mark{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border:2.5px solid var(--green);border-radius:4px;background:#fff;flex:0 0 18px}
+.veg-mark::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--green)}
+.pure-veg-badge{display:inline-flex;align-items:center;gap:8px;background:#fffdf8;border:2px solid var(--green);border-radius:999px;padding:8px 16px;font-weight:900;font-size:16px;color:var(--green);margin:12px 0 0;box-shadow:0 6px 16px rgba(46,125,50,.2)}
+.pure-veg-badge.small{padding:6px 13px;font-size:14px;margin:6px 0}
+.hero .pure-veg-badge{animation:badgeBig .7s .58s ease backwards}

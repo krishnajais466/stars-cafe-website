@@ -277,10 +277,9 @@ function renderMenu(){
     return '<button class="chip '+(c===activeCat?'active':'')+'" onclick="activeCat=\''+esc(c)+'\';renderMenu()">'+esc(c)+'</button>';
   }).join('');
   var q = (document.getElementById('searchInput').value||'').toLowerCase();
-  var vegOnly = document.getElementById('vegOnly').checked;
   var sort = document.getElementById('sortSelect').value;
   var list = menu.filter(function(m){
-    return (activeCat==='All'||m.cat===activeCat) && (!vegOnly||m.veg) &&
+    return (activeCat==='All'||m.cat===activeCat) &&
       (!q || m.name.toLowerCase().indexOf(q)>=0 || m.cat.toLowerCase().indexOf(q)>=0);
   });
   if(sort==='low') list.sort(function(a,b){return a.price-b.price;});
@@ -515,6 +514,47 @@ function saveTerms(){
   document.getElementById('termsSaved').textContent = 'Saved.';
 }
 
+/* ---------- Big, obvious scroll-in animations (19 Nov 2026) ----------
+   Why the old animations looked invisible: (1) a 1.5s timer forced EVERY
+   .reveal element visible, so by the time the user scrolled down, nothing
+   was left to animate; (2) the transition was only 0.3s / 18px — too fast
+   and too small to notice; (3) content rendered by JS after load (menu
+   cards on tab clicks / search, banners rotating every 8s, packages) was
+   never re-observed. Fixed: no blanket timer, 0.7s / 40px in CSS, and a
+   MutationObserver re-observes every newly rendered element. */
+var revealObserver = null;
+function observeReveals(scope){
+  var root = (scope && scope.querySelectorAll) ? scope : document;
+  if(typeof IntersectionObserver === 'undefined'){
+    root.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+    return;
+  }
+  if(!revealObserver){
+    revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+      });
+    }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
+  }
+  root.querySelectorAll('.reveal, .panel, .menu-card, .gallery-card, .pkg, .stat, footer, .notice, .banner, .order-card, .combo-panel, .loyalty-panel').forEach(function(el){
+    if(!el.classList.contains('reveal')) el.classList.add('reveal');
+    if(!el.classList.contains('visible')) revealObserver.observe(el);
+  });
+}
+/* Re-observe anything JS renders later (tab clicks, search, banner rotation,
+   owner edits). Class changes do not retrigger this (childList only). */
+if(typeof MutationObserver !== 'undefined' && document.body){
+  new MutationObserver(function(){ observeReveals(document); }).observe(document.body, {childList:true, subtree:true});
+}
+/* Safety, run once: content already on screen must never stay hidden —
+   reveal only what is actually in the viewport, never the whole page. */
+setTimeout(function(){
+  document.querySelectorAll('.reveal:not(.visible)').forEach(function(el){
+    var r = el.getBoundingClientRect();
+    if(r.top < window.innerHeight && r.bottom > 0) el.classList.add('visible');
+  });
+}, 900);
+
 /* ---------- Init ---------- */
 renderBanners();
 renderCombo();
@@ -541,12 +581,5 @@ var headerEl = document.querySelector('header');
 function onPageScroll(){ if(headerEl) headerEl.classList.toggle('scrolled', window.scrollY > 40); }
 window.addEventListener('scroll', onPageScroll, {passive:true});
 onPageScroll();
-/* Smooth scroll-in animations (no external library). */
-if(typeof IntersectionObserver !== 'undefined'){
-  var revealObserver = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
-  }, {threshold:0.12});
-  document.querySelectorAll('.reveal, .panel, .menu-card, .gallery-card, .pkg, .stat, footer').forEach(function(el){ el.classList.add('reveal'); revealObserver.observe(el); });
-  /* Safety: never leave content hidden if the observer never fires. */
-  setTimeout(function(){ document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); }); }, 1500);
-}
+/* Big, obvious scroll-in animations — the helper above does the work. */
+observeReveals(document);
