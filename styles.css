@@ -1,0 +1,236 @@
+/* Star's Cafe — Nalasopara East. DISPLAY / MARKETING site, no ordering. Warm & cosy: cream + brown, purple accents. Mobile-first. */
+:root{
+  --cream:#fdf6ec; --cream2:#f7ead6; --brown:#5b3a29; --brown2:#7a5238;
+  --purple:#5b2a86; --purple2:#7d3cba; --gold:#c89b3c;
+  --green:#2e7d32; --red:#b3261e; --ink:#2b211a; --muted:#8a7364;
+  --card:#fffdf8; --border:#e8dcc8; --shadow:0 6px 18px rgba(91,58,41,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--cream);color:var(--ink);line-height:1.5}
+a{color:var(--purple)}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:16px;padding:12px;border:1.5px solid var(--border);border-radius:12px;background:#fff;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--purple2);border-color:var(--purple2)}
+label{font-weight:700;font-size:14px;display:block;margin:12px 0 4px}
+
+/* Sticky header */
+header{position:sticky;top:0;z-index:50;background:#fffdf8;border-bottom:2px solid var(--border);box-shadow:0 2px 10px rgba(91,58,41,.08)}
+.header-inner{max-width:1024px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand img{width:52px;height:52px;flex:0 0 52px;border-radius:50%;object-fit:cover;border:2px solid #1a1a1a;background:#fff}
+.brand svg{width:52px;height:52px;flex:0 0 52px}
+.brand-name{font-size:20px;font-weight:900;letter-spacing:.5px;color:var(--purple);line-height:1.1}
+.brand-sub{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+nav.tabs{max-width:1024px;margin:0 auto;padding:0 14px 10px;display:flex;gap:22px;justify-content:center}
+nav.tabs a{font-weight:700;font-size:15px;color:var(--brown);text-decoration:none;padding:8px 2px}
+nav.tabs a:hover{color:var(--purple);text-decoration:underline}
+
+main{max-width:1024px;margin:0 auto;padding:14px 14px 40px}
+.view{display:none}.view.active{display:block}
+h1{font-size:26px;margin:8px 0;color:var(--brown)}
+h2{font-size:21px;margin:22px 0 8px;color:var(--brown)}
+h3{font-size:17px;margin:14px 0 6px;color:var(--brown)}
+p{margin:6px 0}
+.muted{color:var(--muted);font-size:14px}
+.notice{background:#fff3d6;border:1.5px solid #e6c87a;border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px}
+.notice b{color:var(--brown)}
+
+/* Banners */
+.banner{border-radius:18px;padding:20px;margin:12px 0;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.banner.offer{background:linear-gradient(135deg,var(--purple),#9b59d0)}
+.banner.birthday{background:linear-gradient(135deg,#8a5a2b,#c89b3c)}
+.banner h2{color:#fff;margin:0 0 6px;font-size:22px}
+.banner p{margin:0 0 12px;opacity:.95}
+.banner .btn{background:#fff;color:var(--purple)}
+.banner-nav{display:flex;gap:8px;justify-content:center;margin:6px 0}
+.banner-nav button{border:0;background:var(--border);width:34px;height:34px;border-radius:50%;font-weight:900}
+.banner-nav button.active{background:var(--purple);color:#fff}
+
+/* Toolbar — pill search + horizontally scrollable category tabs, like a food-delivery app */
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.toolbar input{flex:1;min-width:180px;border-radius:999px}
+.toolbar select{flex:0 0 150px;border-radius:999px}
+.chips{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;margin:8px -14px;padding:2px 14px 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:10px 14px;font-weight:700;min-height:44px}
+.chip.active{background:var(--brown);color:#fff;border-color:var(--brown)}
+.veg-toggle{display:flex;align-items:center;gap:8px;font-weight:700;margin:8px 0}
+.veg-toggle input{width:auto}
+
+/* Hamburger (three-line menu bar) — mobile only; desktop keeps the tab bar */
+.hamburger{display:none;margin-left:auto;flex:0 0 48px;width:48px;height:48px;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:0}
+.hamburger span{display:block;width:22px;height:3px;border-radius:2px;background:var(--brown);transition:transform .2s ease,opacity .2s ease}
+.hamburger.active span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+.hamburger:focus-visible{outline:2px solid var(--purple2)}
+.mobile-menu{display:none;background:#fffdf8;border-top:1.5px solid var(--border)}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:14px 18px;font-weight:800;font-size:16px;color:var(--brown);text-decoration:none;border-bottom:1px solid var(--border)}
+.mobile-menu a:last-child{border-bottom:0}
+.mobile-menu a:hover{background:var(--cream2);color:var(--purple)}
+@media(max-width:639px){
+  .hamburger{display:flex}
+  nav.tabs{display:none}
+  .header-menu-btn{display:none}
+}
+@media(min-width:640px){
+  .mobile-menu{display:none!important}
+}
+
+/* Menu — Zomato/Swiggy-style compact rows: text left, food image right */
+.menu-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+@media(min-width:640px){.menu-grid{grid-template-columns:1fr 1fr}}
+.menu-card{display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.food-img{flex:0 0 96px;width:96px;height:96px;border-radius:12px}
+.food-img.pizza{background:linear-gradient(135deg,#d35400,#e67e22)}
+.food-img.sandwich{background:linear-gradient(135deg,#7a5238,#b07a4a)}
+.food-img.fries{background:linear-gradient(135deg,#c89b3c,#e6c87a)}
+.food-img.drinks{background:linear-gradient(135deg,#5b2a86,#9b59d0)}
+.food-img.dessert{background:linear-gradient(135deg,#a04060,#d07a9b)}
+.food-img.default{background:linear-gradient(135deg,#5b3a29,#8a7364)}
+.food-photo{flex:0 0 96px;width:96px;height:96px;object-fit:cover;border-radius:12px;display:block}
+.food-photo-preview{width:100%;max-height:140px;object-fit:cover;border-radius:12px;margin-top:8px;display:block}
+.menu-thumb{width:56px;height:56px;object-fit:cover;border-radius:10px;margin:8px 0;display:block}
+.menu-body{flex:1;min-width:0;padding:0}
+.menu-body h3{margin:0;font-size:15px}
+.price{font-size:17px;font-weight:900;color:var(--purple)}
+.veg-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--green);margin-right:6px;vertical-align:middle}
+.out{opacity:.55}
+
+/* Buttons */
+.btn{display:inline-block;background:var(--purple);color:#fff;border:0;border-radius:14px;padding:14px 20px;font-weight:800;font-size:16px;min-height:52px;text-decoration:none;text-align:center}
+.btn.secondary{background:#fff;color:var(--purple);border:2px solid var(--purple)}
+.btn.brown{background:var(--brown)}
+.btn.green{background:var(--green)}
+.btn.small{padding:10px 14px;min-height:44px;font-size:14px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.whatsapp{background:#25d366;color:#fff}
+
+/* Cart / panels — consistent tidy spacing between sections */
+.panel{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:16px;margin:20px 0;box-shadow:var(--shadow)}
+/* Tidy, organised section rhythm: same gap above every main section,
+   centred display headings for Menu and Gallery */
+#view-site>section,#view-site>.panel,#view-site>.notice{margin-top:20px;margin-bottom:20px}
+#menuSection>h1{text-align:center;font-size:32px;margin-bottom:4px}
+#menuSection>p.muted{text-align:center}
+.order-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:14px;margin:12px 0}
+.order-card h3{margin:0 0 4px}
+
+/* Packages */
+.pkg-grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:640px){.pkg-grid{grid-template-columns:repeat(3,1fr)}}
+.pkg{background:var(--card);border:2px solid var(--border);border-radius:18px;padding:16px}
+.pkg.featured{border-color:var(--purple);box-shadow:var(--shadow)}
+.pkg ul{margin:8px 0;padding-left:20px}
+.pkg li{margin:4px 0}
+
+/* Tables / stats */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media(min-width:640px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:14px;text-align:center}
+.stat b{font-size:24px;display:block;color:var(--purple)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border-bottom:1px solid var(--border);padding:8px;text-align:left;vertical-align:top}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1;min-width:140px}
+.hidden{display:none!important}
+.login-box{max-width:420px;margin:30px auto}
+.terms{white-space:pre-wrap;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px;font-size:15px}
+/* Google Reviews map embed (on-site) */
+#googleReviewsFrame{width:100%;height:320px;border:1.5px solid var(--border);border-radius:14px;margin:8px 0}
+
+/* Combo of the Day / Loyalty Offer */
+.combo-panel{border-color:var(--gold);background:linear-gradient(180deg,#fff8e6,var(--card))}
+.combo-panel h2{color:var(--purple)}
+.loyalty-panel{border-color:var(--purple);background:linear-gradient(180deg,#f3e8ff,var(--card))}
+.loyalty-panel h2{color:var(--purple)}
+/* Footer */
+footer{background:var(--brown);color:#f7ead6;margin-top:30px}
+.footer-inner{max-width:1024px;margin:0 auto;padding:24px 14px}
+footer h3{color:#fff;margin:0 0 8px}
+footer a{color:#e6c87a}
+footer p{margin:4px 0;font-size:15px}
+
+/* ---------- Premium display / marketing polish ---------- */
+/* Large hero */
+.hero{text-align:center;padding:44px 18px 34px;background:radial-gradient(ellipse at 50% 0%,#fff8ea 0%,var(--cream) 55%,var(--cream2) 100%);border-radius:0 0 28px 28px;margin:0 -14px 18px;box-shadow:var(--shadow)}
+.hero-logo{width:140px;height:140px;border-radius:50%;object-fit:cover;border:4px solid #1a1a1a;box-shadow:0 14px 34px rgba(91,58,41,.28);background:#fff}
+.hero h1{font-size:44px;line-height:1.05;letter-spacing:.5px;margin:16px 0 6px;color:var(--purple)}
+.hero-tag{font-size:19px;font-weight:700;color:var(--brown);margin:6px 0}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.hero-cta .btn{box-shadow:0 8px 20px rgba(91,42,134,.25);transition:transform .18s ease,box-shadow .18s ease}
+.hero-cta .btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(91,42,134,.32)}
+@media(min-width:640px){.hero{padding:64px 24px 48px}.hero h1{font-size:60px}.hero-logo{width:168px;height:168px}}
+
+/* Section titles */
+.section-title{font-size:32px;text-align:center;margin:34px 0 4px}
+.section-sub{text-align:center;margin-bottom:16px}
+
+/* Scroll-in animation */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* Hover polish */
+.btn{transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.menu-card{transition:transform .18s ease,box-shadow .18s ease}
+.menu-card:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(91,58,41,.2)}
+.pkg{transition:transform .18s ease,box-shadow .18s ease;cursor:pointer}
+.pkg:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.chip{transition:background .15s ease,color .15s ease}
+.chip:hover{border-color:var(--purple);color:var(--purple)}
+
+/* Gallery showcase — compact cards, same as the menu cards */
+.gallery-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:14px 0 8px}
+@media(min-width:640px){.gallery-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
+.gallery-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease}
+.gallery-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 16px 32px rgba(91,58,41,.22)}
+.gallery-img{height:120px;display:flex;align-items:flex-end;padding:12px;color:#fff;font-weight:900;font-size:18px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.gallery-img.pizza{background:linear-gradient(135deg,#d35400,#e67e22)}
+.gallery-img.sandwich{background:linear-gradient(135deg,#7a5238,#b07a4a)}
+.gallery-img.fries{background:linear-gradient(135deg,#c89b3c,#e6c87a)}
+.gallery-img.drinks{background:linear-gradient(135deg,#5b2a86,#9b59d0)}
+.gallery-img.dessert{background:linear-gradient(135deg,#a04060,#d07a9b)}
+.gallery-img.default{background:linear-gradient(135deg,#5b3a29,#8a7364)}
+.gallery-photo{width:100%;height:120px;object-fit:cover;display:block}
+.gallery-body{padding:12px}
+.gallery-body h3{margin:0;font-size:15px}
+
+/* Big birthday banner + standout offers */
+.banner{padding:28px 22px}
+.banner.birthday{padding:34px 24px;background:linear-gradient(135deg,#6b421f,#b07a2e 55%,#d9a441);border:2px solid rgba(255,255,255,.35)}
+.banner.birthday h2{font-size:28px}
+.banner.offer{border:2px solid rgba(255,255,255,.25)}
+.combo-panel,.loyalty-panel{padding:22px}
+.combo-panel h2,.loyalty-panel h2{font-size:24px}
+
+/* Polished footer — 3 columns: About, Quick links, Contact */
+footer{border-top:4px solid var(--gold)}
+.footer-inner{padding:32px 14px 28px}
+footer h3{font-size:20px;letter-spacing:.5px}
+.footer-grid{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:640px){.footer-grid{grid-template-columns:1.2fr 1fr 1.2fr}}
+.footer-col p{margin:6px 0}
+.footer-bottom{border-top:1px solid rgba(247,234,214,.25);margin-top:24px;padding-top:16px}
+.footer-bottom p{font-size:13px;color:#d8c3a5}
+
+/* Netlify contact form (Contact section) — inherits the theme's inputs/buttons.
+   .hp-field hides the honeypot field off-screen (bots still see it in the DOM). */
+.contact-form{margin-top:8px}
+.hp-field{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;margin:0}
+
+/* Verified ratings — Google 4.9/5 (199 reviews), Justdial 4.8/5 (checked live 19 Nov 2026) */
+.rating-badge{display:inline-block;background:#fff;border:2px solid var(--gold);border-radius:999px;padding:8px 16px;font-size:18px;font-weight:900;color:var(--brown);margin:12px 0 0;box-shadow:var(--shadow)}
+.rating-badge span{font-weight:700;color:var(--muted);font-size:15px}
+.rating-big{font-size:32px;font-weight:900;color:var(--brown);margin:8px 0}
+.rating-big span{font-size:16px;font-weight:700;color:var(--muted)}
+
+/* Zomato / Swiggy order links (menu area) — search links only, no invented restaurant URLs */
+.order-links{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin:14px 0 4px;font-weight:700;color:var(--brown)}
+
+/* Top Rated badge — based on the verified 4.9/5 Google rating (199 reviews), not a numbered #1 claim */
+.top-badge{display:inline-block;background:linear-gradient(135deg,var(--purple),#9b59d0);color:#fff;border-radius:999px;padding:10px 18px;font-size:17px;font-weight:900;letter-spacing:.3px;margin:14px 0 0;box-shadow:0 8px 20px rgba(91,42,134,.3)}
