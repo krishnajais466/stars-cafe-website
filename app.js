@@ -303,11 +303,36 @@ function login(role){
   session = role; save(LS.session, session); msg.textContent='';
   renderOwner();
 }
+/* Owner password visibility: the password field shows the password as typed
+   by default (type="text"). This toggles it to masked (type="password")
+   and back, updating the button label. Login reads the value either way. */
+function toggleOwnerPass(){
+  var f = document.getElementById('ownerPass');
+  var b = document.getElementById('ownerPassToggle');
+  if(!f) return;
+  var show = f.type !== 'text';
+  f.type = show ? 'text' : 'password';
+  if(b) b.textContent = show ? 'Hide' : 'Show';
+}
 function logout(role){
   if(session===role){ session=null; save(LS.session, session); }
   document.getElementById(role+'Login').classList.remove('hidden');
   document.getElementById(role+'App').classList.add('hidden');
   document.getElementById(role+'User').value=''; document.getElementById(role+'Pass').value='';
+}
+/* Owner menu bar: jump to one of the five owner sections. Before login the
+   sections are hidden, so just stay on the login box. No smooth scrolling
+   here — the owner view is animation-free. */
+function goToOwnerSection(id){
+  var app = document.getElementById('ownerApp');
+  if(!app || app.classList.contains('hidden')) return;
+  var el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'auto', block:'start'});
+}
+/* Owner menu bar: log out and return to the public site. */
+function ownerLogout(){
+  logout('owner');
+  showView('site');
 }
 
 /* ---------- Site: banners, display menu ---------- */

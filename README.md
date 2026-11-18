@@ -79,6 +79,17 @@ and see birthday enquiries. There is no staff view and no staff login.
 - **Owner login: aashi / starcafe@456**, case-insensitive for both fields.
   The credentials appear only in the login check in `app.js` and in this README
   — never in any page text visitors can see.
+- **Separate owner menu bar.** The owner page has its own menu bar
+  (`#ownerNavBar` at the top of `#view-owner` in `index.html`): a purple
+  "Owner" label, links to all five owner sections (Menu, Birthday Packages,
+  Offers, Settings, Birthday Enquiries), plus "View Site" (back to the
+  public homepage) and "Log out". While the owner view is open, the public
+  header and hamburger are hidden (`body.owner-mode > header { display:
+  none }`) and this bar takes their place, sticky at the top. On small
+  screens its links scroll horizontally. It is animation-free like the rest
+  of the owner view (covered by the `owner-mode` kill-switch). Section links
+  call `goToOwnerSection(id)` in `app.js`; "Log out" calls `ownerLogout()`,
+  which logs out and returns to the public site.
 - **Organised owner dashboard** (all in `index.html` → `#view-owner` →
   `#ownerApp`, rendered by `renderOwner()` in `app.js`):
   1. **Menu** — "Arrange categories" (↑ / ↓ per category), menu items grouped

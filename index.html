@@ -160,17 +160,39 @@
 
   <!-- ================= OWNER ONLY ================= -->
   <section id="view-owner" class="view">
+    <!-- Separate owner menu bar: shown only while the owner view is open.
+         It replaces the public header/hamburger (hidden by body.owner-mode
+         in styles.css) so the owner area has its own navigation. -->
+    <nav class="owner-nav" id="ownerNavBar" aria-label="Owner menu">
+      <div class="owner-nav-inner">
+        <span class="owner-nav-label">Owner</span>
+        <span class="owner-nav-title">Star's Cafe</span>
+        <a href="#" onclick="goToOwnerSection('owner-section-menu');return false;">Menu</a>
+        <a href="#" onclick="goToOwnerSection('owner-section-packages');return false;">Birthday Packages</a>
+        <a href="#" onclick="goToOwnerSection('owner-section-offers');return false;">Offers</a>
+        <a href="#" onclick="goToOwnerSection('owner-section-settings');return false;">Settings</a>
+        <a href="#" onclick="goToOwnerSection('owner-section-enquiries');return false;">Birthday Enquiries</a>
+        <a href="#" class="owner-nav-view" onclick="showView('site');return false;">View Site</a>
+        <a href="#" class="owner-nav-logout" onclick="ownerLogout();return false;">Log out</a>
+      </div>
+    </nav>
     <div id="ownerLogin" class="panel login-box">
       <h1>Owner login</h1>
       <p class="muted">The owner page is accessible to all owners, for editing the display website — menu, packages, banners, combo, loyalty offer and terms.</p>
       <label for="ownerUser">Username</label><input id="ownerUser" type="text" autocomplete="username">
-      <label for="ownerPass">Password</label><input id="ownerPass" type="password" autocomplete="current-password">
+      <label for="ownerPass">Password</label>
+      <div style="display:flex;gap:8px;align-items:center">
+        <!-- Password is NOT masked by default: shown as typed, so the owner
+             can see it. Use the Hide button to mask it if wanted. -->
+        <input id="ownerPass" type="text" autocomplete="current-password" style="flex:1">
+        <button type="button" class="btn small secondary" id="ownerPassToggle" onclick="toggleOwnerPass()" style="flex:0 0 auto;min-height:48px">Hide</button>
+      </div>
       <p style="margin-top:14px"><button class="btn block" onclick="login('owner')">Log in as owner</button></p>
       <p class="muted" id="ownerLoginMsg"></p>
     </div>
     <div id="ownerApp" class="hidden">
       <h1>Owner dashboard — edit the website</h1>
-      <p class="muted">Edit everything visitors see on the display site. <button class="btn small secondary" onclick="logout('owner')">Log out</button> <button class="btn small secondary" onclick="showView('site')">Back to site</button></p>
+      <p class="muted">Edit everything visitors see on the display site.</p>
       <div class="stats">
         <div class="stat"><b id="ownMenuCount">0</b>Menu items</div>
         <div class="stat"><b id="ownBannerCount">0</b>Banners</div>
@@ -178,7 +200,7 @@
         <div class="stat"><b id="ownBookingCount">0</b>Birthday enquiries</div>
       </div>
 
-      <section class="owner-section" aria-label="Menu">
+      <section class="owner-section" id="owner-section-menu" aria-label="Menu">
         <h2>1. Menu</h2>
         <p class="muted">Create, edit, delete and arrange menu items and categories. Changes show on the site immediately.</p>
         <h3>Arrange categories</h3>
@@ -203,13 +225,13 @@
         </div>
       </section>
 
-      <section class="owner-section" aria-label="Birthday packages">
+      <section class="owner-section" id="owner-section-packages" aria-label="Birthday packages">
         <h2>2. Birthday Packages</h2>
         <p class="muted">Edit package names, prices and what's included. Changes show on the site immediately.</p>
         <div id="packageEditor"></div>
       </section>
 
-      <section class="owner-section" aria-label="Offers">
+      <section class="owner-section" id="owner-section-offers" aria-label="Offers">
         <h2>3. Offers</h2>
         <h3>Banner offers</h3>
         <p class="muted">Add, edit, enable or disable offer banners and the birthday banner.</p>
@@ -223,7 +245,7 @@
         <div id="loyaltyEditor"></div>
       </section>
 
-      <section class="owner-section" aria-label="Settings">
+      <section class="owner-section" id="owner-section-settings" aria-label="Settings">
         <h2>4. Settings</h2>
         <h3>Contact details</h3>
         <p class="muted">These are the phone, email, address and hours shown on the homepage.</p>
@@ -233,7 +255,7 @@
         <p><button class="btn" onclick="saveTerms()">Save terms &amp; conditions</button> <span class="muted" id="termsSaved"></span></p>
       </section>
 
-      <section class="owner-section" aria-label="Birthday enquiries">
+      <section class="owner-section" id="owner-section-enquiries" aria-label="Birthday enquiries">
         <h2>5. Birthday enquiries</h2>
         <p class="muted">Enquiries made on this browser, newest first.</p>
         <div id="ownerBookings"></div>

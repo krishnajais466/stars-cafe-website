@@ -572,3 +572,27 @@ body.owner-mode .reveal.visible:hover{transition-duration:0s}
 .owner-cat>h3{margin-top:0}
 .owner-cat .btn.small{margin:2px}
 .owner-edit-form{margin:12px 0}
+
+/* ================= SEPARATE OWNER MENU BAR =================
+   The owner page has its OWN menu bar, distinct from the public site's
+   header/hamburger. While the owner view is open, body.owner-mode hides
+   the public header (and its floating hamburger) and this bar takes its
+   place at the top. Same cream/brown design, clearly labelled "Owner".
+   Sticky at the top; on small screens the links scroll horizontally
+   instead of wrapping awkwardly. Animation-free: the owner-mode
+   kill-switch above (body.owner-mode *) already covers this bar too. */
+body.owner-mode>header{display:none!important}
+.owner-nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:3px double var(--tan2);box-shadow:0 2px 10px rgba(91,58,41,.08);margin:0 -14px}
+.owner-nav-inner{max-width:1024px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;gap:8px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.owner-nav-inner::-webkit-scrollbar{display:none}
+.owner-nav-label{flex:0 0 auto;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;border-radius:999px;padding:5px 12px;font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;box-shadow:0 4px 10px rgba(91,42,134,.3)}
+.owner-nav-title{flex:0 0 auto;font-family:var(--serif);font-size:19px;font-weight:700;color:var(--brown);white-space:nowrap;margin-right:4px}
+main .owner-nav a{flex:0 0 auto;font-family:var(--serif);font-weight:700;font-size:14px;color:var(--brown);background:#fffdf8;border:1.5px solid var(--tan);border-radius:999px;padding:8px 14px;margin:0;white-space:nowrap;box-shadow:0 2px 8px rgba(91,58,41,.10)}
+main .owner-nav a:hover{background:var(--purple);border-color:var(--purple);color:#fff}
+main .owner-nav a:visited{color:var(--brown)}
+main .owner-nav a:hover:visited{color:#fff}
+main .owner-nav a.owner-nav-view{background:linear-gradient(135deg,var(--purple),var(--purple2));border-color:var(--purple);color:#fff}
+main .owner-nav a.owner-nav-view:visited{color:#fff}
+main .owner-nav a.owner-nav-logout{background:#fffdf8;border-color:var(--red);color:var(--red)}
+main .owner-nav a.owner-nav-logout:visited{color:var(--red)}
+main .owner-nav a.owner-nav-logout:hover{background:var(--red);border-color:var(--red);color:#fff}
