@@ -201,12 +201,18 @@ function goToSection(id){
 document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMobileMenu(); });
 
 function showView(name){
+  /* menu.html has no view sections — plain links handle navigation there. */
+  if(!document.getElementById('view-site') || !document.getElementById('view-owner')) return;
   closeMobileMenu();
   ['site','owner'].forEach(function(v){
     document.getElementById('view-'+v).classList.toggle('active', v===name);
   });
   if(name==='owner') renderOwner();
-  if(name==='site'){ renderMenu(); renderBanners(); renderCombo(); renderLoyalty(); renderPackages(); renderTerms(); renderGoogleReviews(); }
+  if(name==='site'){
+    renderMenu(); renderMenuPreview(); renderBanners(); renderCombo(); renderLoyalty(); renderPackages(); renderTerms(); renderGoogleReviews();
+    /* Leaving the owner view clears the #owner hash (best-effort). */
+    try{ if(window.location.hash === '#owner') history.replaceState(null, '', window.location.pathname + window.location.search); }catch(e){}
+  }
   window.scrollTo({top:0});
 }
 function login(role){
@@ -229,7 +235,7 @@ function logout(role){
 function renderBanners(){
   var list = banners.filter(function(b){ return b.enabled; });
   var area = document.getElementById('bannerArea'), nav = document.getElementById('bannerNav');
-  if(!list.length){ area.innerHTML=''; nav.innerHTML=''; return; }
+  if(!area || !nav) return;
   if(bannerIdx>=list.length) bannerIdx=0;
   var b = list[bannerIdx];
   area.innerHTML = '<div class="banner '+esc(b.kind)+'"><h2>'+esc(b.title)+'</h2><p>'+esc(b.text)+'</p></div>';
@@ -240,6 +246,7 @@ function renderBanners(){
 /* Combo of the Day + Loyalty Offer — shown on the site only when enabled. */
 function renderCombo(){
   var area = document.getElementById('comboArea');
+  if(!area) return;
   if(!combo || !combo.enabled || !combo.name){ area.innerHTML=''; return; }
   area.innerHTML = '<div class="panel combo-panel"><h2>\u2605 Combo of the Day</h2>' +
     '<h3>'+esc(combo.name)+'</h3>' +
@@ -250,6 +257,7 @@ function renderCombo(){
 }
 function renderLoyalty(){
   var area = document.getElementById('loyaltyArea');
+  if(!area) return;
   if(!loyalty || !loyalty.enabled || !loyalty.title){ area.innerHTML=''; return; }
   area.innerHTML = '<div class="panel loyalty-panel"><h2>\u2605 '+esc(loyalty.title)+'</h2>' +
     '<p><b>'+esc(loyalty.text||'')+'</b></p>' +
@@ -261,7 +269,11 @@ function categories(){
   menu.forEach(function(m){ if(cats.indexOf(m.cat)<0) cats.push(m.cat); }); return cats;
 }
 function renderMenu(){
+  /* Full menu lives on menu.html only. On the homepage there is no
+     categoryChips/menuGrid — the preview is rendered by renderMenuPreview. */
   var chips = document.getElementById('categoryChips');
+  var grid = document.getElementById('menuGrid');
+  if(!chips || !grid) return;
   chips.innerHTML = categories().map(function(c){
     return '<button class="chip '+(c===activeCat?'active':'')+'" onclick="activeCat=\''+esc(c)+'\';renderMenu()">'+esc(c)+'</button>';
   }).join('');
@@ -275,11 +287,30 @@ function renderMenu(){
   if(sort==='low') list.sort(function(a,b){return a.price-b.price;});
   if(sort==='high') list.sort(function(a,b){return b.price-a.price;});
   if(sort==='name') list.sort(function(a,b){return a.name.localeCompare(b.name);});
-  var grid = document.getElementById('menuGrid');
+  if(!grid){ return; }
   if(!list.length){ grid.innerHTML = '<p class="muted">No items match. Try another search or category.</p>'; return; }
   grid.innerHTML = list.map(function(m){
     /* Traditional compact row: name, veg dot and price on the left,
        food image on the right. No descriptions / specifications. Display only — no cart. */
+    return '<article class="menu-card '+(m.out?'out':'')+'">' +
+      '<div class="menu-body"><h3>'+(m.veg?'<span class="veg-dot" title="Veg"></span>':'')+esc(m.name)+'</h3>' +
+      '<p class="price">'+rs(m.price)+'</p>' +
+      (m.out?' <p class="muted"><b>Currently unavailable</b></p>':'') +
+      '</div>' +
+      (m.photo ? '<img class="food-photo" src="'+esc(m.photo)+'" alt="Photo of '+esc(m.name)+'">' :
+        '<div class="food-img '+esc(m.img||'default')+'" aria-label="'+esc(m.name)+'"></div>') +
+      '</article>';
+  }).join('');
+}
+
+/* Homepage menu preview — a few most-loved items + a link to menu.html.
+   The full menu lives on menu.html only. */
+var PREVIEW_IDS = ['m1','m5','m20','m26','m15','m8'];
+function renderMenuPreview(){
+  var grid = document.getElementById('menuPreviewGrid');
+  if(!grid) return;
+  var items = PREVIEW_IDS.map(function(id){ return menu.find(function(m){ return m.id===id; }); }).filter(Boolean);
+  grid.innerHTML = items.map(function(m){
     return '<article class="menu-card '+(m.out?'out':'')+'">' +
       '<div class="menu-body"><h3>'+(m.veg?'<span class="veg-dot" title="Veg"></span>':'')+esc(m.name)+'</h3>' +
       '<p class="price">'+rs(m.price)+'</p>' +
@@ -309,19 +340,21 @@ function renderGallery(){
 /* ---------- Birthday enquiry (WhatsApp, not an order) ---------- */
 function renderPackages(){
   var grid = document.getElementById('packageGrid');
+  if(!grid) return;
   grid.innerHTML = packages.map(function(p){
     return '<div class="pkg '+(p.featured?'featured':'')+'" onclick="selectPackage(\''+p.id+'\')" title="Select '+esc(p.name)+' below"><h3>'+esc(p.name)+(p.featured?' \u2605':'')+'</h3>' +
       '<p class="price">'+rs(p.price)+'</p><ul>' + p.features.map(function(f){ return '<li>'+esc(f)+'</li>'; }).join('') + '</ul>' +
       '<p class="muted">Tap to select this package below.</p></div>';
   }).join('');
   var sel = document.getElementById('bkPackage');
+  if(!sel) return;
   sel.innerHTML = packages.map(function(p){ return '<option value="'+p.id+'">'+esc(p.name)+' — '+rs(p.price)+'</option>'; }).join('');
   var bfSel = document.getElementById('bfPackage');
   if(bfSel) bfSel.innerHTML = packages.map(function(p){ return '<option value="'+p.name+' — '+rs(p.price)+'">'+esc(p.name)+' — '+rs(p.price)+'</option>'; }).join('');
   var bfTime = document.getElementById('bfTime');
   if(bfTime) bfTime.innerHTML = TIME_SLOTS.map(function(t){ return '<option>'+esc(t)+'</option>'; }).join('');
   var ts = document.getElementById('bkTime');
-  ts.innerHTML = TIME_SLOTS.map(function(t){ return '<option>'+esc(t)+'</option>'; }).join('');
+  if(ts) ts.innerHTML = TIME_SLOTS.map(function(t){ return '<option>'+esc(t)+'</option>'; }).join('');
 }
 function selectPackage(id){
   document.getElementById('bkPackage').value = id;
@@ -351,7 +384,7 @@ function bookBirthdayWhatsApp(){
   save(LS.bookings, bookings);
   window.open('https://wa.me/919326222019?text=' + encodeURIComponent(lines.join('\n')), '_blank');
 }
-function renderTerms(){ document.getElementById('termsText').textContent = terms; }
+function renderTerms(){ var el = document.getElementById('termsText'); if(el) el.textContent = terms; }
 
 /* ---------- Google Reviews (on-site) ----------
    No inbuilt rating system: reviews live on Google. The site shows a
@@ -415,6 +448,8 @@ function addMenuItem(){
 
 /* ---------- Owner ---------- */
 function renderOwner(){
+  /* menu.html has no owner view — plain links handle navigation there. */
+  if(!document.getElementById('ownerLogin') || !document.getElementById('ownerApp')) return;
   var logged = session==='owner';
   document.getElementById('ownerLogin').classList.toggle('hidden', logged);
   document.getElementById('ownerApp').classList.toggle('hidden', !logged);
@@ -529,11 +564,22 @@ renderBanners();
 renderCombo();
 renderLoyalty();
 renderMenu();
+renderMenuPreview();
 renderGallery();
 renderPackages();
 renderTerms();
 renderGoogleReviews();
 setInterval(renderBanners, 8000); /* rotate banners */
+/* Owner access: the hamburger menu's small bottom "Owner" link, plus the
+   hidden #owner URL (index.html#owner) — no Owner button on the main page. */
+function openOwnerFromHash(){ if(window.location.hash === '#owner') showView('owner'); }
+openOwnerFromHash();
+window.addEventListener('hashchange', openOwnerFromHash);
+/* Deep links from menu.html (e.g. index.html#birthdayPanel) scroll to that section. */
+if(window.location.hash && window.location.hash !== '#owner'){
+  var target = document.getElementById(window.location.hash.slice(1));
+  if(target) setTimeout(function(){ target.scrollIntoView({behavior:'smooth'}); }, 150);
+}
 if(session==='owner') renderOwner();
 /* Smooth scroll-in animations (no external library). */
 if(typeof IntersectionObserver !== 'undefined'){

@@ -13,12 +13,42 @@ Plain HTML/CSS/JS — no build step, no backend server, no heavy external librar
 All editable content (menu, banners, packages, terms, birthday enquiries) is stored in
 the browser with `localStorage`, so it works as a static deploy and demo.
 
+## Pages
+
+- **index.html — homepage.** Hero, About, Our Story, a small **menu preview (6 featured items only) + "View full menu" link**, Gallery, birthday bookings, Offers, Reviews, Location, Contact, Jobs, Terms, footer. The full 37-item menu is **NOT** on the homepage.
+- **[menu.html](sandbox://workspace/stars-cafe-app/menu.html) — separate menu page.** The full display menu lives here only: categories, search, veg filter, sort, all 37 items with prices, Zomato/Swiggy links, and a "Back to home" link. Same header (with hamburger menu), same footer, same styles.css / app.js / logo.jpg, same colours and design as the homepage. Every "Menu" link in the header, hamburger menu, hero and footer goes to menu.html.
+
 ## Files
 
-- [index.html](sandbox://workspace/stars-cafe-app/index.html) — structure: sticky header (real logo + Owner button, hamburger three-line menu on mobile with Home, Menu, Gallery, Birthday Bookings, Offers, Reviews, Jobs, Location, Contact, Instagram; desktop nav is plain text links: Menu, Birthdays, Gallery, Reviews, Jobs, Visit Us), large hero with the real logo and only four call-to-action buttons (View Menu, Book a Birthday, Get Directions, Call), About, display Menu, Gallery, birthday booking showcase, Offers (banners, Combo of the Day, Loyalty Offer), Google Reviews, Location & basics, Contact, Jobs (Work with us), terms; footer (3 columns: About, Quick links, Contact). Section order on the page: Hero, About, Menu, Gallery, Birthday, Offers, Reviews, Location, Contact, Jobs, Footer.
-- [app.js](sandbox://workspace/stars-cafe-app/app.js) — all logic: display menu (search/filter/sort, no cart), gallery showcase, banners, Combo of the Day, Loyalty Offer, birthday enquiry via WhatsApp, owner login and editors, Google Reviews settings, scroll-in animations.
+- [index.html](sandbox://workspace/stars-cafe-app/index.html) — structure: sticky header (real logo, NO Owner button, hamburger three-line menu on mobile with Home, Menu, Gallery, Birthday Bookings, Offers, Reviews, Jobs, Location, Contact, Instagram, and a small Owner link at the very bottom; desktop nav is plain text links: Menu, Birthdays, Gallery, Reviews, Jobs, Visit Us), large hero with the real logo and only four call-to-action buttons (View Menu, Book a Birthday, Get Directions, Call), About, Our Story, display Menu preview, Gallery, birthday booking showcase, Offers (banners, Combo of the Day, Loyalty Offer), Google Reviews, Location & basics, Contact, Jobs (Work with us), terms; footer (3 columns: About, Quick links, Contact). Section order on the page: Hero, About, Menu preview, Gallery, Birthday, Offers, Reviews, Location, Contact, Jobs, Footer.
+- [menu.html](sandbox://workspace/stars-cafe-app/menu.html) — separate full menu page (see Pages above).
+- [app.js](sandbox://workspace/stars-cafe-app/app.js) — all logic: display menu (search/filter/sort, no cart), homepage menu preview (6 items), gallery showcase, banners, Combo of the Day, Loyalty Offer, birthday enquiry via WhatsApp, owner login and editors, Google Reviews settings, scroll-in animations. All render functions guard for missing elements, so the same app.js runs safely on both index.html and menu.html.
 - [styles.css](sandbox://workspace/stars-cafe-app/styles.css) — warm & cosy theme (cream + brown, purple accents), mobile-first, large touch buttons, premium hero, hover effects, scroll animations, gallery cards, big birthday banner, polished footer.
 - [logo.jpg](sandbox://workspace/stars-cafe-app/logo.jpg) — the cafe's real logo (Star's Cafe, Since 2022, purple/black). Used as the header logo, the large hero logo and the favicon; the inline SVG logo in the header is the fallback if the image fails to load.
+
+## Design match to the selected UI images (19 Nov 2026)
+
+The user said the live site was "not the same UI design, not the same colour, not the same pattern" as the design images shown. The site was re-styled to match those images (traditional home, menu page, birthday page, gallery/contact page, menu bar, Zomato/Swiggy hero):
+
+- **Colours:** warm pale-cream paper background `#f6eeda` (not white), cream panels `#fdf8ec`, caramel/tan bands and footer `#b98a5a` → `#a67c52` (not dark brown), dark brown text `#4a2e1b`, purple `#6d3fa0` used ONLY as an accent (pill badges, active tab underline, primary buttons).
+- **Pattern:** faint dotted paper texture on the page background, faint paisley-style radial pattern in the hero, thin purple flourish dividers (`— ❧ —`) under main headings, brown double rules under the header and hero.
+- **Typography:** dark-brown **serif** headings (Georgia / Palatino / Times), hero title in uppercase serif with letter-spacing; body text stays a clean sans-serif.
+- **Header:** cream paper bar, brown serif "STAR'S CAFE" brand name (not purple), hamburger with dark-brown bars on cream.
+- **Hero:** purple pill badges (Top Rated + 4.9 ★ rating badge, white text, gold star), large brown serif title, tagline in brown serif.
+- **Menu:** category strip as a cream bar with brown rules — active tab in purple with a purple underline (not a brown pill); menu cards are cream rounded cards, item name in brown serif, price in brown (not purple), green veg dot with a white ring, food image on the right.
+- **Birthday packages:** cream cards with an ornate brown double frame and a purple price ribbon at the top-right corner, package name in centred brown serif.
+- **Zomato / Swiggy:** stacked white cards with logo chips (red "zomato" chip, orange "S" chip), as in the hero image — not small purple buttons.
+- **Footer:** caramel/tan background with purple small-caps labels (ADDRESS / PHONE / EMAIL) and cream text.
+- **Form containers — matched STRICTLY to the design images:** NO boxed card around any form. Each form (Contact, Birthday, Job) sits directly on the cream paper; the fields carry the style — cream inputs, thin brown borders, 12px rounded corners, generous spacing, dark-brown serif labels above each field, and one purple full-width submit button. No gradient card, no border box, no shadow around the forms.
+
+## Owner access (hidden from the main page)
+
+There is **no Owner button** on the main page header or hero. Owner access is:
+
+1. **Hamburger menu, small link at the bottom** — open the three-line menu and the last, small "Owner" link at the bottom opens the owner login.
+2. **Hidden URL** — opening the site with `#owner` in the URL (e.g. https://stars-cafe-order-online.netlify.app/#owner) shows the owner login directly. This URL is documented here in the README only, not on the site itself.
+
+Owner login is still **owner / stars123** (demo only, not real security). The owner can edit: menu, birthday packages, banner offers, Combo of the Day, Loyalty Offer, Google Reviews settings, terms & conditions, and see birthday enquiries. There is no staff view and no staff login.
 
 ## Redesign — clean traditional website (19 Nov 2026)
 
@@ -34,9 +64,11 @@ After the user's feedback ("too many buttons everywhere", "footer is very poor",
   and Swiggy search for "Star's Cafe Nalasopara East". No Zomato/Swiggy
   restaurant URL or ID was invented; the owner should replace them with the
   cafe's exact Zomato/Swiggy restaurant links when available.
-- **Verified ratings** — Google **4.9 ★ (199 Google reviews)** and Justdial **4.8/5**
+- **Verified ratings** — Google **4.9 ★ (199 Google reviews)** only
   (checked live 19 Nov 2026 from the Google listing), shown prominently in the
-  hero and in the Reviews section. The Reviews section also quotes the Google
+  hero and in the Reviews section. No other review site's rating is shown
+  anywhere on the site — only Google, plus the
+  direct WhatsApp review option. The Reviews section also quotes the Google
   listing description: "Relaxed lakeside cafe offering diverse menu options
   including pizza and burgers." No other rating is claimed.
 - **Our Story** — a short section after About, before the Menu: Star's Cafe began
@@ -83,7 +115,7 @@ After the user's feedback ("too many buttons everywhere", "footer is very poor",
 - **Offer banners** carousel + birthday banner; **Combo of the Day** and **Loyalty Offer** sections (shown when the owner enables them).
 - **About** — the cafe since 2022, dine-in / takeout / delivery / outdoor seating.
 - **Gallery** — "Gallery": compact cards for Margherita Pizza, Chocolate Freakshake, Cold Coffee, Chocolate Milkshake, Paneer Pizza and Loaded Nachos, with prices. Gallery cards use the menu items' photos (CSS gradient placeholders until the owner adds real dish photos) — the owner adds/changes a dish photo from the Owner page, under Menu management, and it shows in the Gallery and on the menu card.
-- **Menu (display only)** — Zomato/Swiggy-style compact rows: food image on the right, item name, veg dot and price on the left (no descriptions / specifications), with category tabs in logical order (All, Combo Packs, Pizza, Sandwich, Burger, Fries, Pasta, Maggie, Wedges, Nachos, Fried Rice, Noodles, Tea, Coffee, Mojito, Milkshake, Freakshake, Dessert, Icecream, Drinks), pill search, veg-only filter and sort. **No cart, no ordering.**
+- **Menu (display only)** — the homepage shows only a small preview (6 featured items) with a "View full menu" link. The **full menu lives on the separate [menu.html](sandbox://workspace/stars-cafe-app/menu.html) page**: Zomato/Swiggy-style compact rows: food image on the right, item name, veg dot and price on the left (no descriptions / specifications), with category tabs in logical order (All, Combo Packs, Pizza, Sandwich, Burger, Fries, Pasta, Maggie, Wedges, Nachos, Fried Rice, Noodles, Tea, Coffee, Mojito, Milkshake, Freakshake, Dessert, Icecream, Drinks), pill search, veg-only filter and sort. **No cart, no ordering.**
 - **Birthday bookings (showcase)** — Basic / Premium / Deluxe packages (owner-editable), date + time-slot picker, name/phone/guests/note — enquiry opens WhatsApp to 919326222019 with everything prefilled. This is a booking enquiry, not an order.
 - **Reviews:** a "What customers say on Google" section shows Google reviews on-site in a Google Maps view, with a "Read reviews on Google" text link and a "Write a review on WhatsApp" text link (WhatsApp to 919326222019 with "I would like to leave a review for Star's Cafe" prefilled).
 - **Location & basics** — full address, Get Directions link, phone, email, hours, veg, ₹350 for two, and a "Follow us on Instagram" link. Instagram: @stars_cafe_since2022, also linked in the footer.
@@ -165,3 +197,4 @@ test enquiry from the live site and check Netlify → Forms to confirm it arrive
 - Headless Chromium could **not** be run in this environment (Hatch WebGL domain policy blocks browser startup) — the site has not been click-tested in a real browser yet. Please open it once after deploying. The Google Maps embed also needs a live internet connection to render; if it does not load, the "Read reviews on Google" link still works.
 
 - Node DOM-stub run (8 checks, 0 failed) for the 19 Nov 2026 traditional redesign: 37 menu rows with no description text, banner with no button, packages with no Choose button (tap-to-select), birthday-form package/time-slot selects populated, gallery cards with no price, terms rendered, Google Reviews map src set. All files served over local HTTP (200): index.html, app.js, styles.css, logo.jpg.
+- Design-match + separate-menu + hidden-owner test (`/tmp/test-stars-design-match.js`, 33 checks, 0 failed, 19 Nov 2026): homepage preview renders exactly 6 items (not 37), no full menu grid/chips on the homepage, "View full menu" links to menu.html, menu.html renders all 37 items with categories in order + search/sort/veg filter, no header Owner button on either page, Owner link is the last link in the hamburger menu, `#owner` hash opens the owner view, all 3 forms carry the `form-card` class, no Add to cart, no Justdial anywhere on either page, CSS has the cream `#f6eeda` paper, brown Georgia serif headings, uppercase hero title, tan/caramel footer, purple pill rating badge, unboxed form containers, Zomato/Swiggy white cards with logo chips, purple flourish dividers, ornate double-frame packages. All 5 files served over local HTTP (200): index.html, menu.html, app.js, styles.css, logo.jpg.

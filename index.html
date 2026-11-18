@@ -36,12 +36,13 @@
     <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" onclick="toggleMobileMenu()">
       <span></span><span></span><span></span>
     </button>
-    <button class="btn small secondary" onclick="showView('owner')">Owner</button>
   </div>
-  <!-- Mobile hamburger menu (three-line menu bar): shown on phones only. -->
+  <!-- Mobile hamburger menu (three-line menu bar): shown on phones only.
+       Owner access lives here, small at the bottom of the menu — no Owner
+       button on the main page header or hero. -->
   <nav class="mobile-menu" id="mobileMenu" aria-label="Menu">
     <a href="#" onclick="goToSection(null);return false;">Home</a>
-    <a href="#" onclick="goToSection('menuSection');return false;">Menu</a>
+    <a href="menu.html">Menu</a>
     <a href="#" onclick="goToSection('gallerySection');return false;">Gallery</a>
     <a href="#" onclick="goToSection('birthdayPanel');return false;">Birthday Bookings</a>
     <a href="#" onclick="goToSection('bannerArea');return false;">Offers</a>
@@ -50,9 +51,10 @@
     <a href="#" onclick="goToSection('locationPanel');return false;">Location</a>
     <a href="#" onclick="goToSection('contactPanel');return false;">Contact</a>
     <a href="https://www.instagram.com/stars_cafe_since2022" target="_blank" rel="noopener" onclick="closeMobileMenu()">Instagram</a>
+    <a class="owner-link" href="#owner" onclick="showView('owner')">Owner</a>
   </nav>
   <nav class="tabs" aria-label="Sections">
-    <a href="#" onclick="showView('site');document.getElementById('menuSection').scrollIntoView({behavior:'smooth'});return false;">Menu</a>
+    <a href="menu.html">Menu</a>
     <a href="#" onclick="showView('site');document.getElementById('birthdayPanel').scrollIntoView({behavior:'smooth'});return false;">Birthdays</a>
     <a href="#" onclick="showView('site');document.getElementById('gallerySection').scrollIntoView({behavior:'smooth'});return false;">Gallery</a>
     <a href="#" onclick="showView('site');document.getElementById('reviewsPanel').scrollIntoView({behavior:'smooth'});return false;">Reviews</a>
@@ -69,10 +71,10 @@
       <h1>Star's Cafe</h1>
       <p class="hero-tag">A warm, cosy veg cafe in Nalasopara East — since 2022.</p>
       <p class="top-badge">Top Rated Cafe in Nalasopara &mdash; 4.9 &#9733; (199 Google reviews)</p>
-      <p class="rating-badge" aria-label="Google rating 4.9 out of 5 from 199 Google reviews">4.9 &#9733; <span>(199 Google reviews)</span> &middot; Justdial 4.8/5</p>
+      <p class="rating-badge" aria-label="Google rating 4.9 out of 5 from 199 Google reviews">4.9 &#9733; <span>(199 Google reviews)</span></p>
       <p class="muted">Pizza &middot; Coffee &middot; Freakshakes &middot; Birthday celebrations &middot; ₹350 for two &middot; Open 9am&ndash;11pm, every day</p>
       <div class="hero-cta">
-        <button class="btn" onclick="document.getElementById('menuSection').scrollIntoView({behavior:'smooth'})">View Menu</button>
+        <a class="btn" href="menu.html">View Menu</a>
         <button class="btn brown" onclick="document.getElementById('birthdayPanel').scrollIntoView({behavior:'smooth'})">Book a Birthday</button>
         <a class="btn secondary" href="https://www.google.com/maps/search/?api=1&amp;query=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener">Get Directions</a>
         <a class="btn secondary" href="tel:+919326222019">Call 9326222019</a>
@@ -94,25 +96,15 @@
 
     <div class="notice reveal"><b>Prices are placeholder estimates for now.</b> Prices to be updated with the new menu — the cafe menu has changed and the new menu is coming. Please confirm prices at the counter.</div>
 
-    <section id="menuSection" aria-label="Menu">
-    <h1>Our Menu</h1>
-    <p class="muted">Browse by category, search, or filter veg only. This is a display menu — visit us or call to order.</p>
+    <section id="menuPreview" aria-label="Menu preview">
+    <h1 class="section-title">Our Menu</h1>
+    <p class="muted section-sub">A taste of the menu — pizza, coffee, freakshakes and more. This is a display menu — visit us or call to order. Prices are placeholder estimates for now, to be updated with the new menu.</p>
+    <div class="menu-grid" id="menuPreviewGrid"></div>
+    <p style="text-align:center;margin-top:18px"><a class="btn" href="menu.html">View full menu &rarr;</a></p>
     <p class="order-links">Also order online:
-      <a class="btn secondary small" href="https://www.zomato.com/search?q=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener">Order on Zomato</a>
-      <a class="btn secondary small" href="https://www.swiggy.com/search?query=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener">Order on Swiggy</a>
+      <a class="dl-btn zomato" href="https://www.zomato.com/search?q=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener"><span class="dl-chip">zomato</span>Order on Zomato</a>
+      <a class="dl-btn swiggy" href="https://www.swiggy.com/search?query=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener"><span class="dl-chip">S</span>Order on Swiggy</a>
     </p>
-    <div class="toolbar">
-      <input id="searchInput" type="search" placeholder="Search pizza, coffee, fries&hellip;" oninput="renderMenu()">
-      <select id="sortSelect" onchange="renderMenu()" aria-label="Sort menu">
-        <option value="name">Sort: Name</option>
-        <option value="low">Price: Low to High</option>
-        <option value="high">Price: High to Low</option>
-      </select>
-    </div>
-    <div class="chips" id="categoryChips"></div>
-    <label class="veg-toggle"><input type="checkbox" id="vegOnly" onchange="renderMenu()"> Veg only</label>
-
-    <div class="menu-grid" id="menuGrid"></div>
     </section>
 
     <section id="gallerySection" class="reveal" aria-label="Gallery">
@@ -144,7 +136,7 @@
       <h3>Or send a birthday enquiry form</h3>
       <p class="muted">Fill this in and the cafe will get back to you by phone or WhatsApp.</p>
       <!-- Netlify Form: plain HTML (no JS submit) so Netlify captures submissions. -->
-      <form name="birthday" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form">
+      <form name="birthday" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form form-card">
         <input type="hidden" name="form-name" value="birthday">
         <p class="hp-field"><label>Don&rsquo;t fill this out if you&rsquo;re human: <input name="bot-field"></label></p>
         <div class="row">
@@ -174,7 +166,6 @@
       <h2>Reviews</h2>
       <p class="top-badge">Top Rated Cafe in Nalasopara &mdash; 4.9 &#9733; (199 Google reviews)</p>
       <p class="rating-big" aria-label="Google rating 4.9 out of 5 from 199 Google reviews">4.9 &#9733; <span>(199 Google reviews)</span></p>
-      <p>Also rated <b>4.8/5 on Justdial</b>.</p>
       <p class="muted">&ldquo;Relaxed lakeside cafe offering diverse menu options including pizza and burgers.&rdquo; &mdash; Google listing</p>
       <h3>What customers say on Google</h3>
       <iframe id="googleReviewsFrame" title="Star's Cafe on Google Maps — reviews" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Star%27s+Cafe+Nalasopara+East&amp;output=embed"></iframe>
@@ -211,7 +202,7 @@
       <h3>Send us an enquiry</h3>
       <!-- Netlify Form: plain HTML form (no JS submit) so Netlify captures submissions.
            No action attribute = Netlify shows its default thank-you page after sending. -->
-      <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form">
+      <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form form-card">
         <input type="hidden" name="form-name" value="contact">
         <p class="hp-field"><label>Don&rsquo;t fill this out if you&rsquo;re human: <input name="bot-field"></label></p>
         <div class="row">
@@ -237,7 +228,7 @@
       <h2>Work with us</h2>
       <p>Want to work at Star's Cafe? We are a small, friendly veg cafe in Nalasopara East. Tell us about yourself below and we will get back to you if there is an opening.</p>
       <!-- Netlify Form: plain HTML (no JS submit) so Netlify captures submissions. -->
-      <form name="job" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form">
+      <form name="job" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form form-card">
         <input type="hidden" name="form-name" value="job">
         <p class="hp-field"><label>Don&rsquo;t fill this out if you&rsquo;re human: <input name="bot-field"></label></p>
         <div class="row">
@@ -341,7 +332,7 @@
       </div>
       <div class="footer-col">
         <h3>Quick links</h3>
-        <p><a href="#" onclick="showView('site');document.getElementById('menuSection').scrollIntoView({behavior:'smooth'});return false;">Menu</a></p>
+        <p><a href="menu.html">Menu</a></p>
         <p><a href="#" onclick="showView('site');document.getElementById('gallerySection').scrollIntoView({behavior:'smooth'});return false;">Gallery</a></p>
         <p><a href="#" onclick="showView('site');document.getElementById('birthdayPanel').scrollIntoView({behavior:'smooth'});return false;">Birthday bookings</a></p>
         <p><a href="#" onclick="showView('site');document.getElementById('jobsPanel').scrollIntoView({behavior:'smooth'});return false;">Work with us</a></p>

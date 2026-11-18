@@ -1,44 +1,57 @@
-/* Star's Cafe — Nalasopara East. DISPLAY / MARKETING site, no ordering. Warm & cosy: cream + brown, purple accents. Mobile-first. */
+/* Star's Cafe — Nalasopara East. DISPLAY / MARKETING site, no ordering.
+   Design matched to the selected UI images (traditional home / menu /
+   birthday / gallery-contact / menu-bar / Zomato-Swiggy hero):
+   warm pale-cream paper (#f6eeda), dark-brown serif headings, tan/caramel
+   bands and footer, purple used ONLY as an accent (pill badges, active
+   tab underline, primary buttons), thin purple flourish dividers.
+   Mobile-first. */
 :root{
-  --cream:#fdf6ec; --cream2:#f7ead6; --brown:#5b3a29; --brown2:#7a5238;
-  --purple:#5b2a86; --purple2:#7d3cba; --gold:#c89b3c;
+  --cream:#f6eeda; --cream2:#f1e5cb; --paper:#fdf8ec; --card:#fffdf8;
+  --tan:#b98a5a; --tan2:#a67c52; --brown:#4a2e1b; --brown2:#6b4226;
+  --purple:#6d3fa0; --purple2:#8a5fc0; --gold:#c89b3c;
   --green:#2e7d32; --red:#b3261e; --ink:#2b211a; --muted:#8a7364;
-  --card:#fffdf8; --border:#e8dcc8; --shadow:0 6px 18px rgba(91,58,41,.12);
+  --border:#e8dcc8; --border-tan:#d9c39a;
+  --shadow:0 6px 18px rgba(91,58,41,.12);
+  --serif:Georgia,'Palatino Linotype','Book Antiqua','Times New Roman',serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--cream);color:var(--ink);line-height:1.5}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--cream);background-image:radial-gradient(rgba(169,124,82,.07) 1px,transparent 1px);background-size:22px 22px;color:var(--ink);line-height:1.5}
 a{color:var(--purple)}
 button{font-family:inherit;cursor:pointer}
-input,select,textarea{font-family:inherit;font-size:16px;padding:12px;border:1.5px solid var(--border);border-radius:12px;background:#fff;width:100%}
+input,select,textarea{font-family:inherit;font-size:16px;padding:12px;border:1.5px solid var(--tan);border-radius:12px;background:#fffdf8;width:100%}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--purple2);border-color:var(--purple2)}
-label{font-weight:700;font-size:14px;display:block;margin:12px 0 4px}
+label{font-family:var(--serif);font-weight:700;font-size:15px;display:block;margin:12px 0 4px;color:var(--brown)}
 
-/* Sticky header */
-header{position:sticky;top:0;z-index:50;background:#fffdf8;border-bottom:2px solid var(--border);box-shadow:0 2px 10px rgba(91,58,41,.08)}
+/* Sticky header — cream paper bar with a brown double rule, like the images */
+header{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:3px double var(--tan2);box-shadow:0 2px 10px rgba(91,58,41,.08)}
 .header-inner{max-width:1024px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
 .brand img{width:52px;height:52px;flex:0 0 52px;border-radius:50%;object-fit:cover;border:2px solid #1a1a1a;background:#fff}
 .brand svg{width:52px;height:52px;flex:0 0 52px}
-.brand-name{font-size:20px;font-weight:900;letter-spacing:.5px;color:var(--purple);line-height:1.1}
+.brand-name{font-family:var(--serif);font-size:26px;font-weight:700;letter-spacing:1px;color:var(--brown);line-height:1.1}
 .brand-sub{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
-nav.tabs{max-width:1024px;margin:0 auto;padding:0 14px 10px;display:flex;gap:22px;justify-content:center}
-nav.tabs a{font-weight:700;font-size:15px;color:var(--brown);text-decoration:none;padding:8px 2px}
+nav.tabs{max-width:1024px;margin:0 auto;padding:8px 14px 10px;display:flex;gap:22px;justify-content:center;background:var(--paper);border-top:1px solid var(--border)}
+nav.tabs a{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--brown);text-decoration:none;padding:8px 2px}
 nav.tabs a:hover{color:var(--purple);text-decoration:underline}
 
 main{max-width:1024px;margin:0 auto;padding:14px 14px 40px}
 .view{display:none}.view.active{display:block}
-h1{font-size:26px;margin:8px 0;color:var(--brown)}
-h2{font-size:21px;margin:22px 0 8px;color:var(--brown)}
-h3{font-size:17px;margin:14px 0 6px;color:var(--brown)}
+h1{font-family:var(--serif);font-size:28px;margin:8px 0;color:var(--brown);letter-spacing:.5px}
+h2{font-family:var(--serif);font-size:23px;margin:22px 0 8px;color:var(--brown);letter-spacing:.5px}
+h3{font-family:var(--serif);font-size:18px;margin:14px 0 6px;color:var(--brown)}
 p{margin:6px 0}
 .muted{color:var(--muted);font-size:14px}
 .notice{background:#fff3d6;border:1.5px solid #e6c87a;border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px}
 .notice b{color:var(--brown)}
+/* Thin purple flourish divider under main headings, as in the images */
+#view-site>section>h1::after,#view-site>section>h2::after,#view-site .panel>h2::after,.section-title::after{content:"— ❧ —";display:block;color:var(--purple);font-size:16px;letter-spacing:6px;margin-top:6px;text-align:center}
+#view-site .hero h1::after{content:"— ❧ —";display:block;color:var(--purple);font-size:18px;letter-spacing:8px;margin-top:8px}
+.banner h2::after{content:none}
 
 /* Banners */
 .banner{border-radius:18px;padding:20px;margin:12px 0;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.banner.offer{background:linear-gradient(135deg,var(--purple),#9b59d0)}
+.banner.offer{background:linear-gradient(135deg,var(--purple),var(--purple2))}
 .banner.birthday{background:linear-gradient(135deg,#8a5a2b,#c89b3c)}
 .banner h2{color:#fff;margin:0 0 6px;font-size:22px}
 .banner p{margin:0 0 12px;opacity:.95}
@@ -47,29 +60,33 @@ p{margin:6px 0}
 .banner-nav button{border:0;background:var(--border);width:34px;height:34px;border-radius:50%;font-weight:900}
 .banner-nav button.active{background:var(--purple);color:#fff}
 
-/* Toolbar — pill search + horizontally scrollable category tabs, like a food-delivery app */
+/* Toolbar — pill search + category strip with a brown double-rule frame,
+   active tab in purple with a purple underline, as in the menu image */
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
 .toolbar input{flex:1;min-width:180px;border-radius:999px}
 .toolbar select{flex:0 0 150px;border-radius:999px}
-.chips{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;margin:8px -14px;padding:2px 14px 6px;scrollbar-width:none}
+.chips{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;margin:8px -14px;padding:8px 14px 4px;scrollbar-width:none;background:var(--paper);border-top:1px solid var(--tan);border-bottom:1px solid var(--tan)}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:0 0 auto;border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:10px 14px;font-weight:700;min-height:44px}
-.chip.active{background:var(--brown);color:#fff;border-color:var(--brown)}
+.chip{flex:0 0 auto;border:0;border-bottom:3px solid transparent;background:transparent;border-radius:0;padding:10px 12px;font-family:var(--serif);font-weight:700;font-size:15px;color:var(--brown);min-height:44px}
+.chip.active{color:var(--purple);border-bottom-color:var(--purple)}
 .veg-toggle{display:flex;align-items:center;gap:8px;font-weight:700;margin:8px 0}
 .veg-toggle input{width:auto}
 
 /* Hamburger (three-line menu bar) — mobile only; desktop keeps the tab bar */
-.hamburger{display:none;margin-left:auto;flex:0 0 48px;width:48px;height:48px;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:0}
+.hamburger{display:none;margin-left:auto;flex:0 0 48px;width:48px;height:48px;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:var(--paper);border:1.5px solid var(--tan);border-radius:12px;padding:0}
 .hamburger span{display:block;width:22px;height:3px;border-radius:2px;background:var(--brown);transition:transform .2s ease,opacity .2s ease}
 .hamburger.active span:nth-child(1){transform:translateY(8px) rotate(45deg)}
 .hamburger.active span:nth-child(2){opacity:0}
 .hamburger.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
 .hamburger:focus-visible{outline:2px solid var(--purple2)}
-.mobile-menu{display:none;background:#fffdf8;border-top:1.5px solid var(--border)}
+.mobile-menu{display:none;background:var(--paper);border-top:1.5px solid var(--border)}
 .mobile-menu.open{display:block}
-.mobile-menu a{display:block;padding:14px 18px;font-weight:800;font-size:16px;color:var(--brown);text-decoration:none;border-bottom:1px solid var(--border)}
-.mobile-menu a:last-child{border-bottom:0}
+.mobile-menu a{display:block;padding:15px 18px;font-family:var(--serif);font-weight:700;font-size:18px;color:var(--brown);text-decoration:none;border-bottom:1px solid var(--border)}
+.mobile-menu a::before{content:"›";color:var(--purple);margin-right:10px;font-weight:900}
 .mobile-menu a:hover{background:var(--cream2);color:var(--purple)}
+/* Owner link — small, at the very bottom of the hamburger menu only */
+.mobile-menu a.owner-link{font-size:13px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-weight:600;color:var(--muted);border-top:2px solid var(--border);border-bottom:0;margin-top:6px;padding:11px 18px}
+.mobile-menu a.owner-link::before{content:""}
 @media(max-width:639px){
   .hamburger{display:flex}
   nav.tabs{display:none}
@@ -79,51 +96,51 @@ p{margin:6px 0}
   .mobile-menu{display:none!important}
 }
 
-/* Menu — Zomato/Swiggy-style compact rows: text left, food image right */
+/* Menu — compact rows, cream cards: name + veg dot + price left, food image right */
 .menu-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
 @media(min-width:640px){.menu-grid{grid-template-columns:1fr 1fr}}
-.menu-card{display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.menu-card{display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
 .food-img{flex:0 0 96px;width:96px;height:96px;border-radius:12px}
 .food-img.pizza{background:linear-gradient(135deg,#d35400,#e67e22)}
 .food-img.sandwich{background:linear-gradient(135deg,#7a5238,#b07a4a)}
 .food-img.fries{background:linear-gradient(135deg,#c89b3c,#e6c87a)}
-.food-img.drinks{background:linear-gradient(135deg,#5b2a86,#9b59d0)}
+.food-img.drinks{background:linear-gradient(135deg,#6d3fa0,#9b59d0)}
 .food-img.dessert{background:linear-gradient(135deg,#a04060,#d07a9b)}
 .food-img.default{background:linear-gradient(135deg,#5b3a29,#8a7364)}
 .food-photo{flex:0 0 96px;width:96px;height:96px;object-fit:cover;border-radius:12px;display:block}
 .food-photo-preview{width:100%;max-height:140px;object-fit:cover;border-radius:12px;margin-top:8px;display:block}
 .menu-thumb{width:56px;height:56px;object-fit:cover;border-radius:10px;margin:8px 0;display:block}
 .menu-body{flex:1;min-width:0;padding:0}
-.menu-body h3{margin:0;font-size:15px}
-.price{font-size:17px;font-weight:900;color:var(--purple)}
-.veg-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--green);margin-right:6px;vertical-align:middle}
+.menu-body h3{margin:0;font-size:18px}
+.price{font-size:17px;font-weight:900;color:var(--brown)}
+.veg-dot{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--green);border:2px solid #fff;box-shadow:0 0 0 1.5px var(--green);margin-right:6px;vertical-align:middle}
 .out{opacity:.55}
 
-/* Buttons */
+/* Buttons — purple only for the primary call-to-action, as in the images */
 .btn{display:inline-block;background:var(--purple);color:#fff;border:0;border-radius:14px;padding:14px 20px;font-weight:800;font-size:16px;min-height:52px;text-decoration:none;text-align:center}
-.btn.secondary{background:#fff;color:var(--purple);border:2px solid var(--purple)}
-.btn.brown{background:var(--brown)}
+.btn.secondary{background:#fffdf8;color:var(--brown);border:2px solid var(--brown2)}
+.btn.brown{background:var(--brown2)}
 .btn.green{background:var(--green)}
 .btn.small{padding:10px 14px;min-height:44px;font-size:14px}
 .btn.block{width:100%}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .btn.whatsapp{background:#25d366;color:#fff}
 
-/* Cart / panels — consistent tidy spacing between sections */
-.panel{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:16px;margin:20px 0;box-shadow:var(--shadow)}
-/* Tidy, organised section rhythm: same gap above every main section,
-   centred display headings for Menu and Gallery */
+/* Panels — cream paper cards */
+.panel{background:var(--paper);border:1.5px solid var(--border);border-radius:18px;padding:16px;margin:20px 0;box-shadow:var(--shadow)}
 #view-site>section,#view-site>.panel,#view-site>.notice{margin-top:20px;margin-bottom:20px}
 #menuSection>h1{text-align:center;font-size:32px;margin-bottom:4px}
 #menuSection>p.muted{text-align:center}
 .order-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:14px;margin:12px 0}
 .order-card h3{margin:0 0 4px}
 
-/* Packages */
-.pkg-grid{display:grid;grid-template-columns:1fr;gap:14px}
+/* Packages — ornate double frame with a purple price ribbon, as in the birthday image */
+.pkg-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:22px}
 @media(min-width:640px){.pkg-grid{grid-template-columns:repeat(3,1fr)}}
-.pkg{background:var(--card);border:2px solid var(--border);border-radius:18px;padding:16px}
-.pkg.featured{border-color:var(--purple);box-shadow:var(--shadow)}
+.pkg{position:relative;background:var(--paper);border:2px solid var(--brown2);outline:1px solid var(--tan);outline-offset:5px;border-radius:8px;padding:22px 16px 16px;margin-top:14px}
+.pkg.featured{border-color:var(--purple);outline-color:var(--purple2)}
+.pkg h3{text-align:center;font-size:24px;margin:0 0 8px}
+.pkg .price{position:absolute;top:-16px;right:14px;background:var(--purple);color:#fff;padding:6px 12px;border-radius:4px;font-size:15px;box-shadow:0 4px 10px rgba(91,42,134,.3)}
 .pkg ul{margin:8px 0;padding-left:20px}
 .pkg li{margin:4px 0}
 
@@ -138,28 +155,36 @@ th,td{border-bottom:1px solid var(--border);padding:8px;text-align:left;vertical
 .row>*{flex:1;min-width:140px}
 .hidden{display:none!important}
 .login-box{max-width:420px;margin:30px auto}
-.terms{white-space:pre-wrap;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px;font-size:15px}
+.terms{white-space:pre-wrap;background:#fffdf8;border:1.5px solid var(--border);border-radius:14px;padding:14px;font-size:15px}
 /* Google Reviews map embed (on-site) */
 #googleReviewsFrame{width:100%;height:320px;border:1.5px solid var(--border);border-radius:14px;margin:8px 0}
 
 /* Combo of the Day / Loyalty Offer */
-.combo-panel{border-color:var(--gold);background:linear-gradient(180deg,#fff8e6,var(--card))}
-.combo-panel h2{color:var(--purple)}
-.loyalty-panel{border-color:var(--purple);background:linear-gradient(180deg,#f3e8ff,var(--card))}
-.loyalty-panel h2{color:var(--purple)}
-/* Footer */
-footer{background:var(--brown);color:#f7ead6;margin-top:30px}
+.combo-panel{border-color:var(--gold);background:linear-gradient(180deg,#fff8e6,var(--paper))}
+.combo-panel h2{color:var(--brown)}
+.loyalty-panel{border-color:var(--purple);background:linear-gradient(180deg,#f3e8ff,var(--paper))}
+.loyalty-panel h2{color:var(--brown)}
+
+/* Footer — caramel/tan band with purple small-caps labels, as in the images */
+footer{background:linear-gradient(180deg,var(--tan),var(--tan2));color:#fdf6ec;margin-top:30px}
 .footer-inner{max-width:1024px;margin:0 auto;padding:24px 14px}
-footer h3{color:#fff;margin:0 0 8px}
-footer a{color:#e6c87a}
-footer p{margin:4px 0;font-size:15px}
+footer h3{color:var(--purple);font-size:14px;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px}
+footer a{color:#fff8ea}
+footer p{margin:4px 0;font-size:15px;color:#fdf6ec}
+footer{border-top:4px solid var(--gold)}
+.footer-inner{padding:32px 14px 28px}
+.footer-grid{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:640px){.footer-grid{grid-template-columns:1.2fr 1fr 1.2fr}}
+.footer-col p{margin:6px 0}
+.footer-bottom{border-top:1px solid rgba(253,246,236,.35);margin-top:24px;padding-top:16px}
+.footer-bottom p{font-size:13px;color:#f7ead6}
 
 /* ---------- Premium display / marketing polish ---------- */
-/* Large hero */
-.hero{text-align:center;padding:44px 18px 34px;background:radial-gradient(ellipse at 50% 0%,#fff8ea 0%,var(--cream) 55%,var(--cream2) 100%);border-radius:0 0 28px 28px;margin:0 -14px 18px;box-shadow:var(--shadow)}
+/* Large hero — cream paper with a faint paisley-like pattern, brown serif caps title */
+.hero{text-align:center;padding:44px 18px 34px;background-color:var(--paper);background-image:radial-gradient(circle at 18% 22%,rgba(109,63,160,.06) 0 90px,transparent 91px),radial-gradient(circle at 82% 30%,rgba(185,138,90,.10) 0 110px,transparent 111px),radial-gradient(circle at 50% 85%,rgba(109,63,160,.05) 0 120px,transparent 121px);border:1px solid var(--border);border-bottom:3px double var(--tan2);border-radius:0 0 28px 28px;margin:0 -14px 18px;box-shadow:var(--shadow)}
 .hero-logo{width:140px;height:140px;border-radius:50%;object-fit:cover;border:4px solid #1a1a1a;box-shadow:0 14px 34px rgba(91,58,41,.28);background:#fff}
-.hero h1{font-size:44px;line-height:1.05;letter-spacing:.5px;margin:16px 0 6px;color:var(--purple)}
-.hero-tag{font-size:19px;font-weight:700;color:var(--brown);margin:6px 0}
+.hero h1{font-size:44px;line-height:1.05;letter-spacing:4px;text-transform:uppercase;margin:16px 0 6px;color:var(--brown)}
+.hero-tag{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--brown);margin:6px 0}
 .hero-cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}
 .hero-cta .btn{box-shadow:0 8px 20px rgba(91,42,134,.25);transition:transform .18s ease,box-shadow .18s ease}
 .hero-cta .btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(91,42,134,.32)}
@@ -181,19 +206,18 @@ footer p{margin:4px 0;font-size:15px}
 .pkg{transition:transform .18s ease,box-shadow .18s ease;cursor:pointer}
 .pkg:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
 .chip{transition:background .15s ease,color .15s ease}
-.chip:hover{border-color:var(--purple);color:var(--purple)}
+.chip:hover{color:var(--purple)}
 
-/* Gallery showcase — compact cards, same as the menu cards */
-.gallery-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:14px 0 8px}
-@media(min-width:640px){.gallery-grid{grid-template-columns:1fr 1fr}}
-@media(min-width:900px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
-.gallery-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease}
+/* Gallery showcase — compact cards */
+.gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 8px}
+@media(min-width:640px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
+.gallery-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease}
 .gallery-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 16px 32px rgba(91,58,41,.22)}
 .gallery-img{height:120px;display:flex;align-items:flex-end;padding:12px;color:#fff;font-weight:900;font-size:18px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
 .gallery-img.pizza{background:linear-gradient(135deg,#d35400,#e67e22)}
 .gallery-img.sandwich{background:linear-gradient(135deg,#7a5238,#b07a4a)}
 .gallery-img.fries{background:linear-gradient(135deg,#c89b3c,#e6c87a)}
-.gallery-img.drinks{background:linear-gradient(135deg,#5b2a86,#9b59d0)}
+.gallery-img.drinks{background:linear-gradient(135deg,#6d3fa0,#9b59d0)}
 .gallery-img.dessert{background:linear-gradient(135deg,#a04060,#d07a9b)}
 .gallery-img.default{background:linear-gradient(135deg,#5b3a29,#8a7364)}
 .gallery-photo{width:100%;height:120px;object-fit:cover;display:block}
@@ -208,29 +232,37 @@ footer p{margin:4px 0;font-size:15px}
 .combo-panel,.loyalty-panel{padding:22px}
 .combo-panel h2,.loyalty-panel h2{font-size:24px}
 
-/* Polished footer — 3 columns: About, Quick links, Contact */
-footer{border-top:4px solid var(--gold)}
-.footer-inner{padding:32px 14px 28px}
-footer h3{font-size:20px;letter-spacing:.5px}
-.footer-grid{display:grid;grid-template-columns:1fr;gap:24px}
-@media(min-width:640px){.footer-grid{grid-template-columns:1.2fr 1fr 1.2fr}}
-.footer-col p{margin:6px 0}
-.footer-bottom{border-top:1px solid rgba(247,234,214,.25);margin-top:24px;padding-top:16px}
-.footer-bottom p{font-size:13px;color:#d8c3a5}
-
 /* Netlify contact form (Contact section) — inherits the theme's inputs/buttons.
    .hp-field hides the honeypot field off-screen (bots still see it in the DOM). */
 .contact-form{margin-top:8px}
 .hp-field{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;margin:0}
 
-/* Verified ratings — Google 4.9/5 (199 reviews), Justdial 4.8/5 (checked live 19 Nov 2026) */
-.rating-badge{display:inline-block;background:#fff;border:2px solid var(--gold);border-radius:999px;padding:8px 16px;font-size:18px;font-weight:900;color:var(--brown);margin:12px 0 0;box-shadow:var(--shadow)}
-.rating-badge span{font-weight:700;color:var(--muted);font-size:15px}
+/* Form containers — EXACTLY as in the design images: NO boxed card around
+   the form. The form sits directly on the cream paper; the fields
+   themselves carry the style: cream inputs, thin brown borders, rounded
+   12px corners, generous spacing, labels in dark brown serif above each
+   field, and one purple full-width submit button (as in "Send Message"). */
+.form-card{background:none;border:0;border-radius:0;padding:0;margin-top:16px;box-shadow:none}
+.form-card label{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--brown);margin:18px 0 6px}
+.form-card .row{gap:14px}
+.form-card input,.form-card select,.form-card textarea{background:#fffdf8;border:1.5px solid #8a6d4b;border-radius:12px;padding:14px 16px;color:var(--ink)}
+.form-card input::placeholder,.form-card textarea::placeholder{color:#a98f78}
+.form-card button[type="submit"]{background:linear-gradient(135deg,var(--purple),var(--purple2));border-radius:14px;padding:15px 20px;box-shadow:0 8px 20px rgba(91,42,134,.28)}
+.form-card button[type="submit"]:hover{transform:translateY(-1px)}
+
+/* Verified ratings — Google 4.9/5 (199 reviews) only, checked live 19 Nov 2026. No other review site's rating is shown. */
+.rating-badge{display:inline-block;background:linear-gradient(135deg,var(--purple),var(--purple2));border:0;border-radius:999px;padding:8px 16px;font-size:18px;font-weight:900;color:#fff;margin:12px 0 0;box-shadow:0 8px 20px rgba(91,42,134,.3)}
+.rating-badge span{font-weight:700;color:#f7ead6;font-size:15px}
 .rating-big{font-size:32px;font-weight:900;color:var(--brown);margin:8px 0}
 .rating-big span{font-size:16px;font-weight:700;color:var(--muted)}
 
-/* Zomato / Swiggy order links (menu area) — search links only, no invented restaurant URLs */
-.order-links{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin:14px 0 4px;font-weight:700;color:var(--brown)}
+/* Zomato / Swiggy order links — stacked white cards with logo chips, as in the hero image */
+.order-links{display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;margin:14px 0 4px;font-weight:700;color:var(--brown)}
+.dl-btn{display:flex;align-items:center;gap:14px;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:12px 20px;width:min(420px,100%);font-weight:800;font-size:17px;color:var(--ink);text-decoration:none;box-shadow:var(--shadow);transition:transform .15s ease,box-shadow .15s ease}
+.dl-btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(91,58,41,.2)}
+.dl-chip{flex:0 0 44px;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
+.dl-btn.zomato .dl-chip{background:#e23744;font-size:12px;letter-spacing:-.5px}
+.dl-btn.swiggy .dl-chip{background:#fc8019;font-size:24px}
 
 /* Top Rated badge — based on the verified 4.9/5 Google rating (199 reviews), not a numbered #1 claim */
-.top-badge{display:inline-block;background:linear-gradient(135deg,var(--purple),#9b59d0);color:#fff;border-radius:999px;padding:10px 18px;font-size:17px;font-weight:900;letter-spacing:.3px;margin:14px 0 0;box-shadow:0 8px 20px rgba(91,42,134,.3)}
+.top-badge{display:inline-block;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;border-radius:999px;padding:10px 18px;font-size:17px;font-weight:900;letter-spacing:.3px;margin:14px 0 0;box-shadow:0 8px 20px rgba(91,42,134,.3)}
