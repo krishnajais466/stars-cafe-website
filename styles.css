@@ -41,15 +41,15 @@ label{font-family:var(--serif);font-weight:700;font-size:15px;display:block;marg
 
 /* Sticky header — cream paper bar with a brown double rule, like the images */
 header{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:3px double var(--tan2);box-shadow:0 2px 10px rgba(91,58,41,.08)}
-.header-inner{max-width:1024px;margin:0 auto;padding:7px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.header-inner{max-width:1024px;margin:0 auto;padding:5px 14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--ink)}
 .brand img{width:42px;height:42px;flex:0 0 42px;border-radius:50%;object-fit:cover;border:2px solid #1a1a1a;background:#fff}
 .brand svg{width:42px;height:42px;flex:0 0 42px}
 .brand-name{font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:1px;color:var(--brown);line-height:1.1}
 .brand-sub{font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
-nav.tabs{max-width:1024px;margin:0 auto;padding:5px 14px 7px;display:flex;gap:18px;justify-content:center;background:var(--paper);border-top:1px solid var(--border)}
-nav.tabs a{font-family:var(--serif);font-weight:700;font-size:14px;color:var(--brown);text-decoration:none;padding:5px 2px}
-nav.tabs a:hover{color:var(--purple);text-decoration:underline}
+nav.tabs{max-width:1024px;margin:0 auto;padding:4px 14px 5px;display:flex;gap:14px;justify-content:center;background:var(--paper);border-top:1px solid var(--border)}
+nav.tabs a{font-family:var(--serif);font-weight:700;font-size:14px;color:var(--brown);text-decoration:none;padding:4px 2px;transition:color .2s ease,transform .2s ease}
+nav.tabs a:hover{color:var(--purple);text-decoration:underline;transform:translateY(-2px)}
 
 main{max-width:1024px;margin:0 auto;padding:14px 14px 40px}
 .view{display:none}.view.active{display:block}
@@ -89,24 +89,39 @@ p{margin:6px 0}
 .veg-toggle input{width:auto}
 
 /* Hamburger (three-line menu bar) — mobile only; desktop keeps the tab bar */
-.hamburger{display:none;margin-left:auto;flex:0 0 48px;width:48px;height:48px;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:var(--paper);border:1.5px solid var(--tan);border-radius:12px;padding:0}
-.hamburger span{display:block;width:22px;height:3px;border-radius:2px;background:var(--brown);transition:transform .2s ease,opacity .2s ease}
+.hamburger{display:none;margin-left:auto;flex:0 0 42px;width:42px;height:42px;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:var(--paper);border:1.5px solid var(--tan);border-radius:12px;padding:0;transition:transform .2s ease,box-shadow .2s ease}
+.hamburger:active{transform:scale(.94)}
+.hamburger span{display:block;width:20px;height:3px;border-radius:2px;background:var(--brown);transition:transform .2s ease,opacity .2s ease}
 .hamburger.active span:nth-child(1){transform:translateY(8px) rotate(45deg)}
 .hamburger.active span:nth-child(2){opacity:0}
 .hamburger.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
 .hamburger:focus-visible{outline:2px solid var(--purple2)}
 .mobile-menu{display:none;background:var(--paper);border-top:1.5px solid var(--border)}
-.mobile-menu.open{display:block}
-.mobile-menu a{display:block;padding:15px 18px;font-family:var(--serif);font-weight:700;font-size:18px;color:var(--brown);text-decoration:none;border-bottom:1px solid var(--border)}
+.mobile-menu.open{display:block;animation:menuSlideIn .25s ease both}
+.mobile-menu.open a{animation:linkFadeIn .25s ease both}
+.mobile-menu.open a:nth-child(1){animation-delay:0ms}
+.mobile-menu.open a:nth-child(2){animation-delay:30ms}
+.mobile-menu.open a:nth-child(3){animation-delay:60ms}
+.mobile-menu.open a:nth-child(4){animation-delay:90ms}
+.mobile-menu.open a:nth-child(5){animation-delay:120ms}
+.mobile-menu.open a:nth-child(6){animation-delay:150ms}
+.mobile-menu.open a:nth-child(7){animation-delay:180ms}
+.mobile-menu.open a:nth-child(8){animation-delay:210ms}
+.mobile-menu.open a:nth-child(9){animation-delay:240ms}
+.mobile-menu.open a:nth-child(10){animation-delay:270ms}
+.mobile-menu a{display:block;padding:13px 18px;font-family:var(--serif);font-weight:700;font-size:16px;color:var(--brown);text-decoration:none;border-bottom:1px solid var(--border)}
 .mobile-menu a::before{content:"›";color:var(--purple);margin-right:10px;font-weight:900}
 .mobile-menu a:hover{background:var(--cream2);color:var(--purple)}
 /* Owner link — small, at the very bottom of the hamburger menu only */
 .mobile-menu a.owner-link{font-size:13px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-weight:600;color:var(--muted);border-top:2px solid var(--border);border-bottom:0;margin-top:6px;padding:11px 18px}
 .mobile-menu a.owner-link::before{content:""}
 @media(max-width:639px){
-  .hamburger{display:flex}
+  /* Floating hamburger: fixed circular button, always visible while scrolling */
+  .hamburger{display:flex;position:fixed;top:10px;right:12px;z-index:60;border-radius:50%;box-shadow:0 6px 18px rgba(91,58,41,.28)}
   nav.tabs{display:none}
   .header-menu-btn{display:none}
+  /* Keep the brand text clear of the fixed button */
+  .header-inner{padding-right:64px}
 }
 @media(min-width:640px){
   .mobile-menu{display:none!important}
@@ -200,22 +215,31 @@ footer{border-top:4px solid var(--gold)}
 
 /* ---------- Premium display / marketing polish ---------- */
 /* Large hero — cream paper with a faint paisley-like pattern, brown serif caps title */
-.hero{text-align:center;padding:44px 18px 34px;background-color:var(--paper);background-image:radial-gradient(circle at 18% 22%,rgba(109,63,160,.06) 0 90px,transparent 91px),radial-gradient(circle at 82% 30%,rgba(185,138,90,.10) 0 110px,transparent 111px),radial-gradient(circle at 50% 85%,rgba(109,63,160,.05) 0 120px,transparent 121px);border:1px solid var(--border);border-bottom:3px double var(--tan2);border-radius:0 0 28px 28px;margin:0 -14px 18px;box-shadow:var(--shadow)}
+.hero{text-align:center;padding:36px 18px 34px;background-color:var(--paper);background-image:radial-gradient(circle at 18% 22%,rgba(109,63,160,.06) 0 90px,transparent 91px),radial-gradient(circle at 82% 30%,rgba(185,138,90,.10) 0 110px,transparent 111px),radial-gradient(circle at 50% 85%,rgba(109,63,160,.05) 0 120px,transparent 121px);border:1px solid var(--border);border-bottom:3px double var(--tan2);border-radius:0 0 28px 28px;margin:0 -14px 12px;box-shadow:var(--shadow)}
 .hero-logo{width:140px;height:140px;border-radius:50%;object-fit:cover;border:4px solid #1a1a1a;box-shadow:0 14px 34px rgba(91,58,41,.28);background:#fff}
 .hero h1{font-size:44px;line-height:1.05;letter-spacing:4px;text-transform:uppercase;margin:16px 0 6px;color:var(--brown)}
 .hero-tag{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--brown);margin:6px 0}
 .hero-cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}
 .hero-cta .btn{box-shadow:0 8px 20px rgba(91,42,134,.25);transition:transform .18s ease,box-shadow .18s ease}
 .hero-cta .btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(91,42,134,.32)}
-@media(min-width:640px){.hero{padding:64px 24px 48px}.hero h1{font-size:60px}.hero-logo{width:168px;height:168px}}
+@media(min-width:640px){.hero{padding:52px 24px 48px}.hero h1{font-size:60px}.hero-logo{width:168px;height:168px}}
 
 /* Section titles */
 .section-title{font-size:32px;text-align:center;margin:34px 0 4px}
 .section-sub{text-align:center;margin-bottom:16px}
 
-/* Scroll-in animation */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+/* Scroll-in animation — fast and light (~0.3s) */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .3s ease,transform .3s ease}
 .reveal.visible{opacity:1;transform:none}
+
+/* Menu + page animations — all fast and subtle (~0.25-0.3s) */
+@keyframes menuSlideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes linkFadeIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+@keyframes heroFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero{animation:heroFadeIn .3s ease both}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
 
 /* Hover polish */
 .btn{transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
@@ -285,3 +309,123 @@ footer{border-top:4px solid var(--gold)}
 
 /* Top Rated badge — based on the verified 4.9/5 Google rating (199 reviews), not a numbered #1 claim */
 .top-badge{display:inline-block;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;border-radius:999px;padding:10px 18px;font-size:17px;font-weight:900;letter-spacing:.3px;margin:14px 0 0;box-shadow:0 8px 20px rgba(91,42,134,.3)}
+
+/* ================= Animation everywhere — fast, smooth, professional (200-400ms) =================
+   Additions only: no colours, layout, content or functionality changed.
+   Entrance animations use `backwards` fill where the element also has a
+   hover transform, so hover still works after the entrance finishes. */
+@keyframes heroTitleIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes heroLogoPop{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes badgePop{from{opacity:0;transform:scale(.75)}to{opacity:1;transform:scale(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes headingSlide{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
+@keyframes bannerIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+@keyframes dotPop{from{transform:scale(.6)}to{transform:scale(1)}}
+@keyframes hamburgerPulse{0%{box-shadow:0 6px 18px rgba(91,58,41,.28),0 0 0 0 rgba(109,63,160,.28)}70%{box-shadow:0 6px 18px rgba(91,58,41,.28),0 0 0 12px rgba(109,63,160,0)}100%{box-shadow:0 6px 18px rgba(91,58,41,.28),0 0 0 0 rgba(109,63,160,0)}}
+@keyframes badgeGlow{0%,100%{box-shadow:0 8px 20px rgba(109,63,160,.3)}50%{box-shadow:0 8px 26px rgba(109,63,160,.55)}}
+
+/* Hero entrance — logo pops, title slides up, badges pop, CTA buttons stagger in */
+.hero-logo{animation:heroLogoPop .4s ease both,heroFloat 5s ease-in-out .5s infinite}
+.hero h1{animation:heroTitleIn .4s .08s ease backwards}
+.hero-tag{animation:heroFadeIn .35s .16s ease backwards}
+.top-badge{animation:badgePop .35s .24s ease backwards,badgeGlow 3s ease-in-out 1s infinite}
+.rating-badge{animation:badgePop .35s .3s ease backwards}
+.hero .muted{animation:heroFadeIn .35s .34s ease backwards}
+.hero-cta .btn{animation:heroFadeIn .3s ease backwards}
+.hero-cta .btn:nth-child(1){animation-delay:.36s}
+.hero-cta .btn:nth-child(2){animation-delay:.42s}
+.hero-cta .btn:nth-child(3){animation-delay:.48s}
+.hero-cta .btn:nth-child(4){animation-delay:.54s}
+.hero-cta .btn:nth-child(5){animation-delay:.6s}
+
+/* Header shrinks smoothly on scroll (JS toggles .scrolled on <header>) */
+header{transition:box-shadow .3s ease}
+.header-inner{transition:padding .3s ease}
+.brand img,.brand svg{transition:width .3s ease,height .3s ease,transform .3s ease}
+.brand-name{transition:font-size .3s ease}
+nav.tabs{transition:padding .3s ease}
+header.scrolled{box-shadow:0 4px 18px rgba(91,58,41,.18)}
+header.scrolled .header-inner{padding:3px 14px}
+header.scrolled .brand img,header.scrolled .brand svg{width:34px;height:34px;flex-basis:34px}
+header.scrolled .brand-name{font-size:19px}
+header.scrolled nav.tabs{padding:2px 14px 4px}
+.brand:hover img{transform:scale(1.06)}
+
+/* Floating hamburger pulses gently (mobile only, where it is fixed) */
+@media(max-width:639px){
+  .hamburger{animation:hamburgerPulse 2.4s ease-in-out infinite}
+}
+
+/* Section headings slide in when their panel becomes visible */
+.reveal.visible h2,.reveal.visible .section-title{animation:headingSlide .35s ease both}
+.section-title{animation:headingSlide .4s ease backwards}
+
+/* Banner re-animates on every rotation (renderBanners rewrites it) */
+.banner{animation:bannerIn .35s ease both}
+.banner-nav button.active{animation:dotPop .25s ease}
+
+/* Staggered scroll-in: menu cards, gallery cards, packages, stats.
+   transition-delay only while entering — hover resets it to 0 so hovers stay instant. */
+.menu-grid .menu-card:nth-child(1),.gallery-grid .gallery-card:nth-child(1),.pkg-grid .pkg:nth-child(1),.stats .stat:nth-child(1){transition-delay:0ms}
+.menu-grid .menu-card:nth-child(2),.gallery-grid .gallery-card:nth-child(2),.pkg-grid .pkg:nth-child(2),.stats .stat:nth-child(2){transition-delay:60ms}
+.menu-grid .menu-card:nth-child(3),.gallery-grid .gallery-card:nth-child(3),.pkg-grid .pkg:nth-child(3),.stats .stat:nth-child(3){transition-delay:120ms}
+.menu-grid .menu-card:nth-child(4),.gallery-grid .gallery-card:nth-child(4),.stats .stat:nth-child(4){transition-delay:180ms}
+.menu-grid .menu-card:nth-child(5),.gallery-grid .gallery-card:nth-child(5){transition-delay:240ms}
+.menu-grid .menu-card:nth-child(6),.gallery-grid .gallery-card:nth-child(6){transition-delay:300ms}
+.menu-grid .menu-card:nth-child(n+7){transition-delay:340ms}
+.menu-card:hover,.gallery-card:hover,.pkg:hover,.stat:hover{transition-delay:0s}
+/* Packages pop in (scale) as well as rising; gallery cards rise a touch less */
+.pkg.reveal{transform:translateY(18px) scale(.96)}
+.gallery-card.reveal{transform:translateY(14px) scale(.98)}
+.stat.reveal{transform:translateY(14px) scale(.97)}
+
+/* Gallery + menu images zoom slightly on hover */
+.gallery-img,.gallery-photo,.food-img,.food-photo{transition:transform .35s ease}
+.gallery-card:hover .gallery-img,.gallery-card:hover .gallery-photo{transform:scale(1.08)}
+.menu-card:hover .food-img,.menu-card:hover .food-photo{transform:scale(1.06)}
+.gallery-card:hover .gallery-body h3{color:var(--purple)}
+
+/* Buttons lift AND glow on hover; order cards and stats lift too */
+.btn:hover{box-shadow:0 14px 30px rgba(109,63,160,.45)}
+.btn.secondary:hover{box-shadow:0 12px 26px rgba(91,58,41,.25)}
+.btn.brown:hover{box-shadow:0 14px 30px rgba(91,58,41,.45)}
+.dl-btn:hover{box-shadow:0 14px 30px rgba(91,58,41,.3)}
+.stat{transition:transform .18s ease,box-shadow .18s ease}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.order-card{transition:transform .18s ease,box-shadow .18s ease}
+.order-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.banner .btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.3)}
+.chip.active{transform:scale(1.05)}
+.toolbar input,.toolbar select{transition:border-color .2s ease,box-shadow .2s ease}
+
+/* Form fields: smooth focus highlight (glow ring + warm background) */
+input,select,textarea{transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 4px rgba(109,63,160,.16);background-color:#fffef9}
+.form-card input:focus,.form-card select:focus,.form-card textarea:focus{box-shadow:0 0 0 4px rgba(109,63,160,.18);border-color:var(--purple)}
+.form-card button[type="submit"]{transition:transform .18s ease,box-shadow .18s ease}
+.form-card button[type="submit"]:hover{box-shadow:0 12px 28px rgba(109,63,160,.4)}
+
+/* Footer fades in (JS adds .reveal to <footer>); its columns stagger in */
+footer.reveal{transform:translateY(16px)}
+footer.reveal.visible .footer-col:nth-child(1){animation:fadeUp .35s .05s ease both}
+footer.reveal.visible .footer-col:nth-child(2){animation:fadeUp .35s .15s ease both}
+footer.reveal.visible .footer-col:nth-child(3){animation:fadeUp .35s .25s ease both}
+footer.reveal.visible .footer-bottom{animation:fadeUp .35s .35s ease both}
+
+/* Notice + combo/loyalty panels get the same gentle entrance as other panels */
+.notice.reveal{transform:translateY(14px)}
+.combo-panel,.loyalty-panel{transition:transform .18s ease,box-shadow .18s ease}
+.combo-panel:hover,.loyalty-panel:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(91,58,41,.2)}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .hero-logo,.top-badge,.hamburger{animation:none!important}
+  .hero h1,.hero-tag,.hero .muted,.hero-cta .btn,.section-title{animation-duration:.01ms!important;animation-delay:0ms!important}
+}
+
+/* Visible-state overrides (must beat the entrance transforms above) */
+.pkg.reveal.visible,.gallery-card.reveal.visible,.stat.reveal.visible,.notice.reveal.visible{transform:none}
+
+/* Hover delay reset — same specificity as the stagger rules, later in file, so it wins */
+.menu-grid .menu-card:hover,.gallery-grid .gallery-card:hover,.pkg-grid .pkg:hover,.stats .stat:hover{transition-delay:0s}

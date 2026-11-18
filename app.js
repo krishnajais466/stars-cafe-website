@@ -536,12 +536,17 @@ if(window.location.hash && window.location.hash !== '#owner'){
   if(target) setTimeout(function(){ target.scrollIntoView({behavior:'smooth'}); }, 150);
 }
 if(session==='owner') renderOwner();
+/* Header shrinks smoothly on scroll (CSS .scrolled does the sizing). */
+var headerEl = document.querySelector('header');
+function onPageScroll(){ if(headerEl) headerEl.classList.toggle('scrolled', window.scrollY > 40); }
+window.addEventListener('scroll', onPageScroll, {passive:true});
+onPageScroll();
 /* Smooth scroll-in animations (no external library). */
 if(typeof IntersectionObserver !== 'undefined'){
   var revealObserver = new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
   }, {threshold:0.12});
-  document.querySelectorAll('.reveal, .panel, .menu-card, .gallery-card, .pkg').forEach(function(el){ el.classList.add('reveal'); revealObserver.observe(el); });
+  document.querySelectorAll('.reveal, .panel, .menu-card, .gallery-card, .pkg, .stat, footer').forEach(function(el){ el.classList.add('reveal'); revealObserver.observe(el); });
   /* Safety: never leave content hidden if the observer never fires. */
   setTimeout(function(){ document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); }); }, 1500);
 }
