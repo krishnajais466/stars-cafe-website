@@ -46,7 +46,6 @@
     <a href="#" onclick="goToSection('gallerySection');return false;">Gallery</a>
     <a href="#" onclick="goToSection('birthdayPanel');return false;">Birthday Bookings</a>
     <a href="#" onclick="goToSection('bannerArea');return false;">Offers</a>
-    <a href="#" onclick="goToSection('reviewsPanel');return false;">Reviews</a>
     <a href="#" onclick="goToSection('jobsPanel');return false;">Jobs</a>
     <a href="#" onclick="goToSection('locationPanel');return false;">Location</a>
     <a href="#" onclick="goToSection('contactPanel');return false;">Contact</a>
@@ -57,7 +56,6 @@
     <a href="menu.html">Menu</a>
     <a href="#" onclick="showView('site');document.getElementById('birthdayPanel').scrollIntoView({behavior:'smooth'});return false;">Birthdays</a>
     <a href="#" onclick="showView('site');document.getElementById('gallerySection').scrollIntoView({behavior:'smooth'});return false;">Gallery</a>
-    <a href="#" onclick="showView('site');document.getElementById('reviewsPanel').scrollIntoView({behavior:'smooth'});return false;">Reviews</a>
     <a href="#" onclick="showView('site');document.getElementById('jobsPanel').scrollIntoView({behavior:'smooth'});return false;">Jobs</a>
     <a href="#" onclick="showView('site');document.getElementById('locationPanel').scrollIntoView({behavior:'smooth'});return false;">Visit Us</a>
   </nav>
@@ -162,19 +160,6 @@
     <div id="comboArea"></div>
     <div id="loyaltyArea"></div>
 
-    <div class="panel" id="reviewsPanel">
-      <h2>Reviews</h2>
-      <p class="top-badge">Top Rated Cafe in Nalasopara &mdash; 4.9 &#9733; (199 Google reviews)</p>
-      <p class="rating-big" aria-label="Google rating 4.9 out of 5 from 199 Google reviews">4.9 &#9733; <span>(199 Google reviews)</span></p>
-      <p class="muted">&ldquo;Relaxed lakeside cafe offering diverse menu options including pizza and burgers.&rdquo; &mdash; Google listing</p>
-      <h3>What customers say on Google</h3>
-      <iframe id="googleReviewsFrame" title="Star's Cafe on Google Maps — reviews" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Star%27s+Cafe+Nalasopara+East&amp;output=embed"></iframe>
-      <p class="muted" id="googleReviewsNote">Showing Google Maps for Star's Cafe — tap the place to read its Google reviews, or use the button below. To show the cafe's own reviews directly, the owner can add the Google Place ID in the Owner page.</p>
-      <p><a id="googleReviewsBtn" href="https://www.google.com/search?q=Star%27s+Cafe+Nalasopara+East+reviews" target="_blank" rel="noopener">Read reviews on Google &rarr;</a></p>
-      <p><a href="https://wa.me/919326222019?text=I%20would%20like%20to%20leave%20a%20review%20for%20Star%27s%20Cafe" target="_blank" rel="noopener">Write a review on WhatsApp &rarr;</a></p>
-      <p class="muted">Tapping "Write a Review" opens WhatsApp to the cafe (9326222019) with "I would like to leave a review for Star's Cafe" prefilled — just send it and tell us how your visit was.</p>
-    </div>
-
     <div class="panel" id="locationPanel">
       <h2>Visit us — Location &amp; basics</h2>
       <p><b>Star's Cafe — Since 2022</b></p>
@@ -264,7 +249,7 @@
   <section id="view-owner" class="view">
     <div id="ownerLogin" class="panel login-box">
       <h1>Owner login</h1>
-      <p class="muted">The owner page is accessible to all owners, for editing the display website — menu, packages, banners, combo, loyalty offer, terms and Google Reviews settings.</p>
+      <p class="muted">The owner page is accessible to all owners, for editing the display website — menu, packages, banners, combo, loyalty offer and terms.</p>
       <p class="notice"><b>Demo login:</b> username <b>owner</b> &middot; password <b>stars123</b> — demo only, not real security.</p>
       <label for="ownerUser">Username</label><input id="ownerUser" type="text" autocomplete="username">
       <label for="ownerPass">Password</label><input id="ownerPass" type="password" autocomplete="current-password">
@@ -310,9 +295,6 @@
       <h2>Loyalty Offer — edit</h2>
       <p class="muted">Set the loyalty offer and its terms. Turn it off to hide it from the site.</p>
       <div id="loyaltyEditor"></div>
-      <h2>Google Reviews — edit</h2>
-      <p class="muted">Paste the cafe's Google Place ID and/or Google Maps reviews link so customers see the cafe's own Google reviews on the site.</p>
-      <div id="googleEditor"></div>
       <h2>Terms &amp; conditions — edit</h2>
       <textarea id="termsEditor" rows="12"></textarea>
       <p><button class="btn" onclick="saveTerms()">Save terms &amp; conditions</button> <span class="muted" id="termsSaved"></span></p>
@@ -336,7 +318,6 @@
         <p><a href="#" onclick="showView('site');document.getElementById('gallerySection').scrollIntoView({behavior:'smooth'});return false;">Gallery</a></p>
         <p><a href="#" onclick="showView('site');document.getElementById('birthdayPanel').scrollIntoView({behavior:'smooth'});return false;">Birthday bookings</a></p>
         <p><a href="#" onclick="showView('site');document.getElementById('jobsPanel').scrollIntoView({behavior:'smooth'});return false;">Work with us</a></p>
-        <p><a href="#" onclick="showView('site');document.getElementById('reviewsPanel').scrollIntoView({behavior:'smooth'});return false;">Reviews</a></p>
       </div>
       <div class="footer-col">
         <h3>Contact</h3>

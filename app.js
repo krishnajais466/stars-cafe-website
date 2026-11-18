@@ -4,7 +4,7 @@
    They are marked in the site as "prices to be updated with new menu". */
 'use strict';
 
-var LS = { menu:'sc_menu', banners:'sc_banners', pkgs:'sc_pkgs', terms:'sc_terms', bookings:'sc_bookings', combo:'sc_combo', loyalty:'sc_loyalty', google:'sc_google', session:'sc_session' };
+var LS = { menu:'sc_menu', banners:'sc_banners', pkgs:'sc_pkgs', terms:'sc_terms', bookings:'sc_bookings', combo:'sc_combo', loyalty:'sc_loyalty', session:'sc_session' };
 function load(key, fallback){ try{ var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }catch(e){ return fallback; } }
 function save(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -85,7 +85,6 @@ var terms = load(LS.terms, null) || DEFAULT_TERMS;
 var bookings = load(LS.bookings, []);
 var combo = load(LS.combo, null) || Object.assign({}, DEFAULT_COMBO);
 var loyalty = load(LS.loyalty, null) || Object.assign({}, DEFAULT_LOYALTY);
-var googleReviews = load(LS.google, null) || { placeId:'', reviewsUrl:'' };
 var activeCat = 'All';
 var bannerIdx = 0;
 /* Food-photo uploads: pending data URL (small, compressed) for the
@@ -171,7 +170,7 @@ function removeMenuItemPhoto(id){
   renderOwner(); renderMenu();
 }
 var session = load(LS.session, null); /* 'owner' | null */
-save(LS.menu, menu); save(LS.banners, banners); save(LS.pkgs, packages); save(LS.terms, terms); save(LS.bookings, bookings); save(LS.combo, combo); save(LS.loyalty, loyalty); save(LS.google, googleReviews);
+save(LS.menu, menu); save(LS.banners, banners); save(LS.pkgs, packages); save(LS.terms, terms); save(LS.bookings, bookings); save(LS.combo, combo); save(LS.loyalty, loyalty);
 
 /* ---------- Views / login (owner only) ---------- */
 /* Hamburger (three-line menu bar) — mobile navigation. */
@@ -209,7 +208,7 @@ function showView(name){
   });
   if(name==='owner') renderOwner();
   if(name==='site'){
-    renderMenu(); renderMenuPreview(); renderBanners(); renderCombo(); renderLoyalty(); renderPackages(); renderTerms(); renderGoogleReviews();
+    renderMenu(); renderMenuPreview(); renderBanners(); renderCombo(); renderLoyalty(); renderPackages(); renderTerms();
     /* Leaving the owner view clears the #owner hash (best-effort). */
     try{ if(window.location.hash === '#owner') history.replaceState(null, '', window.location.pathname + window.location.search); }catch(e){}
   }
@@ -386,42 +385,6 @@ function bookBirthdayWhatsApp(){
 }
 function renderTerms(){ var el = document.getElementById('termsText'); if(el) el.textContent = terms; }
 
-/* ---------- Google Reviews (on-site) ----------
-   No inbuilt rating system: reviews live on Google. The site shows a
-   Google Maps embed for "Star's Cafe Nalasopara East" so customers can see
-   Google reviews on the site, plus a button out to Google and a WhatsApp
-   "Write a Review" button. The owner can paste the cafe's Google Business
-   Profile Place ID and/or a Google Maps reviews link in the Owner page:
-   - Place ID set  -> the map embed shows that exact place (q=place_id:...),
-     and the button opens Google Maps for that place.
-   - Reviews link set (and no Place ID) -> the button uses that link.
-   - Neither set -> name search (default). No Place ID is invented here. */
-function googleEmbedUrl(){
-  if(googleReviews.placeId) return 'https://maps.google.com/maps?q=place_id:' + encodeURIComponent(googleReviews.placeId) + '&output=embed';
-  return 'https://maps.google.com/maps?q=Star%27s+Cafe+Nalasopara+East&output=embed';
-}
-function googleReviewsUrl(){
-  if(googleReviews.reviewsUrl) return googleReviews.reviewsUrl;
-  if(googleReviews.placeId) return 'https://www.google.com/maps/search/?api=1&query_place_id=' + encodeURIComponent(googleReviews.placeId);
-  return 'https://www.google.com/search?q=Star%27s+Cafe+Nalasopara+East+reviews';
-}
-function renderGoogleReviews(){
-  var frame = document.getElementById('googleReviewsFrame');
-  if(frame) frame.src = googleEmbedUrl();
-  var btn = document.getElementById('googleReviewsBtn');
-  if(btn) btn.href = googleReviewsUrl();
-  var note = document.getElementById('googleReviewsNote');
-  if(note){
-    note.textContent = googleReviews.placeId
-      ? 'Showing reviews from the cafe\u2019s Google Business Profile.'
-      : 'Showing Google Maps for Star\u2019s Cafe — tap the place to read its Google reviews, or use the button below. To show the cafe\u2019s own reviews directly, the owner can add the Google Place ID in the Owner page.';
-  }
-}
-function saveGoogleReviews(){
-  googleReviews.placeId = document.getElementById('google-place-id').value.trim();
-  googleReviews.reviewsUrl = document.getElementById('google-reviews-url').value.trim();
-  save(LS.google, googleReviews); renderGoogleReviews(); renderOwner(); alert('Google Reviews settings saved.');
-}
 
 /* ---------- Menu editing (owner only) ---------- */
 function toggleOut(id){
@@ -502,13 +465,6 @@ function renderOwner(){
   document.getElementById('ownerBookings').innerHTML = bookings.length ?
     bookings.map(function(b){ return '<div class="order-card"><h3>'+esc(b.pkg)+' — '+esc(b.date)+' '+esc(b.time)+'</h3><p>'+esc(b.name)+' &middot; '+esc(b.phone)+' &middot; Guests: '+esc(b.guests||'—')+'</p><p class="muted">'+esc(b.note||'')+'</p></div>'; }).join('') :
     '<p class="muted">No birthday enquiries yet in this browser.</p>';
-  /* Google Reviews editor — Place ID and/or Maps reviews link */
-  document.getElementById('googleEditor').innerHTML =
-    '<div class="panel"><label for="google-place-id">Google Place ID (optional)</label><input type="text" id="google-place-id" value="'+esc(googleReviews.placeId||'')+'" placeholder="e.g. ChIJ...">' +
-    '<p class="muted">Find it in the cafe\u2019s Google Business Profile. When set, the site shows the cafe\u2019s own Google reviews map.</p>' +
-    '<label for="google-reviews-url">Google Maps reviews link (optional)</label><input type="text" id="google-reviews-url" value="'+esc(googleReviews.reviewsUrl||'')+'" placeholder="Paste the Google Maps reviews link">' +
-    '<p class="muted">If set, the "Read reviews on Google" button on the site uses this link.</p>' +
-    '<p><button class="btn small" onclick="saveGoogleReviews()">Save Google Reviews settings</button></p></div>';
 }
 function savePackage(id){
   var p = packages.find(function(x){return x.id===id;}); if(!p) return;
@@ -568,7 +524,6 @@ renderMenuPreview();
 renderGallery();
 renderPackages();
 renderTerms();
-renderGoogleReviews();
 setInterval(renderBanners, 8000); /* rotate banners */
 /* Owner access: the hamburger menu's small bottom "Owner" link, plus the
    hidden #owner URL (index.html#owner) — no Owner button on the main page. */

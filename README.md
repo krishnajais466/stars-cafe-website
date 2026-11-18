@@ -7,7 +7,7 @@ Dine-in / takeout / delivery / outdoor seating.
 
 **This is NOT an ordering website.** There is no cart, no Add to cart, no ordering by
 table number, no live order status, and no staff admin. It is a display site to market
-the cafe: hero, menu, birthday packages, offers, Google reviews, location and Instagram.
+the cafe: hero, menu, birthday packages, offers, location and Instagram.
 
 Plain HTML/CSS/JS — no build step, no backend server, no heavy external libraries.
 All editable content (menu, banners, packages, terms, birthday enquiries) is stored in
@@ -15,14 +15,14 @@ the browser with `localStorage`, so it works as a static deploy and demo.
 
 ## Pages
 
-- **index.html — homepage.** Hero, About, Our Story, a small **menu preview (6 featured items only) + "View full menu" link**, Gallery, birthday bookings, Offers, Reviews, Location, Contact, Jobs, Terms, footer. The full 37-item menu is **NOT** on the homepage.
+- **index.html — homepage.** Hero, About, Our Story, a small **menu preview (6 featured items only) + "View full menu" link**, Gallery, birthday bookings, Offers, Location, Contact, Jobs, Terms, footer. The full 37-item menu is **NOT** on the homepage.
 - **[menu.html](sandbox://workspace/stars-cafe-app/menu.html) — separate menu page.** The full display menu lives here only: categories, search, veg filter, sort, all 37 items with prices, Zomato/Swiggy links, and a "Back to home" link. Same header (with hamburger menu), same footer, same styles.css / app.js / logo.jpg, same colours and design as the homepage. Every "Menu" link in the header, hamburger menu, hero and footer goes to menu.html.
 
 ## Files
 
-- [index.html](sandbox://workspace/stars-cafe-app/index.html) — structure: sticky header (real logo, NO Owner button, hamburger three-line menu on mobile with Home, Menu, Gallery, Birthday Bookings, Offers, Reviews, Jobs, Location, Contact, Instagram, and a small Owner link at the very bottom; desktop nav is plain text links: Menu, Birthdays, Gallery, Reviews, Jobs, Visit Us), large hero with the real logo and only four call-to-action buttons (View Menu, Book a Birthday, Get Directions, Call), About, Our Story, display Menu preview, Gallery, birthday booking showcase, Offers (banners, Combo of the Day, Loyalty Offer), Google Reviews, Location & basics, Contact, Jobs (Work with us), terms; footer (3 columns: About, Quick links, Contact). Section order on the page: Hero, About, Menu preview, Gallery, Birthday, Offers, Reviews, Location, Contact, Jobs, Footer.
+- [index.html](sandbox://workspace/stars-cafe-app/index.html) — structure: sticky header (real logo, NO Owner button, hamburger three-line menu on mobile with Home, Menu, Gallery, Birthday Bookings, Offers, Jobs, Location, Contact, Instagram, and a small Owner link at the very bottom; desktop nav is plain text links: Menu, Birthdays, Gallery, Jobs, Visit Us), large hero with the real logo and only four call-to-action buttons (View Menu, Book a Birthday, Get Directions, Call), About, Our Story, display Menu preview, Gallery, birthday booking showcase, Offers (banners, Combo of the Day, Loyalty Offer), Location & basics, Contact, Jobs (Work with us), terms; footer (3 columns: About, Quick links, Contact). Section order on the page: Hero, About, Menu preview, Gallery, Birthday, Offers, Location, Contact, Jobs, Footer.
 - [menu.html](sandbox://workspace/stars-cafe-app/menu.html) — separate full menu page (see Pages above).
-- [app.js](sandbox://workspace/stars-cafe-app/app.js) — all logic: display menu (search/filter/sort, no cart), homepage menu preview (6 items), gallery showcase, banners, Combo of the Day, Loyalty Offer, birthday enquiry via WhatsApp, owner login and editors, Google Reviews settings, scroll-in animations. All render functions guard for missing elements, so the same app.js runs safely on both index.html and menu.html.
+- [app.js](sandbox://workspace/stars-cafe-app/app.js) — all logic: display menu (search/filter/sort, no cart), homepage menu preview (6 items), gallery showcase, banners, Combo of the Day, Loyalty Offer, birthday enquiry via WhatsApp, owner login and editors, scroll-in animations. All render functions guard for missing elements, so the same app.js runs safely on both index.html and menu.html.
 - [styles.css](sandbox://workspace/stars-cafe-app/styles.css) — warm & cosy theme (cream + brown, purple accents), mobile-first, large touch buttons, premium hero, hover effects, scroll animations, gallery cards, big birthday banner, polished footer.
 - [logo.jpg](sandbox://workspace/stars-cafe-app/logo.jpg) — the cafe's real logo (Star's Cafe, Since 2022, purple/black). Used as the header logo, the large hero logo and the favicon; the inline SVG logo in the header is the fallback if the image fails to load.
 
@@ -48,7 +48,7 @@ There is **no Owner button** on the main page header or hero. Owner access is:
 1. **Hamburger menu, small link at the bottom** — open the three-line menu and the last, small "Owner" link at the bottom opens the owner login.
 2. **Hidden URL** — opening the site with `#owner` in the URL (e.g. https://stars-cafe-order-online.netlify.app/#owner) shows the owner login directly. This URL is documented here in the README only, not on the site itself.
 
-Owner login is still **owner / stars123** (demo only, not real security). The owner can edit: menu, birthday packages, banner offers, Combo of the Day, Loyalty Offer, Google Reviews settings, terms & conditions, and see birthday enquiries. There is no staff view and no staff login.
+Owner login is still **owner / stars123** (demo only, not real security). The owner can edit: menu, birthday packages, banner offers, Combo of the Day, Loyalty Offer, terms & conditions, and see birthday enquiries. There is no staff view and no staff login.
 
 ## Redesign — clean traditional website (19 Nov 2026)
 
@@ -56,21 +56,21 @@ After the user's feedback ("too many buttons everywhere", "footer is very poor",
 "hide the specifications"), the site was redesigned as a clean, traditional website:
 
 - **"Top Rated Cafe in Nalasopara" badge** — a prominent purple badge in the hero
-  and in the Reviews section with the exact wording "Top Rated Cafe in
+  with the exact wording "Top Rated Cafe in
   Nalasopara — 4.9 ★ (199 Google reviews)". Based on the verified 4.9/5 Google
-  rating from 199 reviews — not a numbered #1 claim.
+  rating from 199 reviews — not a numbered #1 claim. It is plain text, not a
+  link, and there is no Reviews section on the site (removed 19 Nov 2026 at the
+  user's request — see "Google review option removed" below).
 - **Order on Zomato / Swiggy** — two clean buttons in the menu area ("Order on
   Zomato", "Order on Swiggy"). These are **search links only** — Zomato search
   and Swiggy search for "Star's Cafe Nalasopara East". No Zomato/Swiggy
   restaurant URL or ID was invented; the owner should replace them with the
   cafe's exact Zomato/Swiggy restaurant links when available.
 - **Verified ratings** — Google **4.9 ★ (199 Google reviews)** only
-  (checked live 19 Nov 2026 from the Google listing), shown prominently in the
-  hero and in the Reviews section. No other review site's rating is shown
-  anywhere on the site — only Google, plus the
-  direct WhatsApp review option. The Reviews section also quotes the Google
-  listing description: "Relaxed lakeside cafe offering diverse menu options
-  including pizza and burgers." No other rating is claimed.
+  (checked live 19 Nov 2026 from the Google listing), shown as plain text in the
+  hero badge only. No Reviews section, no "Read reviews on Google" link, no
+  "Write a Review" option, and no other review site's rating anywhere on the
+  site.
 - **Our Story** — a short section after About, before the Menu: Star's Cafe began
   in 2022 in Nalasopara East, a small, warm, cosy veg cafe where friends and
   families come together over pizza, coffee and freakshakes. No founder names or
@@ -84,7 +84,7 @@ After the user's feedback ("too many buttons everywhere", "footer is very poor",
   Send enquiry, Send job application). The extra header "Menu" button is gone,
   the desktop nav is plain text links (not pill buttons), the banner "Book a
   birthday" button is gone, package "Choose" buttons are gone (tap a package card
-  to select it in the enquiry form), and the Reviews / Location / Contact
+  to select it in the enquiry form), and the Location / Contact
   buttons are plain text links instead. Owner-page editing buttons are unchanged
   (they are admin controls, not visitor clutter).
 - **Item specifications hidden.** Menu rows now show name, veg dot and price only —
@@ -92,7 +92,7 @@ After the user's feedback ("too many buttons everywhere", "footer is very poor",
   (no description text anywhere on a menu card). Gallery cards show name and
   category only, no price.
 - **Footer rebuilt properly** — 3 columns: About Star's Cafe (with Instagram link),
-  Quick links (Menu, Gallery, Birthday bookings, Work with us, Reviews), and
+  Quick links (Menu, Gallery, Birthday bookings, Work with us), and
   Contact (address, phone, email, hours, Get Directions), plus a copyright bar.
   No buttons in the footer at all.
 - **Three Netlify Forms** (all plain HTML, no JS submit, each with hidden
@@ -117,14 +117,13 @@ After the user's feedback ("too many buttons everywhere", "footer is very poor",
 - **Gallery** — "Gallery": compact cards for Margherita Pizza, Chocolate Freakshake, Cold Coffee, Chocolate Milkshake, Paneer Pizza and Loaded Nachos, with prices. Gallery cards use the menu items' photos (CSS gradient placeholders until the owner adds real dish photos) — the owner adds/changes a dish photo from the Owner page, under Menu management, and it shows in the Gallery and on the menu card.
 - **Menu (display only)** — the homepage shows only a small preview (6 featured items) with a "View full menu" link. The **full menu lives on the separate [menu.html](sandbox://workspace/stars-cafe-app/menu.html) page**: Zomato/Swiggy-style compact rows: food image on the right, item name, veg dot and price on the left (no descriptions / specifications), with category tabs in logical order (All, Combo Packs, Pizza, Sandwich, Burger, Fries, Pasta, Maggie, Wedges, Nachos, Fried Rice, Noodles, Tea, Coffee, Mojito, Milkshake, Freakshake, Dessert, Icecream, Drinks), pill search, veg-only filter and sort. **No cart, no ordering.**
 - **Birthday bookings (showcase)** — Basic / Premium / Deluxe packages (owner-editable), date + time-slot picker, name/phone/guests/note — enquiry opens WhatsApp to 919326222019 with everything prefilled. This is a booking enquiry, not an order.
-- **Reviews:** a "What customers say on Google" section shows Google reviews on-site in a Google Maps view, with a "Read reviews on Google" text link and a "Write a review on WhatsApp" text link (WhatsApp to 919326222019 with "I would like to leave a review for Star's Cafe" prefilled).
 - **Location & basics** — full address, Get Directions link, phone, email, hours, veg, ₹350 for two, and a "Follow us on Instagram" link. Instagram: @stars_cafe_since2022, also linked in the footer.
 - **Contact** — dedicated Contact section: phone 9326222019 (tap to call), WhatsApp, email starscafe466@gmail.com, address, hours 9am–11pm, Get Directions, and Instagram @stars_cafe_since2022 — plus a **contact/enquiry form (Netlify Forms, `contact`)**: name (required), phone (required), email (optional), subject — Enquiry / Birthday Booking / Feedback — and message (required). Submissions are captured by Netlify, not by any JavaScript or backend.
 - **Terms & conditions** (owner-editable).
 
 ## Owner only
 
-- **Owner** — login **owner / stars123** (shown on the login screen; **demo only, not real security**). The owner can edit: menu (add items, edit price, mark available/unavailable, add/change/remove food photos), birthday packages, banner offers (add / edit / enable / disable offer and birthday banners), **Combo of the Day** (name, items, price, banner, on/off), **Loyalty Offer** (offer, terms, on/off), **Google Reviews** (Google Place ID and/or Google Maps reviews link), terms & conditions, and see birthday enquiries.
+- **Owner** — login **owner / stars123** (shown on the login screen; **demo only, not real security**). The owner can edit: menu (add items, edit price, mark available/unavailable, add/change/remove food photos), birthday packages, banner offers (add / edit / enable / disable offer and birthday banners), **Combo of the Day** (name, items, price, banner, on/off), **Loyalty Offer** (offer, terms, on/off), terms & conditions, and see birthday enquiries.
 - There is **no staff view and no staff login** — staff order handling was removed with the ordering pivot.
 
 Terms & conditions (owner-editable) cover: advance payment confirms a booking, cancellation/refund rules, fixed time slot with extra time charged, damage to property charged, outside food/cake rules, guest count, and the cafe's right to cancel for safety reasons.
@@ -148,13 +147,21 @@ Large hero with the real logo, bold typography, warm cosy cream/brown with purpl
 Follow us on Instagram — **@stars_cafe_since2022**,
 https://www.instagram.com/stars_cafe_since2022 — linked as a button in the Location & basics section and in the footer on every view. Link only; no Instagram feed is embedded.
 
-## Reviews — Google Reviews, not an inbuilt rating system
+## Google review option removed (19 Nov 2026)
 
-There is no inbuilt rating system on this site. Reviews live on Google:
+At the user's request ("No Google review option", confirmed Yes), the Google
+review option was removed completely from the site:
 
-- **On-site:** the site has a "What customers say on Google" section with an embedded Google Maps view for "Star's Cafe Nalasopara East", so customers can see Google reviews on the website, plus a "Read reviews on Google" text link.
-- **Direct review:** a "Write a Review" button opens WhatsApp to 919326222019 with "I would like to leave a review for Star's Cafe" prefilled.
-- **Owner settings:** in the Owner page, the owner can paste the cafe's Google Business Profile **Place ID** and/or a **Google Maps reviews link**. When a Place ID is set, the on-site map shows that exact place and the button opens Google Maps for it; when only a reviews link is set, the button uses that link. No Place ID is invented — until the owner adds one, the map uses a name search for "Star's Cafe Nalasopara East". Live on-site Google reviews for the cafe's own profile need that Place ID.
+- The entire **Reviews section** ("What customers say on Google", Google Maps
+  embed, "Read reviews on Google" link, "Write a review on WhatsApp" link) was
+  deleted from `index.html`, along with every Reviews link in the header,
+  hamburger menu, desktop nav and footer on both `index.html` and `menu.html`.
+- The owner-page **Google Reviews editor** (Place ID / reviews link) and all
+  related code in `app.js` (`googleReviews` state, `googleEmbedUrl`,
+  `googleReviewsUrl`, `renderGoogleReviews`, `saveGoogleReviews`, `sc_google`
+  localStorage key) were removed, plus the `#googleReviewsFrame` CSS rule.
+- **Kept:** the hero **Top Rated 4.9 ★ badge** only — plain text, no link.
+  Get Directions links to Google Maps are still there (directions, not reviews).
 
 ## Contact form (Netlify Forms)
 
@@ -198,3 +205,4 @@ test enquiry from the live site and check Netlify → Forms to confirm it arrive
 
 - Node DOM-stub run (8 checks, 0 failed) for the 19 Nov 2026 traditional redesign: 37 menu rows with no description text, banner with no button, packages with no Choose button (tap-to-select), birthday-form package/time-slot selects populated, gallery cards with no price, terms rendered, Google Reviews map src set. All files served over local HTTP (200): index.html, app.js, styles.css, logo.jpg.
 - Design-match + separate-menu + hidden-owner test (`/tmp/test-stars-design-match.js`, 33 checks, 0 failed, 19 Nov 2026): homepage preview renders exactly 6 items (not 37), no full menu grid/chips on the homepage, "View full menu" links to menu.html, menu.html renders all 37 items with categories in order + search/sort/veg filter, no header Owner button on either page, Owner link is the last link in the hamburger menu, `#owner` hash opens the owner view, all 3 forms carry the `form-card` class, no Add to cart, no Justdial anywhere on either page, CSS has the cream `#f6eeda` paper, brown Georgia serif headings, uppercase hero title, tan/caramel footer, purple pill rating badge, unboxed form containers, Zomato/Swiggy white cards with logo chips, purple flourish dividers, ornate double-frame packages. All 5 files served over local HTTP (200): index.html, menu.html, app.js, styles.css, logo.jpg.
+- Google review option removal test (`/tmp/test-no-google-reviews.js`, 26 checks, 0 failed, 19 Nov 2026): no Reviews section, no "Read reviews on Google" / "Write a review on WhatsApp" links, no Reviews nav/footer links on either page, no Google Reviews code/editor/`sc_google` key in app.js, no `#googleReviewsFrame` CSS rule; hero 4.9 ★ badge kept as plain text (not a link), Get Directions links kept, all 3 Netlify forms intact, app.js runs under a DOM stub and still renders the 6-item preview and the full 37-item menu. All 5 files served over local HTTP (200): index.html, menu.html, app.js, styles.css, logo.jpg.
