@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — Star's Cafe, Nalasopara East</title>
+<meta name="description" content="Contact Star's Cafe, Nalasopara East — call 9326222019, WhatsApp, email, address and hours. Open 9am-11pm daily.">
+<link rel="icon" href="logo.jpg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Star's Cafe home">
+      <img src="logo.jpg" alt="Star's Cafe logo" onerror="this.style.display='none';var f=document.getElementById('logoFallback');if(f)f.style.display='block'">
+      <span id="logoFallback" style="display:none">
+      <svg viewBox="0 0 120 120" role="img" aria-label="Star's Cafe logo">
+        <circle cx="60" cy="60" r="56" fill="#fff" stroke="#1a1a1a" stroke-width="6"/>
+        <circle cx="60" cy="52" r="30" fill="#fff" stroke="#1a1a1a" stroke-width="4"/>
+        <path d="M42 34 L78 34 L72 46 L48 46 Z" fill="#1a1a1a"/>
+        <circle cx="60" cy="40" r="4" fill="#1a1a1a"/>
+        <path d="M60 48 L62 53 L67 53 L63 56 L65 61 L60 58 L55 61 L57 56 L53 53 L58 53 Z" fill="#5b2a86"/>
+        <path d="M60 66 L62 71 L67 71 L63 74 L65 79 L60 76 L55 79 L57 74 L53 71 L58 71 Z" fill="#7d3cba"/>
+        <path d="M40 52 L52 92 L58 92 L48 54 Z" fill="#3a3a3a"/>
+        <path d="M80 52 L68 92 L62 92 L72 54 Z" fill="#3a3a3a"/>
+        <text x="60" y="108" text-anchor="middle" font-size="11" font-weight="900" fill="#5b2a86" font-family="Arial,sans-serif">STAR'S CAFE</text>
+      </svg>
+      </span>
+      <span>
+        <span class="brand-name">STAR'S CAFE</span><br>
+        <span class="brand-sub">Since 2022 &middot; Veg &middot; Nalasopara East</span>
+      </span>
+    </a>
+    <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <!-- Mobile hamburger menu (three-line menu bar): shown on phones only.
+       Owner access lives here, small at the bottom of the menu — no Owner
+       button on the main page header or hero. -->
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Menu">
+    <a href="index.html" onclick="closeMobileMenu()">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="index.html#gallerySection">Gallery</a>
+    <a href="birthday.html">Birthday Bookings</a>
+    <a href="index.html#bannerArea">Offers</a>
+    <a href="job.html">Jobs</a>
+    <a href="index.html#locationPanel">Location</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://www.instagram.com/stars_cafe_since2022" target="_blank" rel="noopener" onclick="closeMobileMenu()">Instagram</a>
+    <a class="owner-link" href="index.html#owner">Owner</a>
+  </nav>
+  <nav class="tabs" aria-label="Sections">
+    <a href="menu.html">Menu</a>
+    <a href="birthday.html">Birthdays</a>
+    <a href="index.html#gallerySection">Gallery</a>
+    <a href="job.html">Jobs</a>
+    <a href="index.html#locationPanel">Visit Us</a>
+  </nav>
+</header>
+
+<main>
+  <section aria-label="Contact us">
+    <h1 class="section-title">Contact Us</h1>
+    <div class="panel" id="contactPanel">
+      <h2>Contact us</h2>
+      <p>Call, WhatsApp or email us — or just walk in. We are open 9am&ndash;11pm, every day.</p>
+      <p>Phone: <a href="tel:+919326222019">9326222019</a> (tap to call)</p>
+      <p><a class="btn" href="tel:+919326222019">Reserve a Table</a></p>
+      <p class="muted">Tapping "Reserve a Table" calls the cafe on 9326222019 — no booking form, just a direct phone call.</p>
+      <p>WhatsApp: <a href="https://wa.me/919326222019" target="_blank" rel="noopener">Chat on WhatsApp</a></p>
+      <p>Email: <a href="mailto:starscafe466@gmail.com">starscafe466@gmail.com</a></p>
+      <p>Address: B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209</p>
+      <p>Hours: 9am&ndash;11pm, every day</p>
+      <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener">Get Directions on Google Maps &rarr;</a></p>
+      <p><a href="https://www.instagram.com/stars_cafe_since2022" target="_blank" rel="noopener">Instagram — @stars_cafe_since2022</a></p>
+
+      <h3>Send us an enquiry</h3>
+      <!-- Netlify Form: plain HTML form (no JS submit) so Netlify captures submissions.
+           No action attribute = Netlify shows its default thank-you page after sending. -->
+      <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form form-card">
+        <input type="hidden" name="form-name" value="contact">
+        <p class="hp-field"><label>Don&rsquo;t fill this out if you&rsquo;re human: <input name="bot-field"></label></p>
+        <div class="row">
+          <div><label for="cfName">Your name *</label><input id="cfName" name="name" type="text" placeholder="Your name" required></div>
+          <div><label for="cfPhone">Phone *</label><input id="cfPhone" name="phone" type="tel" placeholder="Your phone number" required></div>
+        </div>
+        <label for="cfEmail">Email (optional)</label>
+        <input id="cfEmail" name="email" type="email" placeholder="you@example.com">
+        <label for="cfType">What is this about?</label>
+        <select id="cfType" name="subject">
+          <option value="Enquiry">Enquiry</option>
+          <option value="Birthday Booking">Birthday Booking</option>
+          <option value="Feedback">Feedback</option>
+        </select>
+        <label for="cfMessage">Message *</label>
+        <textarea id="cfMessage" name="message" rows="4" placeholder="Tell us what you need — a table, a birthday, feedback…" required></textarea>
+        <p style="margin-top:14px"><button type="submit" class="btn block">Send enquiry</button></p>
+        <p class="muted">We reply on WhatsApp or by phone. For a faster answer, you can also chat with us on WhatsApp above.</p>
+      </form>
+    </div>
+    <p style="text-align:center;margin-top:22px"><a class="btn" href="index.html">Back to home &rarr;</a></p>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>Star's Cafe</h3>
+        <p>A warm, cosy veg cafe in Nalasopara East — serving pizza, coffee, freakshakes and birthdays since 2022.</p>
+        <p><a href="https://www.instagram.com/stars_cafe_since2022" target="_blank" rel="noopener">Instagram — @stars_cafe_since2022</a></p>
+      </div>
+      <div class="footer-col">
+        <h3>Quick links</h3>
+        <p><a href="menu.html">Menu</a></p>
+        <p><a href="index.html#gallerySection">Gallery</a></p>
+        <p><a href="birthday.html">Birthday bookings</a></p>
+        <p><a href="job.html">Work with us</a></p>
+        <p><a href="contact.html">Contact Us</a></p>
+        <p><a href="https://share.google/OY9cJPErdoLdT4YHh" target="_blank" rel="noopener">Write a Review on Google</a></p>
+      </div>
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <p>B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209</p>
+        <p>Phone: <a href="tel:+919326222019">9326222019</a></p>
+        <p>Email: <a href="mailto:starscafe466@gmail.com">starscafe466@gmail.com</a></p>
+        <p>Open 9am&ndash;11pm, every day</p>
+        <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener">Get Directions</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Star's Cafe, Nalasopara East. All rights reserved. &middot; Veg cafe &middot; ₹350 for two &middot; Dine-in &middot; Takeout &middot; Delivery &middot; Outdoor seating</p>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

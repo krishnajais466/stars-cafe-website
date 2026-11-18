@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Bookings — Star's Cafe, Nalasopara East</title>
+<meta name="description" content="Celebrate your birthday at Star's Cafe, Nalasopara East — birthday packages, date and time slots, enquire on WhatsApp or by form.">
+<link rel="icon" href="logo.jpg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Star's Cafe home">
+      <img src="logo.jpg" alt="Star's Cafe logo" onerror="this.style.display='none';var f=document.getElementById('logoFallback');if(f)f.style.display='block'">
+      <span id="logoFallback" style="display:none">
+      <svg viewBox="0 0 120 120" role="img" aria-label="Star's Cafe logo">
+        <circle cx="60" cy="60" r="56" fill="#fff" stroke="#1a1a1a" stroke-width="6"/>
+        <circle cx="60" cy="52" r="30" fill="#fff" stroke="#1a1a1a" stroke-width="4"/>
+        <path d="M42 34 L78 34 L72 46 L48 46 Z" fill="#1a1a1a"/>
+        <circle cx="60" cy="40" r="4" fill="#1a1a1a"/>
+        <path d="M60 48 L62 53 L67 53 L63 56 L65 61 L60 58 L55 61 L57 56 L53 53 L58 53 Z" fill="#5b2a86"/>
+        <path d="M60 66 L62 71 L67 71 L63 74 L65 79 L60 76 L55 79 L57 74 L53 71 L58 71 Z" fill="#7d3cba"/>
+        <path d="M40 52 L52 92 L58 92 L48 54 Z" fill="#3a3a3a"/>
+        <path d="M80 52 L68 92 L62 92 L72 54 Z" fill="#3a3a3a"/>
+        <text x="60" y="108" text-anchor="middle" font-size="11" font-weight="900" fill="#5b2a86" font-family="Arial,sans-serif">STAR'S CAFE</text>
+      </svg>
+      </span>
+      <span>
+        <span class="brand-name">STAR'S CAFE</span><br>
+        <span class="brand-sub">Since 2022 &middot; Veg &middot; Nalasopara East</span>
+      </span>
+    </a>
+    <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <!-- Mobile hamburger menu (three-line menu bar): shown on phones only.
+       Owner access lives here, small at the bottom of the menu — no Owner
+       button on the main page header or hero. -->
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Menu">
+    <a href="index.html" onclick="closeMobileMenu()">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="index.html#gallerySection">Gallery</a>
+    <a href="birthday.html">Birthday Bookings</a>
+    <a href="index.html#bannerArea">Offers</a>
+    <a href="job.html">Jobs</a>
+    <a href="index.html#locationPanel">Location</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://www.instagram.com/stars_cafe_since2022" target="_blank" rel="noopener" onclick="closeMobileMenu()">Instagram</a>
+    <a class="owner-link" href="index.html#owner">Owner</a>
+  </nav>
+  <nav class="tabs" aria-label="Sections">
+    <a href="menu.html">Menu</a>
+    <a href="birthday.html">Birthdays</a>
+    <a href="index.html#gallerySection">Gallery</a>
+    <a href="job.html">Jobs</a>
+    <a href="index.html#locationPanel">Visit Us</a>
+  </nav>
+</header>
+
+<main>
+  <section aria-label="Birthday bookings">
+    <h1 class="section-title">Birthday Bookings</h1>
+    <p class="muted section-sub">Celebrate your birthday at Star's Cafe — pick a package, date and time.</p>
+    <div class="panel" id="birthdayPanel">
+      <h2>Birthday bookings</h2>
+      <p>Celebrate your birthday at Star's Cafe. Pick a package, date and time — send the enquiry straight to the cafe on WhatsApp and we will confirm your booking.</p>
+      <div class="pkg-grid" id="packageGrid"></div>
+      <h3>Enquire about a birthday</h3>
+      <div class="row">
+        <div><label for="bkPackage">Package</label><select id="bkPackage"></select></div>
+        <div><label for="bkDate">Date</label><input id="bkDate" type="date"></div>
+        <div><label for="bkTime">Time slot</label><select id="bkTime"></select></div>
+      </div>
+      <div class="row">
+        <div><label for="bkName">Your name</label><input id="bkName" type="text" placeholder="Your name"></div>
+        <div><label for="bkPhone">Phone</label><input id="bkPhone" type="tel" placeholder="Your phone number"></div>
+        <div><label for="bkGuests">Guests</label><input id="bkGuests" type="number" min="1" placeholder="e.g. 15"></div>
+      </div>
+      <label for="bkNote">Note (cake, decoration, anything else)</label>
+      <textarea id="bkNote" rows="2" placeholder="Anything we should know?"></textarea>
+      <p style="margin-top:14px"><button class="btn whatsapp block" onclick="bookBirthdayWhatsApp()">Enquire on WhatsApp</button></p>
+      <p class="muted">Opens WhatsApp to the cafe (9326222019) with package, date, time slot, name, phone, guests and note prefilled.</p>
+      <h3>Or send a birthday enquiry form</h3>
+      <p class="muted">Fill this in and the cafe will get back to you by phone or WhatsApp.</p>
+      <!-- Netlify Form: plain HTML (no JS submit) so Netlify captures submissions. -->
+      <form name="birthday" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form form-card">
+        <input type="hidden" name="form-name" value="birthday">
+        <p class="hp-field"><label>Don&rsquo;t fill this out if you&rsquo;re human: <input name="bot-field"></label></p>
+        <div class="row">
+          <div><label for="bfName">Your name *</label><input id="bfName" name="name" type="text" placeholder="Your name" required></div>
+          <div><label for="bfPhone">Phone *</label><input id="bfPhone" name="phone" type="tel" placeholder="Your phone number" required></div>
+        </div>
+        <div class="row">
+          <div><label for="bfDate">Date *</label><input id="bfDate" name="date" type="date" required></div>
+          <div><label for="bfTime">Time slot *</label><select id="bfTime" name="time-slot" required></select></div>
+        </div>
+        <div class="row">
+          <div><label for="bfPackage">Package *</label><select id="bfPackage" name="package" required></select></div>
+          <div><label for="bfGuests">Guests</label><input id="bfGuests" name="guests" type="number" min="1" placeholder="e.g. 15"></div>
+        </div>
+        <label for="bfMessage">Message</label>
+        <textarea id="bfMessage" name="message" rows="3" placeholder="Cake, decoration, theme — anything we should know?"></textarea>
+        <p style="margin-top:14px"><button type="submit" class="btn block">Send birthday enquiry</button></p>
+      </form>
+    </div>
+    <p style="text-align:center;margin-top:22px"><a class="btn" href="index.html">Back to home &rarr;</a></p>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>Star's Cafe</h3>
+        <p>A warm, cosy veg cafe in Nalasopara East — serving pizza, coffee, freakshakes and birthdays since 2022.</p>
+        <p><a href="https://www.instagram.com/stars_cafe_since2022" target="_blank" rel="noopener">Instagram — @stars_cafe_since2022</a></p>
+      </div>
+      <div class="footer-col">
+        <h3>Quick links</h3>
+        <p><a href="menu.html">Menu</a></p>
+        <p><a href="index.html#gallerySection">Gallery</a></p>
+        <p><a href="birthday.html">Birthday bookings</a></p>
+        <p><a href="job.html">Work with us</a></p>
+        <p><a href="contact.html">Contact Us</a></p>
+        <p><a href="https://share.google/OY9cJPErdoLdT4YHh" target="_blank" rel="noopener">Write a Review on Google</a></p>
+      </div>
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <p>B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209</p>
+        <p>Phone: <a href="tel:+919326222019">9326222019</a></p>
+        <p>Email: <a href="mailto:starscafe466@gmail.com">starscafe466@gmail.com</a></p>
+        <p>Open 9am&ndash;11pm, every day</p>
+        <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener">Get Directions</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Star's Cafe, Nalasopara East. All rights reserved. &middot; Veg cafe &middot; ₹350 for two &middot; Dine-in &middot; Takeout &middot; Delivery &middot; Outdoor seating</p>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -17,7 +17,23 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--cream);background-image:radial-gradient(rgba(169,124,82,.07) 1px,transparent 1px);background-size:22px 22px;color:var(--ink);line-height:1.5}
-a{color:var(--purple)}
+/* Links — NEVER default browser blue. MNC-style button system: every link
+   looks like a proper pill button / chip, clearly different from plain text.
+   Primary action = filled purple pill (.btn), secondary = outlined cream pill
+   (.btn.secondary), plain content links (phone, email, directions, Instagram)
+   = small cream pill chips. Nav tabs, hamburger links and the brand keep
+   their own (already non-blue) styles. */
+a{color:var(--purple);text-decoration:none}
+a:visited{color:var(--purple)}
+/* Plain links inside page content: cream pill chips with a brown border,
+   purple fill on hover — a visible clickable action, never blue text. */
+main a:not(.btn):not(.dl-btn):not(.chip):not(.brand){display:inline-block;background:var(--paper);border:1.5px solid var(--tan);border-radius:999px;padding:7px 15px;margin:3px 2px;font-weight:700;font-size:14px;color:var(--brown);box-shadow:0 2px 8px rgba(91,58,41,.10);transition:background .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease}
+main a:not(.btn):not(.dl-btn):not(.chip):not(.brand):hover{background:var(--purple);border-color:var(--purple);color:#fff;transform:translateY(-1px);box-shadow:0 6px 14px rgba(91,42,134,.25)}
+main a:not(.btn):not(.dl-btn):not(.chip):not(.brand):visited{color:var(--brown)}
+/* Footer links: same pill chips, on the tan footer band. */
+footer a:not(.btn){display:inline-block;background:rgba(253,248,236,.94);border:1.5px solid transparent;border-radius:999px;padding:6px 14px;margin:3px 2px;font-weight:700;font-size:14px;color:var(--brown);text-decoration:none;box-shadow:0 2px 8px rgba(91,58,41,.15);transition:background .18s ease,color .18s ease,transform .18s ease}
+footer a:not(.btn):hover{background:var(--purple);color:#fff;transform:translateY(-1px)}
+footer a:not(.btn):visited{color:var(--brown)}
 button{font-family:inherit;cursor:pointer}
 input,select,textarea{font-family:inherit;font-size:16px;padding:12px;border:1.5px solid var(--tan);border-radius:12px;background:#fffdf8;width:100%}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--purple2);border-color:var(--purple2)}
@@ -25,14 +41,14 @@ label{font-family:var(--serif);font-weight:700;font-size:15px;display:block;marg
 
 /* Sticky header — cream paper bar with a brown double rule, like the images */
 header{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:3px double var(--tan2);box-shadow:0 2px 10px rgba(91,58,41,.08)}
-.header-inner{max-width:1024px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
-.brand img{width:52px;height:52px;flex:0 0 52px;border-radius:50%;object-fit:cover;border:2px solid #1a1a1a;background:#fff}
-.brand svg{width:52px;height:52px;flex:0 0 52px}
-.brand-name{font-family:var(--serif);font-size:26px;font-weight:700;letter-spacing:1px;color:var(--brown);line-height:1.1}
-.brand-sub{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
-nav.tabs{max-width:1024px;margin:0 auto;padding:8px 14px 10px;display:flex;gap:22px;justify-content:center;background:var(--paper);border-top:1px solid var(--border)}
-nav.tabs a{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--brown);text-decoration:none;padding:8px 2px}
+.header-inner{max-width:1024px;margin:0 auto;padding:7px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.brand img{width:42px;height:42px;flex:0 0 42px;border-radius:50%;object-fit:cover;border:2px solid #1a1a1a;background:#fff}
+.brand svg{width:42px;height:42px;flex:0 0 42px}
+.brand-name{font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:1px;color:var(--brown);line-height:1.1}
+.brand-sub{font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+nav.tabs{max-width:1024px;margin:0 auto;padding:5px 14px 7px;display:flex;gap:18px;justify-content:center;background:var(--paper);border-top:1px solid var(--border)}
+nav.tabs a{font-family:var(--serif);font-weight:700;font-size:14px;color:var(--brown);text-decoration:none;padding:5px 2px}
 nav.tabs a:hover{color:var(--purple);text-decoration:underline}
 
 main{max-width:1024px;margin:0 auto;padding:14px 14px 40px}
@@ -116,10 +132,15 @@ p{margin:6px 0}
 .veg-dot{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--green);border:2px solid #fff;box-shadow:0 0 0 1.5px var(--green);margin-right:6px;vertical-align:middle}
 .out{opacity:.55}
 
-/* Buttons — purple only for the primary call-to-action, as in the images */
-.btn{display:inline-block;background:var(--purple);color:#fff;border:0;border-radius:14px;padding:14px 20px;font-weight:800;font-size:16px;min-height:52px;text-decoration:none;text-align:center}
-.btn.secondary{background:#fffdf8;color:var(--brown);border:2px solid var(--brown2)}
-.btn.brown{background:var(--brown2)}
+/* Buttons — MNC-style pill system: one primary filled purple pill (.btn),
+   secondary outlined cream pill (.btn.secondary), brown filled pill
+   (.btn.brown). Consistent rounded pills, generous padding, clean type,
+   subtle shadow, smooth hover lift. No blue anywhere. */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;border:0;border-radius:999px;padding:15px 28px;font-weight:800;font-size:16px;min-height:52px;text-decoration:none;text-align:center;box-shadow:0 8px 20px rgba(91,42,134,.25);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.btn:visited{color:#fff}
+.btn.secondary{background:#fffdf8;color:var(--brown);border:2px solid var(--brown2);box-shadow:0 4px 12px rgba(91,58,41,.12)}
+.btn.secondary:visited{color:var(--brown)}
+.btn.brown{background:linear-gradient(135deg,#5b3a29,#6b4226);box-shadow:0 8px 20px rgba(91,58,41,.28)}
 .btn.green{background:var(--green)}
 .btn.small{padding:10px 14px;min-height:44px;font-size:14px}
 .btn.block{width:100%}
@@ -198,7 +219,7 @@ footer{border-top:4px solid var(--gold)}
 
 /* Hover polish */
 .btn{transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
-.btn:hover{transform:translateY(-1px)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(91,42,134,.32)}
 .menu-card{transition:transform .18s ease,box-shadow .18s ease}
 .menu-card:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(91,58,41,.2)}
 .pkg{transition:transform .18s ease,box-shadow .18s ease;cursor:pointer}
@@ -245,7 +266,7 @@ footer{border-top:4px solid var(--gold)}
 .form-card .row{gap:14px}
 .form-card input,.form-card select,.form-card textarea{background:#fffdf8;border:1.5px solid #8a6d4b;border-radius:12px;padding:14px 16px;color:var(--ink)}
 .form-card input::placeholder,.form-card textarea::placeholder{color:#a98f78}
-.form-card button[type="submit"]{background:linear-gradient(135deg,var(--purple),var(--purple2));border-radius:14px;padding:15px 20px;box-shadow:0 8px 20px rgba(91,42,134,.28)}
+.form-card button[type="submit"]{background:linear-gradient(135deg,var(--purple),var(--purple2));border-radius:999px;padding:15px 20px;box-shadow:0 8px 20px rgba(91,42,134,.28)}
 .form-card button[type="submit"]:hover{transform:translateY(-1px)}
 
 /* Verified ratings — Google 4.9/5 (199 reviews) only, checked live 19 Nov 2026. No other review site's rating is shown. */

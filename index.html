@@ -44,19 +44,19 @@
     <a href="#" onclick="goToSection(null);return false;">Home</a>
     <a href="menu.html">Menu</a>
     <a href="#" onclick="goToSection('gallerySection');return false;">Gallery</a>
-    <a href="#" onclick="goToSection('birthdayPanel');return false;">Birthday Bookings</a>
+    <a href="birthday.html">Birthday Bookings</a>
     <a href="#" onclick="goToSection('bannerArea');return false;">Offers</a>
-    <a href="#" onclick="goToSection('jobsPanel');return false;">Jobs</a>
+    <a href="job.html">Jobs</a>
     <a href="#" onclick="goToSection('locationPanel');return false;">Location</a>
-    <a href="#" onclick="goToSection('contactPanel');return false;">Contact</a>
+    <a href="contact.html">Contact</a>
     <a href="https://www.instagram.com/stars_cafe_since2022" target="_blank" rel="noopener" onclick="closeMobileMenu()">Instagram</a>
     <a class="owner-link" href="#owner" onclick="showView('owner')">Owner</a>
   </nav>
   <nav class="tabs" aria-label="Sections">
     <a href="menu.html">Menu</a>
-    <a href="#" onclick="showView('site');document.getElementById('birthdayPanel').scrollIntoView({behavior:'smooth'});return false;">Birthdays</a>
+    <a href="birthday.html">Birthdays</a>
     <a href="#" onclick="showView('site');document.getElementById('gallerySection').scrollIntoView({behavior:'smooth'});return false;">Gallery</a>
-    <a href="#" onclick="showView('site');document.getElementById('jobsPanel').scrollIntoView({behavior:'smooth'});return false;">Jobs</a>
+    <a href="job.html">Jobs</a>
     <a href="#" onclick="showView('site');document.getElementById('locationPanel').scrollIntoView({behavior:'smooth'});return false;">Visit Us</a>
   </nav>
 </header>
@@ -73,7 +73,7 @@
       <p class="muted">Pizza &middot; Coffee &middot; Freakshakes &middot; Birthday celebrations &middot; ₹350 for two &middot; Open 9am&ndash;11pm, every day</p>
       <div class="hero-cta">
         <a class="btn" href="menu.html">View Menu</a>
-        <button class="btn brown" onclick="document.getElementById('birthdayPanel').scrollIntoView({behavior:'smooth'})">Book a Birthday</button>
+        <a class="btn brown" href="birthday.html">Book a Birthday</a>
         <a class="btn secondary" href="https://www.google.com/maps/search/?api=1&amp;query=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener">Get Directions</a>
         <a class="btn secondary" href="tel:+919326222019">Call 9326222019</a>
         <a class="btn brown" href="tel:+919326222019">Reserve a Table</a>
@@ -112,49 +112,18 @@
       <p class="muted section-sub">Photos are the cafe's own dish photos where added — the owner can add or change them from the Owner page, under Menu management.</p>
     </section>
 
+    <section class="panel reveal" id="reviewsPanel" aria-label="Reviews">
+      <h2>Reviews</h2>
+      <p>Top Rated Cafe in Nalasopara — 4.9 &#9733; from 199 Google reviews.</p>
+      <p><a class="btn" href="https://share.google/OY9cJPErdoLdT4YHh" target="_blank" rel="noopener">Write a Review on Google</a></p>
+      <p class="muted">Opens our Google listing directly — leave your review there.</p>
+    </section>
+
     <div class="panel" id="birthdayPanel">
       <h2>Birthday bookings</h2>
-      <p>Celebrate your birthday at Star's Cafe. Pick a package, date and time — send the enquiry straight to the cafe on WhatsApp and we will confirm your booking.</p>
-      <div class="pkg-grid" id="packageGrid"></div>
-      <h3>Enquire about a birthday</h3>
-      <div class="row">
-        <div><label for="bkPackage">Package</label><select id="bkPackage"></select></div>
-        <div><label for="bkDate">Date</label><input id="bkDate" type="date"></div>
-        <div><label for="bkTime">Time slot</label><select id="bkTime"></select></div>
-      </div>
-      <div class="row">
-        <div><label for="bkName">Your name</label><input id="bkName" type="text" placeholder="Your name"></div>
-        <div><label for="bkPhone">Phone</label><input id="bkPhone" type="tel" placeholder="Your phone number"></div>
-        <div><label for="bkGuests">Guests</label><input id="bkGuests" type="number" min="1" placeholder="e.g. 15"></div>
-      </div>
-      <label for="bkNote">Note (cake, decoration, anything else)</label>
-      <textarea id="bkNote" rows="2" placeholder="Anything we should know?"></textarea>
-      <p style="margin-top:14px"><button class="btn whatsapp block" onclick="bookBirthdayWhatsApp()">Enquire on WhatsApp</button></p>
-      <p class="muted">Opens WhatsApp to the cafe (9326222019) with package, date, time slot, name, phone, guests and note prefilled.</p>
-      <h3>Or send a birthday enquiry form</h3>
-      <p class="muted">Fill this in and the cafe will get back to you by phone or WhatsApp.</p>
-      <!-- Netlify Form: plain HTML (no JS submit) so Netlify captures submissions. -->
-      <form name="birthday" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form form-card">
-        <input type="hidden" name="form-name" value="birthday">
-        <p class="hp-field"><label>Don&rsquo;t fill this out if you&rsquo;re human: <input name="bot-field"></label></p>
-        <div class="row">
-          <div><label for="bfName">Your name *</label><input id="bfName" name="name" type="text" placeholder="Your name" required></div>
-          <div><label for="bfPhone">Phone *</label><input id="bfPhone" name="phone" type="tel" placeholder="Your phone number" required></div>
-        </div>
-        <div class="row">
-          <div><label for="bfDate">Date *</label><input id="bfDate" name="date" type="date" required></div>
-          <div><label for="bfTime">Time slot *</label><select id="bfTime" name="time-slot" required></select></div>
-        </div>
-        <div class="row">
-          <div><label for="bfPackage">Package *</label><select id="bfPackage" name="package" required></select></div>
-          <div><label for="bfGuests">Guests</label><input id="bfGuests" name="guests" type="number" min="1" placeholder="e.g. 15"></div>
-        </div>
-        <label for="bfMessage">Message</label>
-        <textarea id="bfMessage" name="message" rows="3" placeholder="Cake, decoration, theme — anything we should know?"></textarea>
-        <p style="margin-top:14px"><button type="submit" class="btn block">Send birthday enquiry</button></p>
-      </form>
+      <p>Celebrate your birthday at Star's Cafe — packages from ₹1,499, with decoration, cake and more.</p>
+      <p><a class="btn" href="birthday.html">Birthday Booking &rarr;</a></p>
     </div>
-
     <div id="bannerArea"></div>
     <div class="banner-nav" id="bannerNav"></div>
     <div id="comboArea"></div>
@@ -174,71 +143,14 @@
     <div class="panel" id="contactPanel">
       <h2>Contact us</h2>
       <p>Call, WhatsApp or email us — or just walk in. We are open 9am&ndash;11pm, every day.</p>
-      <p>Phone: <a href="tel:+919326222019">9326222019</a> (tap to call)</p>
-      <p><a class="btn" href="tel:+919326222019">Reserve a Table</a></p>
-      <p class="muted">Tapping "Reserve a Table" calls the cafe on 9326222019 — no booking form, just a direct phone call.</p>
-      <p>WhatsApp: <a href="https://wa.me/919326222019" target="_blank" rel="noopener">Chat on WhatsApp</a></p>
-      <p>Email: <a href="mailto:starscafe466@gmail.com">starscafe466@gmail.com</a></p>
-      <p>Address: B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209</p>
-      <p>Hours: 9am&ndash;11pm, every day</p>
-      <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener">Get Directions on Google Maps &rarr;</a></p>
-      <p><a href="https://www.instagram.com/stars_cafe_since2022" target="_blank" rel="noopener">Instagram — @stars_cafe_since2022</a></p>
-
-      <h3>Send us an enquiry</h3>
-      <!-- Netlify Form: plain HTML form (no JS submit) so Netlify captures submissions.
-           No action attribute = Netlify shows its default thank-you page after sending. -->
-      <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form form-card">
-        <input type="hidden" name="form-name" value="contact">
-        <p class="hp-field"><label>Don&rsquo;t fill this out if you&rsquo;re human: <input name="bot-field"></label></p>
-        <div class="row">
-          <div><label for="cfName">Your name *</label><input id="cfName" name="name" type="text" placeholder="Your name" required></div>
-          <div><label for="cfPhone">Phone *</label><input id="cfPhone" name="phone" type="tel" placeholder="Your phone number" required></div>
-        </div>
-        <label for="cfEmail">Email (optional)</label>
-        <input id="cfEmail" name="email" type="email" placeholder="you@example.com">
-        <label for="cfType">What is this about?</label>
-        <select id="cfType" name="subject">
-          <option value="Enquiry">Enquiry</option>
-          <option value="Birthday Booking">Birthday Booking</option>
-          <option value="Feedback">Feedback</option>
-        </select>
-        <label for="cfMessage">Message *</label>
-        <textarea id="cfMessage" name="message" rows="4" placeholder="Tell us what you need — a table, a birthday, feedback…" required></textarea>
-        <p style="margin-top:14px"><button type="submit" class="btn block">Send enquiry</button></p>
-        <p class="muted">We reply on WhatsApp or by phone. For a faster answer, you can also chat with us on WhatsApp above.</p>
-      </form>
+      <p>Phone: <a href="tel:+919326222019">9326222019</a> &middot; Email: <a href="mailto:starscafe466@gmail.com">starscafe466@gmail.com</a></p>
+      <p><a class="btn" href="contact.html">Contact Us &rarr;</a></p>
     </div>
-
     <div class="panel" id="jobsPanel">
       <h2>Work with us</h2>
-      <p>Want to work at Star's Cafe? We are a small, friendly veg cafe in Nalasopara East. Tell us about yourself below and we will get back to you if there is an opening.</p>
-      <!-- Netlify Form: plain HTML (no JS submit) so Netlify captures submissions. -->
-      <form name="job" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form form-card">
-        <input type="hidden" name="form-name" value="job">
-        <p class="hp-field"><label>Don&rsquo;t fill this out if you&rsquo;re human: <input name="bot-field"></label></p>
-        <div class="row">
-          <div><label for="jfName">Your name *</label><input id="jfName" name="name" type="text" placeholder="Your name" required></div>
-          <div><label for="jfPhone">Phone *</label><input id="jfPhone" name="phone" type="tel" placeholder="Your phone number" required></div>
-        </div>
-        <label for="jfEmail">Email</label>
-        <input id="jfEmail" name="email" type="email" placeholder="you@example.com">
-        <label for="jfRole">Role you are applying for *</label>
-        <select id="jfRole" name="role" required>
-          <option value="">Choose a role…</option>
-          <option value="Server / Waiter">Server / Waiter</option>
-          <option value="Kitchen / Cook">Kitchen / Cook</option>
-          <option value="Barista / Beverage maker">Barista / Beverage maker</option>
-          <option value="Cashier">Cashier</option>
-          <option value="Cleaner / Helper">Cleaner / Helper</option>
-          <option value="Other">Other</option>
-        </select>
-        <label for="jfMessage">Tell us about yourself *</label>
-        <textarea id="jfMessage" name="message" rows="4" placeholder="Your experience, when you can start, anything else…" required></textarea>
-        <p style="margin-top:14px"><button type="submit" class="btn block">Send job application</button></p>
-        <p class="muted">We reply on WhatsApp or by phone. You can also call us on 9326222019.</p>
-      </form>
+      <p>Want to work at Star's Cafe? We are a small, friendly veg cafe in Nalasopara East. Tell us about yourself and we will get back to you if there is an opening.</p>
+      <p><a class="btn" href="job.html">Work With Us &rarr;</a></p>
     </div>
-
     <div class="panel">
       <h2>Terms &amp; conditions</h2>
       <div class="terms" id="termsText"></div>
@@ -316,8 +228,10 @@
         <h3>Quick links</h3>
         <p><a href="menu.html">Menu</a></p>
         <p><a href="#" onclick="showView('site');document.getElementById('gallerySection').scrollIntoView({behavior:'smooth'});return false;">Gallery</a></p>
-        <p><a href="#" onclick="showView('site');document.getElementById('birthdayPanel').scrollIntoView({behavior:'smooth'});return false;">Birthday bookings</a></p>
-        <p><a href="#" onclick="showView('site');document.getElementById('jobsPanel').scrollIntoView({behavior:'smooth'});return false;">Work with us</a></p>
+        <p><a href="birthday.html">Birthday bookings</a></p>
+        <p><a href="job.html">Work with us</a></p>
+        <p><a href="contact.html">Contact Us</a></p>
+        <p><a href="https://share.google/OY9cJPErdoLdT4YHh" target="_blank" rel="noopener">Write a Review on Google</a></p>
       </div>
       <div class="footer-col">
         <h3>Contact</h3>

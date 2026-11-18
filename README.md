@@ -15,15 +15,21 @@ the browser with `localStorage`, so it works as a static deploy and demo.
 
 ## Pages
 
-- **index.html — homepage.** Hero, About, Our Story, a small **menu preview (6 featured items only) + "View full menu" link**, Gallery, birthday bookings, Offers, Location, Contact, Jobs, Terms, footer. The full 37-item menu is **NOT** on the homepage.
+- **index.html — homepage.** Hero, About, Our Story, a small **menu preview (6 featured items only) + "View full menu" link**, Gallery, small preview cards for Birthday bookings, Contact and Work with us (each just a "Birthday Booking →" / "Contact Us →" / "Work With Us →" button to its own page), Offers, Location, Terms, footer. The full 37-item menu is **NOT** on the homepage, and **no full form is on the homepage** — the birthday, contact and job forms live on their own pages (19 Nov 2026, homepage kept clear).
 - **[menu.html](sandbox://workspace/stars-cafe-app/menu.html) — separate menu page.** The full display menu lives here only: categories, search, veg filter, sort, all 37 items with prices, Zomato/Swiggy links, and a "Back to home" link. Same header (with hamburger menu), same footer, same styles.css / app.js / logo.jpg, same colours and design as the homepage. Every "Menu" link in the header, hamburger menu, hero and footer goes to menu.html.
+- **[birthday.html](sandbox://workspace/stars-cafe-app/birthday.html) — separate birthday page.** Birthday packages, the WhatsApp enquiry (package/date/time/name/phone/guests/note) and the birthday Netlify form — moved verbatim from the homepage. Same header, footer, styles.css / app.js / logo.jpg and design.
+- **[contact.html](sandbox://workspace/stars-cafe-app/contact.html) — separate contact page.** Full contact details (phone, WhatsApp, email, address, hours, Get Directions, Instagram) and the contact Netlify form — moved verbatim from the homepage. Same header, footer, styles.css / app.js / logo.jpg and design.
+- **[job.html](sandbox://workspace/stars-cafe-app/job.html) — separate jobs page.** "Work with us" intro and the job Netlify form — moved verbatim from the homepage. Same header, footer, styles.css / app.js / logo.jpg and design.
 
 ## Files
 
-- [index.html](sandbox://workspace/stars-cafe-app/index.html) — structure: sticky header (real logo, NO Owner button, hamburger three-line menu on mobile with Home, Menu, Gallery, Birthday Bookings, Offers, Jobs, Location, Contact, Instagram, and a small Owner link at the very bottom; desktop nav is plain text links: Menu, Birthdays, Gallery, Jobs, Visit Us), large hero with the real logo and only four call-to-action buttons (View Menu, Book a Birthday, Get Directions, Call), About, Our Story, display Menu preview, Gallery, birthday booking showcase, Offers (banners, Combo of the Day, Loyalty Offer), Location & basics, Contact, Jobs (Work with us), terms; footer (3 columns: About, Quick links, Contact). Section order on the page: Hero, About, Menu preview, Gallery, Birthday, Offers, Location, Contact, Jobs, Footer.
+- [index.html](sandbox://workspace/stars-cafe-app/index.html) — structure: sticky header (real logo, NO Owner button, hamburger three-line menu on mobile with Home, Menu, Gallery, Birthday Bookings, Offers, Jobs, Location, Contact, Instagram, and a small Owner link at the very bottom; desktop nav is plain text links: Menu, Birthdays, Gallery, Jobs, Visit Us), large hero with the real logo and call-to-action pill buttons (View Menu, Book a Birthday, Get Directions, Call), About, Our Story, display Menu preview, Gallery, Reviews panel with the "Write a Review on Google" button, birthday / contact / jobs preview cards (buttons only — no full forms on the homepage), Offers (banners, Combo of the Day, Loyalty Offer), Location & basics, terms; footer (3 columns: About, Quick links, Contact). Section order on the page: Hero, About, Menu preview, Gallery, Reviews, Birthday preview, Offers, Location, Contact preview, Jobs preview, Footer.
 - [menu.html](sandbox://workspace/stars-cafe-app/menu.html) — separate full menu page (see Pages above).
-- [app.js](sandbox://workspace/stars-cafe-app/app.js) — all logic: display menu (search/filter/sort, no cart), homepage menu preview (6 items), gallery showcase, banners, Combo of the Day, Loyalty Offer, birthday enquiry via WhatsApp, owner login and editors, scroll-in animations. All render functions guard for missing elements, so the same app.js runs safely on both index.html and menu.html.
-- [styles.css](sandbox://workspace/stars-cafe-app/styles.css) — warm & cosy theme (cream + brown, purple accents), mobile-first, large touch buttons, premium hero, hover effects, scroll animations, gallery cards, big birthday banner, polished footer.
+- [birthday.html](sandbox://workspace/stars-cafe-app/birthday.html) — separate birthday page (see Pages above).
+- [contact.html](sandbox://workspace/stars-cafe-app/contact.html) — separate contact page (see Pages above).
+- [job.html](sandbox://workspace/stars-cafe-app/job.html) — separate jobs page (see Pages above).
+- [app.js](sandbox://workspace/stars-cafe-app/app.js) — all logic: display menu (search/filter/sort, no cart), homepage menu preview (6 items), gallery showcase, banners, Combo of the Day, Loyalty Offer, birthday enquiry via WhatsApp, owner login and editors, scroll-in animations. All render functions guard for missing elements, so the same app.js runs safely on every page (index, menu, birthday, contact, job).
+- [styles.css](sandbox://workspace/stars-cafe-app/styles.css) — warm & cosy theme (cream + brown, purple accents), mobile-first, large touch buttons, premium hero, hover effects, scroll animations, gallery cards, big birthday banner, polished footer. **MNC-style button system (19 Nov 2026): no link anywhere shows as default blue text — every link is a proper pill button/chip: primary filled purple pill (.btn), secondary outlined cream pill (.btn.secondary), brown filled pill (.btn.brown), plain content links (phone, email, directions, Instagram) as small cream pill chips with a brown border, footer links as cream pill chips on the tan band; generous padding, subtle shadow, smooth hover lift.**
 - [logo.jpg](sandbox://workspace/stars-cafe-app/logo.jpg) — the cafe's real logo (Star's Cafe, Since 2022, purple/black). Used as the header logo, the large hero logo and the favicon; the inline SVG logo in the header is the fallback if the image fails to load.
 
 ## Design match to the selected UI images (19 Nov 2026)
@@ -59,8 +65,8 @@ After the user's feedback ("too many buttons everywhere", "footer is very poor",
   with the exact wording "Top Rated Cafe in
   Nalasopara — 4.9 ★ (199 Google reviews)". Based on the verified 4.9/5 Google
   rating from 199 reviews — not a numbered #1 claim. It is plain text, not a
-  link, and there is no Reviews section on the site (removed 19 Nov 2026 at the
-  user's request — see "Google review option removed" below).
+  link, and there is a small Reviews panel with a single "Write a Review on
+  Google" button (added 19 Nov 2026 — see "Google review link" below).
 - **Order on Zomato / Swiggy** — two clean buttons in the menu area ("Order on
   Zomato", "Order on Swiggy"). These are **search links only** — Zomato search
   and Swiggy search for "Star's Cafe Nalasopara East". No Zomato/Swiggy
@@ -68,8 +74,9 @@ After the user's feedback ("too many buttons everywhere", "footer is very poor",
   cafe's exact Zomato/Swiggy restaurant links when available.
 - **Verified ratings** — Google **4.9 ★ (199 Google reviews)** only
   (checked live 19 Nov 2026 from the Google listing), shown as plain text in the
-  hero badge only. No Reviews section, no "Read reviews on Google" link, no
-  "Write a Review" option, and no other review site's rating anywhere on the
+  hero badge, plus a single "Write a Review on Google" button (see "Google
+  review link" below). No "Read reviews on Google" section with review text,
+  no WhatsApp review option, and no other review site's rating anywhere on the
   site.
 - **Our Story** — a short section after About, before the Menu: Star's Cafe began
   in 2022 in Nalasopara East, a small, warm, cosy veg cafe where friends and
@@ -163,6 +170,21 @@ review option was removed completely from the site:
 - **Kept:** the hero **Top Rated 4.9 ★ badge** only — plain text, no link.
   Get Directions links to Google Maps are still there (directions, not reviews).
 
+## Google review link (19 Nov 2026 — change of plan)
+
+After the removal above, the user changed his mind: instead of a review on
+WhatsApp, the site now has a single **"Write a Review on Google"** button that
+links directly to the cafe's Google listing share link
+`https://share.google/OY9cJPErdoLdT4YHh` — clicking it opens the Google
+listing where customers can leave a Google review.
+
+- The button is in a small Reviews panel (`#reviewsPanel` in `index.html`,
+  after Gallery, before Birthday bookings) and as a link in the footer Quick
+  links.
+- **Not** added back: the "Write a review on WhatsApp" option, the Google Maps
+  reviews embed, a "Read reviews on Google" section, or any review text. The
+  owner-page Google Reviews editor and all related `app.js` code stay removed.
+
 ## Contact form (Netlify Forms)
 
 The Contact section has a working enquiry form powered by **Netlify Forms** — no
@@ -206,3 +228,5 @@ test enquiry from the live site and check Netlify → Forms to confirm it arrive
 - Node DOM-stub run (8 checks, 0 failed) for the 19 Nov 2026 traditional redesign: 37 menu rows with no description text, banner with no button, packages with no Choose button (tap-to-select), birthday-form package/time-slot selects populated, gallery cards with no price, terms rendered, Google Reviews map src set. All files served over local HTTP (200): index.html, app.js, styles.css, logo.jpg.
 - Design-match + separate-menu + hidden-owner test (`/tmp/test-stars-design-match.js`, 33 checks, 0 failed, 19 Nov 2026): homepage preview renders exactly 6 items (not 37), no full menu grid/chips on the homepage, "View full menu" links to menu.html, menu.html renders all 37 items with categories in order + search/sort/veg filter, no header Owner button on either page, Owner link is the last link in the hamburger menu, `#owner` hash opens the owner view, all 3 forms carry the `form-card` class, no Add to cart, no Justdial anywhere on either page, CSS has the cream `#f6eeda` paper, brown Georgia serif headings, uppercase hero title, tan/caramel footer, purple pill rating badge, unboxed form containers, Zomato/Swiggy white cards with logo chips, purple flourish dividers, ornate double-frame packages. All 5 files served over local HTTP (200): index.html, menu.html, app.js, styles.css, logo.jpg.
 - Google review option removal test (`/tmp/test-no-google-reviews.js`, 26 checks, 0 failed, 19 Nov 2026): no Reviews section, no "Read reviews on Google" / "Write a review on WhatsApp" links, no Reviews nav/footer links on either page, no Google Reviews code/editor/`sc_google` key in app.js, no `#googleReviewsFrame` CSS rule; hero 4.9 ★ badge kept as plain text (not a link), Get Directions links kept, all 3 Netlify forms intact, app.js runs under a DOM stub and still renders the 6-item preview and the full 37-item menu. All 5 files served over local HTTP (200): index.html, menu.html, app.js, styles.css, logo.jpg.
+- Google review link re-added (19 Nov 2026, change of plan — instead of a review on WhatsApp): a single "Write a Review on Google" button in a small Reviews panel (`#reviewsPanel`, after Gallery) and in the footer, linking directly to the cafe's Google listing share link `https://share.google/OY9cJPErdoLdT4YHh`. No WhatsApp review option, no Google Maps reviews embed, no "Read reviews on Google" section, no review text. The owner-page Google Reviews editor stays removed.
+- Separate birthday/contact/job pages + MNC pill button system test (`/tmp/test-separate-pages.js`, 55 checks, 0 failed, 19 Nov 2026): homepage has zero `<form>` tags and no birthday/contact/job form fields — only "Birthday Booking →" / "Contact Us →" / "Work With Us →" pill buttons to birthday.html / contact.html / job.html; each new page has exactly 1 Netlify form with its original name (birthday / contact / job), honeypot and `form-card` class, all original field ids, and a "Back to home" link; all nav/footer links on all 5 pages point to the new pages (no old `#birthdayPanel` / `#jobsPanel` / `#contactPanel` links); Google review share link present on all 5 pages (panel + footer on index); CSS has no default-blue colour value, base links are purple with no underline, `.btn` is a 999px pill with shadow (primary purple, secondary outlined cream, brown filled), content links and footer links are pill chips with a purple hover, submit buttons are pills; app.js runs under a DOM stub both as the homepage (no packageGrid/menuGrid — preview and gallery still render) and as the birthday page (packages render, bkPackage/bfPackage/bfTime/bkTime selects populated). All 8 files served over local HTTP (200): index.html, menu.html, birthday.html, contact.html, job.html, app.js, styles.css, logo.jpg.
