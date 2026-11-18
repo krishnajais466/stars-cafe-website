@@ -2,7 +2,7 @@
 
 A premium, mobile-first **display / marketing website** for **Star's Cafe, Since 2022** —
 B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209.
-Phone 9326222019, starscafe466@gmail.com, open 9am–11pm daily. Veg cafe, ₹350 for two.
+Phone 9326222019, starscafe424@gmail.com, open 9am–11pm daily. Veg cafe, ₹350 for two.
 Dine-in / takeout / delivery / outdoor seating.
 
 **This is NOT an ordering website.** There is no cart, no Add to cart, no ordering by
@@ -159,11 +159,11 @@ After the user's feedback ("too many buttons everywhere", "footer is very poor",
 - **Hero** — large real logo, "Star's Cafe", tagline, veg / Nalasopara East / ₹350 for two / 9am–11pm, and buttons: View Menu, Book a Birthday, Get Directions, Call.
 - **Offer banners** carousel + birthday banner; **Combo of the Day** and **Loyalty Offer** sections (shown when the owner enables them).
 - **About** — the cafe since 2022, dine-in / takeout / delivery / outdoor seating.
-- **Gallery** — "Gallery": compact cards for Margherita Pizza, Chocolate Freakshake, Cold Coffee, Chocolate Milkshake, Paneer Pizza and Loaded Nachos, with prices. Gallery cards use the menu items' photos (CSS gradient placeholders until the owner adds real dish photos) — the owner adds/changes a dish photo from the Owner page, under Menu management, and it shows in the Gallery and on the menu card.
+- **Gallery** — "Gallery": compact cards for Star's special pizza, Oreo Freakshake, Cold Coffee, Oreo milkshake, Paneer pizza and Cheese Nachos, with prices. Gallery cards use the menu items' photos (CSS gradient placeholders until the owner adds real dish photos) — the owner adds/changes a dish photo from the Owner page, under Menu management, and it shows in the Gallery and on the menu card.
 - **Menu (display only)** — the homepage shows only a small preview (6 featured items) with a "View full menu" link. The **full menu lives on the separate [menu.html](sandbox://workspace/stars-cafe-app/menu.html) page**: Zomato/Swiggy-style compact rows: food image on the right, item name, veg dot and price on the left (no descriptions / specifications), with category tabs in logical order (All, Combo Packs, Pizza, Sandwich, Burger, Fries, Pasta, Maggie, Wedges, Nachos, Fried Rice, Noodles, Tea, Coffee, Mojito, Milkshake, Freakshake, Dessert, Icecream, Drinks), pill search, veg-only filter and sort. **No cart, no ordering.**
 - **Birthday bookings (showcase)** — Basic / Premium / Deluxe packages (owner-editable), date + time-slot picker, name/phone/guests/note — enquiry opens WhatsApp to 919326222019 with everything prefilled. This is a booking enquiry, not an order.
 - **Location & basics** — full address, Get Directions link, phone, email, hours, veg, ₹350 for two, and a "Follow us on Instagram" link. Instagram: @stars_cafe_since2022, also linked in the footer.
-- **Contact** — dedicated Contact section: phone 9326222019 (tap to call), WhatsApp, email starscafe466@gmail.com, address, hours 9am–11pm, Get Directions, and Instagram @stars_cafe_since2022 — plus a **contact/enquiry form (Netlify Forms, `contact`)**: name (required), phone (required), email (optional), subject — Enquiry / Birthday Booking / Feedback — and message (required). Submissions are captured by Netlify, not by any JavaScript or backend.
+- **Contact** — dedicated Contact section: phone 9326222019 (tap to call), WhatsApp, email starscafe424@gmail.com, address, hours 9am–11pm, Get Directions, and Instagram @stars_cafe_since2022 — plus a **contact/enquiry form (Netlify Forms, `contact`)**: name (required), phone (required), email (optional), subject — Enquiry / Birthday Booking / Feedback — and message (required). Submissions are captured by Netlify, not by any JavaScript or backend.
 - **Terms & conditions** (owner-editable).
 
 ## Owner only
@@ -185,9 +185,9 @@ Terms & conditions (owner-editable) cover: advance payment confirms a booking, c
 
 Cart, Add to cart / quantity controls, order by table number, live order status (Received → Preparing → Ready → Served), staff live orders and order management, the entire Staff Admin view and staff login, order totals / sales / best sellers, and all `sc_orders` order code. The site title changed from "Star's Cafe — Order Online" to "Star's Cafe — Nalasopara East". The live site at https://stars-cafe-order-online.netlify.app/ still serves the old ordering version until it is redeployed with these files.
 
-## ⚠️ Prices are placeholders
+## ✅ Real menu prices (19 Nov 2026)
 
-Menu and package prices in the site are **placeholder estimates**, clearly marked in the site ("Prices are placeholder estimates for now — prices to be updated with the new menu"). The cafe menu has changed; the new menu arrives in the morning and prices must be updated then — in the site via the Owner menu editing, or in `app.js` (`DEFAULT_MENU` / `DEFAULT_PKGS`).
+The menu in the site is now the **real menu from the cafe's printed menu photos** (received 19 Nov 2026) — 95 items across 18 categories, prices exactly as written on the menu. Birthday package prices (₹1,499 / ₹2,999 / ₹4,999) are still the cafe's own package prices as set by the owner. A menu version (`sc_menu_version = 2`) forces browsers that cached the old placeholder menu to load the real one.
 
 Food photos are pure CSS gradient placeholders with the item name (no external images, so nothing breaks offline). The owner can replace photos with real dish photos (upload, max about 180 KB after shrinking, in the Owner menu management).
 

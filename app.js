@@ -1,7 +1,7 @@
 /* Star's Cafe — Nalasopara East. DISPLAY / MARKETING website, NO ordering.
    Plain JS, no backend. Data lives in localStorage.
-   NOTE: menu/package prices below are PLACEHOLDER estimates, NOT verified prices.
-   They are marked in the site as "prices to be updated with new menu". */
+   NOTE: menu below is the REAL menu from the cafe's printed menu photos
+   (received 19 Nov 2026) — prices exactly as written on the menu. */
 'use strict';
 
 var LS = { menu:'sc_menu', banners:'sc_banners', pkgs:'sc_pkgs', terms:'sc_terms', bookings:'sc_bookings', combo:'sc_combo', loyalty:'sc_loyalty', session:'sc_session', catorder:'sc_cat_order', contact:'sc_contact' };
@@ -10,49 +10,107 @@ function save(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }c
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function rs(n){ return '\u20B9' + Number(n||0).toLocaleString('en-IN'); }
 
-/* ---------- Default data (placeholders) ---------- */
+/* ---------- Default data (real menu, 19 Nov 2026) ---------- */
 var DEFAULT_MENU = [
-  {id:'m1', name:'Margherita Pizza (9 inch)', cat:'Pizza', price:199, veg:true,  img:'pizza',    out:false},
-  {id:'m2', name:'Onion Pizza (9 inch)',      cat:'Pizza', price:219, veg:true,  img:'pizza',    out:false},
-  {id:'m3', name:'Corn Pizza (9 inch)',       cat:'Pizza', price:229, veg:true,  img:'pizza',    out:false},
-  {id:'m4', name:'Capsicum Pizza (9 inch)',   cat:'Pizza', price:229, veg:true,  img:'pizza',    out:false},
-  {id:'m5', name:'Paneer Pizza (9 inch)',     cat:'Pizza', price:259, veg:true,  img:'pizza',    out:false},
-  {id:'m6', name:'Veg Sandwich',              cat:'Sandwich', price:99,  veg:true,  img:'sandwich', out:false},
-  {id:'m7', name:'Grilled Cheese Sandwich',   cat:'Sandwich', price:129, veg:true,  img:'sandwich', out:false},
-  {id:'m8', name:'Veg Burger',                cat:'Burger', price:119, veg:true,  img:'sandwich', out:false},
-  {id:'m9', name:'Cheese Burger',             cat:'Burger', price:149, veg:true,  img:'sandwich', out:false},
-  {id:'m10', name:'French Fries',             cat:'Fries', price:89,  veg:true, img:'fries', out:false},
-  {id:'m11', name:'Peri Peri Fries',          cat:'Fries', price:109, veg:true, img:'fries', out:false},
-  {id:'m12', name:'Garlic Bread',             cat:'Fries', price:99,  veg:true,  img:'fries', out:false},
-  {id:'m13', name:'White Sauce Pasta',        cat:'Pasta', price:169, veg:true,  img:'default', out:false},
-  {id:'m14', name:'Red Sauce Pasta',          cat:'Pasta', price:159, veg:true,  img:'default', out:false},
-  {id:'m15', name:'Masala Maggie',            cat:'Maggie', price:79,  veg:true,  img:'default', out:false},
-  {id:'m16', name:'Cheese Maggie',            cat:'Maggie', price:99,  veg:true,  img:'default', out:false},
-  {id:'m17', name:'Potato Wedges',            cat:'Wedges', price:99,  veg:true,  img:'fries', out:false},
-  {id:'m18', name:'Loaded Nachos',            cat:'Nachos', price:149, veg:true,  img:'fries', out:false},
-  {id:'m19', name:'Masala Tea',               cat:'Tea', price:29, veg:true, img:'drinks', out:false},
-  {id:'m20', name:'Cold Coffee',              cat:'Coffee', price:99,  veg:true, img:'drinks', out:false},
-  {id:'m21', name:'Hot Coffee',               cat:'Coffee', price:69,  veg:true, img:'drinks', out:false},
-  {id:'m22', name:'Mint Mojito',              cat:'Mojito', price:99,  veg:true,  img:'drinks', out:false},
-  {id:'m23', name:'Blue Lagoon Mojito',       cat:'Mojito', price:119, veg:true,  img:'drinks', out:false},
-  {id:'m24', name:'Chocolate Milkshake',      cat:'Milkshake', price:129, veg:true, img:'drinks', out:false},
-  {id:'m25', name:'Oreo Milkshake',           cat:'Milkshake', price:149, veg:true, img:'drinks', out:false},
-  {id:'m26', name:'Chocolate Freakshake',     cat:'Freakshake', price:199, veg:true, img:'dessert', out:false},
-  {id:'m27', name:'Veg Fried Rice',           cat:'Fried Rice', price:139, veg:true, img:'default', out:false},
-  {id:'m28', name:'Schezwan Fried Rice',      cat:'Fried Rice', price:149, veg:true, img:'default', out:false},
-  {id:'m29', name:'Veg Hakka Noodles',        cat:'Noodles', price:139, veg:true,  img:'default', out:false},
-  {id:'m30', name:'Schezwan Noodles',         cat:'Noodles', price:149, veg:true,  img:'default', out:false},
-  {id:'m31', name:'Chocolate Brownie',        cat:'Dessert', price:99,  veg:true,  img:'dessert', out:false},
-  {id:'m32', name:'Vanilla Icecream',         cat:'Icecream', price:69,  veg:true,  img:'dessert', out:false},
-  {id:'m33', name:'Chocolate Icecream',       cat:'Icecream', price:79,  veg:true,  img:'dessert', out:false},
-  {id:'m34', name:'Cold Drink',               cat:'Drinks', price:39,  veg:true,  img:'drinks', out:false},
-  {id:'m35', name:'Mineral Water',            cat:'Drinks', price:20,  veg:true,  img:'drinks', out:false},
-  {id:'m36', name:'Pizza + Fries Combo',       cat:'Combo Packs', price:299, veg:true, img:'pizza', out:false},
-  {id:'m37', name:'Burger + Fries + Cold Drink Combo', cat:'Combo Packs', price:249, veg:true, img:'sandwich', out:false}
+  {id:'m1', name:'Pizza\'s Combo', cat:'Combo Packs', price:499, veg:true, img:'pizza', out:false, desc:'Paneer pizza, Onion pizza, Capsicum pizza, Corn pizza'},
+  {id:'m2', name:'Burger Combo', cat:'Combo Packs', price:299, veg:true, img:'sandwich', out:false, desc:'Peri Peri Burger, Cheese Burger, Fries, Coke / Thumbs up'},
+  {id:'m3', name:'Icecream Combo', cat:'Combo Packs', price:199, veg:true, img:'dessert', out:false, desc:'Vanilla, Chocolate, Strawberry, Butterscotch'},
+  {id:'m4', name:'Pasta Combo', cat:'Combo Packs', price:299, veg:true, img:'default', out:false, desc:'White Sauce pasta, Pink Sauce pasta, Red Sauce pasta'},
+  {id:'m5', name:'Jain pizza', cat:'Pizza', price:149, veg:true, img:'pizza', out:false},
+  {id:'m6', name:'Cheese pizza', cat:'Pizza', price:149, veg:true, img:'pizza', out:false},
+  {id:'m7', name:'Corn pizza', cat:'Pizza', price:159, veg:true, img:'pizza', out:false},
+  {id:'m8', name:'Veg cheese pizza', cat:'Pizza', price:159, veg:true, img:'pizza', out:false},
+  {id:'m9', name:'Paneer pizza', cat:'Pizza', price:169, veg:true, img:'pizza', out:false},
+  {id:'m10', name:'Tandoori paneer pizza', cat:'Pizza', price:199, veg:true, img:'pizza', out:false},
+  {id:'m11', name:'Paneer Barbeque pizza', cat:'Pizza', price:249, veg:true, img:'pizza', out:false},
+  {id:'m12', name:'Star\'s special pizza', cat:'Pizza', price:299, veg:true, img:'pizza', out:false},
+  {id:'m13', name:'Veg Sandwich', cat:'Sandwich', price:69, veg:true, img:'sandwich', out:false},
+  {id:'m14', name:'Veg toast Sandwich', cat:'Sandwich', price:89, veg:true, img:'sandwich', out:false},
+  {id:'m15', name:'Veg Cheese Toast sandwich', cat:'Sandwich', price:99, veg:true, img:'sandwich', out:false},
+  {id:'m16', name:'Veg cheese grilled Sandwich', cat:'Sandwich', price:149, veg:true, img:'sandwich', out:false},
+  {id:'m17', name:'Tandoori paneer Sandwich', cat:'Sandwich', price:159, veg:true, img:'sandwich', out:false},
+  {id:'m18', name:'Veg Burger', cat:'Burger', price:59, veg:true, img:'sandwich', out:false},
+  {id:'m19', name:'Peri Peri burger', cat:'Burger', price:79, veg:true, img:'sandwich', out:false},
+  {id:'m20', name:'Double burger', cat:'Burger', price:89, veg:true, img:'sandwich', out:false},
+  {id:'m21', name:'Cheese burger', cat:'Burger', price:99, veg:true, img:'sandwich', out:false},
+  {id:'m22', name:'D cheese burger', cat:'Burger', price:109, veg:true, img:'sandwich', out:false},
+  {id:'m23', name:'Paneer burger', cat:'Burger', price:149, veg:true, img:'sandwich', out:false},
+  {id:'m24', name:'Masala Pasta', cat:'Pasta', price:79, veg:true, img:'default', out:false},
+  {id:'m25', name:'Cheese Pasta', cat:'Pasta', price:99, veg:true, img:'default', out:false},
+  {id:'m26', name:'Red Sauce Pasta', cat:'Pasta', price:149, veg:true, img:'default', out:false},
+  {id:'m27', name:'White Sauce Pasta', cat:'Pasta', price:149, veg:true, img:'default', out:false},
+  {id:'m28', name:'Pink Sauce Pasta', cat:'Pasta', price:149, veg:true, img:'default', out:false},
+  {id:'m29', name:'Plan Fries', cat:'Fries', price:89, veg:true, img:'fries', out:false},
+  {id:'m30', name:'Cheese Fries', cat:'Fries', price:109, veg:true, img:'fries', out:false},
+  {id:'m31', name:'Peri Peri Fries', cat:'Fries', price:109, veg:true, img:'fries', out:false},
+  {id:'m32', name:'Peri Peri cheese Fries', cat:'Fries', price:149, veg:true, img:'fries', out:false},
+  {id:'m33', name:'Jam Bread', cat:'Bread', price:39, veg:true, img:'fries', out:false},
+  {id:'m34', name:'Butter Bread', cat:'Bread', price:49, veg:true, img:'fries', out:false},
+  {id:'m35', name:'Chocolate Bread', cat:'Bread', price:59, veg:true, img:'fries', out:false},
+  {id:'m36', name:'Garlic Bread', cat:'Bread', price:89, veg:true, img:'fries', out:false},
+  {id:'m37', name:'Cheese Garlic Bread', cat:'Bread', price:99, veg:true, img:'fries', out:false},
+  {id:'m38', name:'Plain Maggie', cat:'Maggie', price:69, veg:true, img:'default', out:false},
+  {id:'m39', name:'Masala Maggie', cat:'Maggie', price:79, veg:true, img:'default', out:false},
+  {id:'m40', name:'Corn Maggie', cat:'Maggie', price:89, veg:true, img:'default', out:false},
+  {id:'m41', name:'Cheese Maggie', cat:'Maggie', price:99, veg:true, img:'default', out:false},
+  {id:'m42', name:'Corn Cheese Maggie', cat:'Maggie', price:109, veg:true, img:'default', out:false},
+  {id:'m43', name:'Plain Nachos', cat:'Nachos', price:69, veg:true, img:'fries', out:false},
+  {id:'m44', name:'Cheese Nachos', cat:'Nachos', price:79, veg:true, img:'fries', out:false},
+  {id:'m45', name:'Salsa Nachos', cat:'Nachos', price:79, veg:true, img:'fries', out:false},
+  {id:'m46', name:'Peri Peri Nachos', cat:'Nachos', price:79, veg:true, img:'fries', out:false},
+  {id:'m47', name:'Jalapeno Nachos', cat:'Nachos', price:79, veg:true, img:'fries', out:false},
+  {id:'m48', name:'Regular Tea', cat:'Tea', price:20, veg:true, img:'drinks', out:false},
+  {id:'m49', name:'Adrak Tea', cat:'Tea', price:25, veg:true, img:'drinks', out:false},
+  {id:'m50', name:'Elaichi Tea', cat:'Tea', price:25, veg:true, img:'drinks', out:false},
+  {id:'m51', name:'Lemon Tea', cat:'Tea', price:25, veg:true, img:'drinks', out:false},
+  {id:'m52', name:'Chocolate Tea', cat:'Tea', price:30, veg:true, img:'drinks', out:false},
+  {id:'m53', name:'Green Tea', cat:'Tea', price:35, veg:true, img:'drinks', out:false},
+  {id:'m54', name:'Regular Coffee', cat:'Coffee', price:25, veg:true, img:'drinks', out:false},
+  {id:'m55', name:'Black Coffee', cat:'Coffee', price:20, veg:true, img:'drinks', out:false},
+  {id:'m56', name:'Chocolate Coffee', cat:'Coffee', price:35, veg:true, img:'drinks', out:false},
+  {id:'m57', name:'Cold Coffee', cat:'Coffee', price:79, veg:true, img:'drinks', out:false},
+  {id:'m58', name:'Choclate Cold Coffee', cat:'Coffee', price:89, veg:true, img:'drinks', out:false},
+  {id:'m59', name:'Cold Coffee Icecream', cat:'Coffee', price:109, veg:true, img:'drinks', out:false},
+  {id:'m60', name:'Mint Mojito', cat:'Mojito', price:79, veg:true, img:'drinks', out:false},
+  {id:'m61', name:'Lemon Mojito', cat:'Mojito', price:79, veg:true, img:'drinks', out:false},
+  {id:'m62', name:'Green Apple Mojito', cat:'Mojito', price:79, veg:true, img:'drinks', out:false},
+  {id:'m63', name:'Peach Mojito', cat:'Mojito', price:79, veg:true, img:'drinks', out:false},
+  {id:'m64', name:'Strawberry Mojito', cat:'Mojito', price:79, veg:true, img:'drinks', out:false},
+  {id:'m65', name:'Blue Lagoon Mojito', cat:'Mojito', price:89, veg:true, img:'drinks', out:false},
+  {id:'m66', name:'Lemon Ice Tea', cat:'Ice Tea', price:49, veg:true, img:'drinks', out:false},
+  {id:'m67', name:'Chocolate Ice Tea', cat:'Ice Tea', price:59, veg:true, img:'drinks', out:false},
+  {id:'m68', name:'Strawberry Ice Tea', cat:'Ice Tea', price:59, veg:true, img:'drinks', out:false},
+  {id:'m69', name:'Vannilla milkshake', cat:'Milkshake', price:79, veg:true, img:'drinks', out:false},
+  {id:'m70', name:'Chocolate milkshake', cat:'Milkshake', price:89, veg:true, img:'drinks', out:false},
+  {id:'m71', name:'Pineapple milkshake', cat:'Milkshake', price:99, veg:true, img:'drinks', out:false},
+  {id:'m72', name:'Oreo milkshake', cat:'Milkshake', price:99, veg:true, img:'drinks', out:false},
+  {id:'m73', name:'Mango milkshake', cat:'Milkshake', price:99, veg:true, img:'drinks', out:false},
+  {id:'m74', name:'Kit kat milkshake', cat:'Milkshake', price:99, veg:true, img:'drinks', out:false},
+  {id:'m75', name:'Strawberry milkshake', cat:'Milkshake', price:99, veg:true, img:'drinks', out:false},
+  {id:'m76', name:'Butterscotch milkshake', cat:'Milkshake', price:99, veg:true, img:'drinks', out:false},
+  {id:'m77', name:'Kaju milkshake', cat:'Milkshake', price:149, veg:true, img:'drinks', out:false},
+  {id:'m78', name:'Oreo Freakshake', cat:'Freakshake', price:149, veg:true, img:'dessert', out:false},
+  {id:'m79', name:'Kitkat Freakshake', cat:'Freakshake', price:149, veg:true, img:'dessert', out:false},
+  {id:'m80', name:'Brownie Freakshake', cat:'Freakshake', price:149, veg:true, img:'dessert', out:false},
+  {id:'m81', name:'Hot Chocolate', cat:'Dessert', price:79, veg:true, img:'dessert', out:false},
+  {id:'m82', name:'Brownie', cat:'Dessert', price:99, veg:true, img:'dessert', out:false},
+  {id:'m83', name:'Choco Lava Cake', cat:'Dessert', price:99, veg:true, img:'dessert', out:false},
+  {id:'m84', name:'Chocolate Brownie', cat:'Dessert', price:129, veg:true, img:'dessert', out:false},
+  {id:'m85', name:'Sizzler Brownie', cat:'Dessert', price:199, veg:true, img:'dessert', out:false},
+  {id:'m86', name:'Extra Cheese', cat:'Add-Ons', price:49, veg:true, img:'default', out:false},
+  {id:'m87', name:'Extra Paneer', cat:'Add-Ons', price:39, veg:true, img:'default', out:false},
+  {id:'m88', name:'Extra Mushroom', cat:'Add-Ons', price:39, veg:true, img:'default', out:false},
+  {id:'m89', name:'Dips', cat:'Add-Ons', price:39, veg:true, img:'default', out:false},
+  {id:'m90', name:'Ketchup Sachet', cat:'Add-Ons', price:2, veg:true, img:'default', out:false},
+  {id:'m91', name:'Water', cat:'Drinks', price:15, veg:true, img:'drinks', out:false},
+  {id:'m92', name:'Coolsberg', cat:'Drinks', price:149, veg:true, img:'drinks', out:false},
+  {id:'m93', name:'Redbull', cat:'Drinks', price:149, veg:true, img:'drinks', out:false},
+  {id:'m94', name:'Coke', cat:'Drinks', price:25, veg:true, img:'drinks', out:false},
+  {id:'m95', name:'Thumps up', cat:'Drinks', price:25, veg:true, img:'drinks', out:false},
 ];
 var DEFAULT_BANNERS = [
   {id:'b1', title:'Birthday bookings are open!', text:'Celebrate at Star\u2019s Cafe — packages from \u20B91,499. Enquire on WhatsApp in one tap.', kind:'birthday', enabled:true},
-  {id:'b2', title:'Pizza + Freakshake combo', text:'Our most-loved combo — ask at the counter for today\u2019s offer.', kind:'offer', enabled:true},
+  {id:'b2', title:'Pizza\u2019s Combo — four pizzas at \u20B9499', text:'Paneer, Onion, Capsicum and Corn pizza in one combo — ask at the counter.', kind:'offer', enabled:true},
   {id:'b3', title:'Open 9am \u2013 11pm, every day', text:'Veg cafe, dine-in, takeout, delivery & outdoor seating. \u20B9350 for two.', kind:'offer', enabled:true}
 ];
 var DEFAULT_PKGS = [
@@ -61,8 +119,8 @@ var DEFAULT_PKGS = [
   {id:'p3', name:'Deluxe', price:4999, features:['4 hours, up to 30 guests','Premium decoration + theme','1 cake (2kg)','Full snacks + shakes','Dedicated host + photography'], featured:false}
 ];
 /* Combo of the Day and Loyalty Offer — owner-editable, shown on the site
-   when enabled. Prices below are PLACEHOLDER estimates, like the menu. */
-var DEFAULT_COMBO = { enabled:true, name:'Pizza + Fries Combo', items:'Margherita Pizza (9 inch) + French Fries + Cold Drink', price:299, banner:'Today only — our most-loved combo at one special price!' };
+   when enabled. The Combo of the Day is a real menu combo (Burger Combo). */
+var DEFAULT_COMBO = { enabled:true, name:'Burger Combo', items:'Peri Peri Burger + Cheese Burger + Fries + Coke / Thumbs up', price:299, banner:'Today only — our most-loved combo at one special price!' };
 var DEFAULT_LOYALTY = { enabled:true, title:'Loyalty Offer', text:'Order 5 times, get a coffee free!', terms:'One stamp per visit above \u20B9199. Collect 5 stamps and get a free hot coffee. Stamps are tracked in the cafe — please ask staff after every visit. Not valid with other offers. The cafe may change or stop this offer at any time.' };
 var DEFAULT_TERMS = ['1. A birthday booking is confirmed only after advance payment. Without advance payment, the slot is not held.',
 '2. Cancellation: cancel 48 hours or more before the slot for a full refund of the advance. Cancel less than 48 hours before, and the advance is non-refundable.',
@@ -78,7 +136,11 @@ var DEFAULT_TERMS = ['1. A birthday booking is confirmed only after advance paym
 var TIME_SLOTS = ['11:00 AM - 1:00 PM','1:00 PM - 3:00 PM','3:00 PM - 5:00 PM','5:00 PM - 7:00 PM','7:00 PM - 9:00 PM','9:00 PM - 11:00 PM'];
 
 /* ---------- State ---------- */
-var menu = load(LS.menu, null) || DEFAULT_MENU.slice();
+/* Menu version 2 = the real printed menu (19 Nov 2026). Browsers that
+   still hold the old placeholder menu (version 1) get the real menu. */
+var MENU_VERSION = 2;
+var storedMenuVersion = null; try{ storedMenuVersion = localStorage.getItem('sc_menu_version'); }catch(e){}
+var menu = (storedMenuVersion === String(MENU_VERSION)) ? (load(LS.menu, null) || DEFAULT_MENU.slice()) : DEFAULT_MENU.slice();
 var banners = load(LS.banners, null) || DEFAULT_BANNERS.slice();
 var packages = load(LS.pkgs, null) || DEFAULT_PKGS.slice();
 var terms = load(LS.terms, null) || DEFAULT_TERMS;
@@ -175,8 +237,14 @@ var session = load(LS.session, null); /* 'owner' | null */
    category, but it stays first in this list. */
 var categoryOrder = null;
 /* Contact details — owner-editable in Settings, shown on the homepage. */
-var DEFAULT_CONTACT = { phone:'9326222019', email:'starscafe466@gmail.com', address:'B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209', hours:'Open 9am–11pm, every day', forTwo:'₹350 for two' };
-var contact = load(LS.contact, null) || Object.assign({}, DEFAULT_CONTACT);
+var DEFAULT_CONTACT = { phone:'9326222019', email:'starscafe424@gmail.com', address:'B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209', hours:'Open 9am–11pm, every day', forTwo:'₹350 for two' };
+/* Contact version 1 = email corrected to starscafe424@gmail.com (19 Nov 2026).
+   Browsers holding the old contact (starscafe466) get the corrected one. */
+var CONTACT_VERSION = 1;
+var storedContactVersion = null; try{ storedContactVersion = localStorage.getItem('sc_contact_version'); }catch(e){}
+var contact = (storedContactVersion === String(CONTACT_VERSION)) ? (load(LS.contact, null) || Object.assign({}, DEFAULT_CONTACT)) : Object.assign({}, DEFAULT_CONTACT);
+try{ localStorage.setItem('sc_menu_version', String(MENU_VERSION)); }catch(e){}
+try{ localStorage.setItem('sc_contact_version', String(CONTACT_VERSION)); }catch(e){}
 save(LS.menu, menu); save(LS.banners, banners); save(LS.pkgs, packages); save(LS.terms, terms); save(LS.bookings, bookings); save(LS.combo, combo); save(LS.loyalty, loyalty); save(LS.contact, contact);
 
 /* ---------- Views / login (owner only) ---------- */
@@ -274,7 +342,7 @@ function renderLoyalty(){
     '<p><b>'+esc(loyalty.text||'')+'</b></p>' +
     (loyalty.terms ? '<p class="muted">'+esc(loyalty.terms)+'</p>' : '') + '</div>';
 }
-var CATEGORY_ORDER = ['All','Combo Packs','Pizza','Sandwich','Burger','Fries','Pasta','Maggie','Wedges','Nachos','Fried Rice','Noodles','Tea','Coffee','Mojito','Milkshake','Freakshake','Dessert','Icecream','Drinks'];
+var CATEGORY_ORDER = ['All','Combo Packs','Pizza','Sandwich','Burger','Pasta','Fries','Bread','Maggie','Nachos','Tea','Coffee','Mojito','Ice Tea','Milkshake','Freakshake','Dessert','Add-Ons','Drinks'];
 if(!categoryOrder) categoryOrder = load(LS.catorder, null) || CATEGORY_ORDER.slice();
 function categories(){
   var cats = [];
@@ -308,6 +376,7 @@ function renderMenu(){
     return '<article class="menu-card '+(m.out?'out':'')+'">' +
       '<div class="menu-body"><h3>'+(m.veg?'<span class="veg-dot" title="Veg"></span>':'')+esc(m.name)+'</h3>' +
       '<p class="price">'+rs(m.price)+'</p>' +
+      (m.desc ? '<p class="muted">'+esc(m.desc)+'</p>' : '') +
       (m.out?' <p class="muted"><b>Currently unavailable</b></p>':'') +
       '</div>' +
       (m.photo ? '<img class="food-photo" src="'+esc(m.photo)+'" alt="Photo of '+esc(m.name)+'">' :
@@ -318,7 +387,7 @@ function renderMenu(){
 
 /* Homepage menu preview — a few most-loved items + a link to menu.html.
    The full menu lives on menu.html only. */
-var PREVIEW_IDS = ['m1','m5','m20','m26','m15','m8'];
+var PREVIEW_IDS = ['m12','m9','m57','m78','m39','m18'];
 function renderMenuPreview(){
   var grid = document.getElementById('menuPreviewGrid');
   if(!grid) return;
@@ -336,7 +405,7 @@ function renderMenuPreview(){
 }
 
 /* Gallery showcase — a few most-loved items, large cards, no ordering. */
-var GALLERY_IDS = ['m1','m26','m20','m24','m5','m18'];
+var GALLERY_IDS = ['m12','m78','m57','m72','m9','m44'];
 function renderGallery(){
   var grid = document.getElementById('galleryGrid');
   if(!grid) return;
