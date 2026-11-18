@@ -4,7 +4,7 @@
    They are marked in the site as "prices to be updated with new menu". */
 'use strict';
 
-var LS = { menu:'sc_menu', banners:'sc_banners', pkgs:'sc_pkgs', terms:'sc_terms', bookings:'sc_bookings', combo:'sc_combo', loyalty:'sc_loyalty', session:'sc_session' };
+var LS = { menu:'sc_menu', banners:'sc_banners', pkgs:'sc_pkgs', terms:'sc_terms', bookings:'sc_bookings', combo:'sc_combo', loyalty:'sc_loyalty', session:'sc_session', catorder:'sc_cat_order', contact:'sc_contact' };
 function load(key, fallback){ try{ var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }catch(e){ return fallback; } }
 function save(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -170,7 +170,14 @@ function removeMenuItemPhoto(id){
   renderOwner(); renderMenu();
 }
 var session = load(LS.session, null); /* 'owner' | null */
-save(LS.menu, menu); save(LS.banners, banners); save(LS.pkgs, packages); save(LS.terms, terms); save(LS.bookings, bookings); save(LS.combo, combo); save(LS.loyalty, loyalty);
+/* Category order — owner-arrangeable (see moveCategory). Set after
+   CATEGORY_ORDER is defined below. 'All' is the filter tab, not a real
+   category, but it stays first in this list. */
+var categoryOrder = null;
+/* Contact details — owner-editable in Settings, shown on the homepage. */
+var DEFAULT_CONTACT = { phone:'9326222019', email:'starscafe466@gmail.com', address:'B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209', hours:'Open 9am–11pm, every day', forTwo:'₹350 for two' };
+var contact = load(LS.contact, null) || Object.assign({}, DEFAULT_CONTACT);
+save(LS.menu, menu); save(LS.banners, banners); save(LS.pkgs, packages); save(LS.terms, terms); save(LS.bookings, bookings); save(LS.combo, combo); save(LS.loyalty, loyalty); save(LS.contact, contact);
 
 /* ---------- Views / login (owner only) ---------- */
 /* Hamburger (three-line menu bar) — mobile navigation. */
@@ -203,6 +210,10 @@ function showView(name){
   /* menu.html has no view sections — plain links handle navigation there. */
   if(!document.getElementById('view-site') || !document.getElementById('view-owner')) return;
   closeMobileMenu();
+  /* Owner view: NO animations at all — body.owner-mode kills every
+     animation/transition while the owner view is open (see styles.css).
+     The public site keeps its animations. */
+  try{ document.body.classList.toggle('owner-mode', name==='owner'); }catch(e){}
   ['site','owner'].forEach(function(v){
     document.getElementById('view-'+v).classList.toggle('active', v===name);
   });
@@ -217,9 +228,10 @@ function showView(name){
 function login(role){
   var u = document.getElementById(role+'User').value.trim();
   var p = document.getElementById(role+'Pass').value;
-  var ok = (role==='owner' && u==='owner' && p==='stars123');
+  /* Owner login — case-insensitive for both username and password. */
+  var ok = (role==='owner' && u.toLowerCase()==='aashi' && p.toLowerCase()==='starcafe@456');
   var msg = document.getElementById(role+'LoginMsg');
-  if(!ok){ msg.textContent = 'Wrong username or password. Demo: owner / stars123'; return; }
+  if(!ok){ msg.textContent = 'Wrong username or password. Please try again.'; return; }
   session = role; save(LS.session, session); msg.textContent='';
   renderOwner();
 }
@@ -263,9 +275,12 @@ function renderLoyalty(){
     (loyalty.terms ? '<p class="muted">'+esc(loyalty.terms)+'</p>' : '') + '</div>';
 }
 var CATEGORY_ORDER = ['All','Combo Packs','Pizza','Sandwich','Burger','Fries','Pasta','Maggie','Wedges','Nachos','Fried Rice','Noodles','Tea','Coffee','Mojito','Milkshake','Freakshake','Dessert','Icecream','Drinks'];
+if(!categoryOrder) categoryOrder = load(LS.catorder, null) || CATEGORY_ORDER.slice();
 function categories(){
-  var cats = []; CATEGORY_ORDER.forEach(function(c){ if(c==='All' || menu.some(function(m){return m.cat===c;})) cats.push(c); });
-  menu.forEach(function(m){ if(cats.indexOf(m.cat)<0) cats.push(m.cat); }); return cats;
+  var cats = [];
+  categoryOrder.forEach(function(c){ if(c==='All' || menu.some(function(m){return m.cat===c;})) cats.push(c); });
+  menu.forEach(function(m){ if(cats.indexOf(m.cat)<0){ cats.push(m.cat); categoryOrder.push(m.cat); } });
+  return cats;
 }
 function renderMenu(){
   /* Full menu lives on menu.html only. On the homepage there is no
@@ -388,13 +403,53 @@ function renderTerms(){ var el = document.getElementById('termsText'); if(el) el
 /* ---------- Menu editing (owner only) ---------- */
 function toggleOut(id){
   var m = menu.find(function(x){return x.id===id;}); if(!m) return;
-  m.out = !m.out; save(LS.menu, menu); renderOwner(); renderMenu();
+  m.out = !m.out; save(LS.menu, menu); renderOwner(); renderMenu(); renderMenuPreview(); renderGallery();
 }
-function editPrice(id){
+/* Inline edit of a menu item: name, category, price, veg. The edit form is
+   rendered in place by renderOwner() while editingMenuId is set. */
+var editingMenuId = null;
+function editMenuItem(id){ editingMenuId = id; renderOwner(); }
+function cancelMenuEdit(){ editingMenuId = null; renderOwner(); }
+function saveMenuItem(id){
   var m = menu.find(function(x){return x.id===id;}); if(!m) return;
-  var v = prompt('New price for ' + m.name + ' (₹):', m.price);
-  if(v===null) return; var n = Number(v); if(isNaN(n)||n<0){ alert('Enter a valid price.'); return; }
-  m.price = n; save(LS.menu, menu); renderOwner(); renderMenu();
+  var name = document.getElementById('edit-name-'+id).value.trim();
+  var cat = document.getElementById('edit-cat-'+id).value.trim() || 'Other';
+  var price = Number(document.getElementById('edit-price-'+id).value);
+  if(!name){ alert('Please enter a name.'); return; }
+  if(isNaN(price) || price < 0){ alert('Enter a valid price.'); return; }
+  m.name = name; m.cat = cat; m.price = price;
+  m.veg = document.getElementById('edit-veg-'+id).checked;
+  if(categoryOrder.indexOf(m.cat)<0){ categoryOrder.push(m.cat); save(LS.catorder, categoryOrder); }
+  editingMenuId = null;
+  save(LS.menu, menu); renderOwner(); renderMenu(); renderMenuPreview(); renderGallery();
+}
+function deleteMenuItem(id){
+  var m = menu.find(function(x){return x.id===id;}); if(!m) return;
+  if(!confirm('Delete "' + m.name + '" from the menu?')) return;
+  menu = menu.filter(function(x){return x.id!==id;});
+  save(LS.menu, menu); renderOwner(); renderMenu(); renderMenuPreview(); renderGallery();
+}
+/* Move an item up (-1) or down (+1) within its own category. The menu array
+   order is the display order inside a category. */
+function moveMenuItem(id, dir){
+  var idx = -1;
+  for(var i=0;i<menu.length;i++){ if(menu[i].id===id){ idx=i; break; } }
+  if(idx<0) return;
+  var cat = menu[idx].cat, j = idx + dir;
+  while(j>=0 && j<menu.length && menu[j].cat!==cat) j += dir;
+  if(j<0 || j>=menu.length) return;
+  var tmp = menu[idx]; menu[idx] = menu[j]; menu[j] = tmp;
+  save(LS.menu, menu); renderOwner(); renderMenu();
+}
+/* Move a whole category up (-1) or down (+1) in the menu order. */
+function moveCategory(cat, dir){
+  var cats = categories().filter(function(c){return c!=='All';});
+  var i = cats.indexOf(cat), j = i + dir;
+  if(i<0 || j<0 || j>=cats.length) return;
+  categoryOrder = categoryOrder.filter(function(c){return c!==cat;});
+  var pos = categoryOrder.indexOf(cats[j]);
+  categoryOrder.splice(dir<0 ? pos : pos+1, 0, cat);
+  save(LS.catorder, categoryOrder); renderOwner(); renderMenu();
 }
 function addMenuItem(){
   var name = document.getElementById('newName').value.trim();
@@ -402,10 +457,11 @@ function addMenuItem(){
   var price = Number(document.getElementById('newPrice').value);
   if(!name || isNaN(price)){ alert('Enter a name and a price.'); return; }
   menu.push({id:'m'+Date.now(), name:name, cat:cat, price:price, veg:document.getElementById('newVeg').checked, img:'default', photo:pendingMenuImg, out:false});
+  if(categoryOrder.indexOf(cat)<0){ categoryOrder.push(cat); save(LS.catorder, categoryOrder); }
   save(LS.menu, menu);
   document.getElementById('newName').value=''; document.getElementById('newCat').value=''; document.getElementById('newPrice').value='';
   pendingMenuImg = null; removeMenuPhoto();
-  renderOwner(); renderMenu();
+  renderOwner(); renderMenu(); renderMenuPreview(); renderGallery();
 }
 
 /* ---------- Owner ---------- */
@@ -420,18 +476,46 @@ function renderOwner(){
   document.getElementById('ownBannerCount').textContent = banners.length;
   document.getElementById('ownPkgCount').textContent = packages.length;
   document.getElementById('ownBookingCount').textContent = bookings.length;
-  document.getElementById('ownerMenu').innerHTML = menu.map(function(m){
-    return '<div class="order-card"><h3>'+esc(m.name)+'</h3>' +
-      (m.photo ? '<img class="menu-thumb" src="'+esc(m.photo)+'" alt="Photo of '+esc(m.name)+'">' : '') +
-      '<p class="muted">'+esc(m.cat)+' &middot; '+rs(m.price)+(m.out?' &middot; Currently unavailable':'')+'</p>' +
-      '<p><button class="btn small secondary" onclick="editPrice(\''+m.id+'\')">Edit price</button> ' +
-      '<button class="btn small secondary" onclick="toggleOut(\''+m.id+'\')">'+(m.out?'Mark available':'Mark unavailable')+'</button> ' +
-      '<button class="btn small secondary" onclick="changeMenuPhoto(\''+m.id+'\')">'+(m.photo?'Change photo':'Add photo')+'</button>' +
-      (m.photo ? ' <button class="btn small secondary" onclick="removeMenuItemPhoto(\''+m.id+'\')">Remove photo</button>' : '') + '</p></div>';
+  /* Menu — grouped by category, in the owner's arranged order. Each item
+     can be edited (name / category / price / veg), moved up/down inside its
+     category, deleted, marked unavailable, or given a photo. */
+  var cats = categories().filter(function(c){return c!=='All';});
+  document.getElementById('ownerMenu').innerHTML = cats.map(function(cat){
+    var items = menu.filter(function(m){return m.cat===cat;});
+    return '<div class="owner-cat"><h3>'+esc(cat)+' <span class="muted">('+items.length+' item'+(items.length===1?'':'s')+')</span> ' +
+      '<button class="btn small secondary" onclick="moveCategory(\''+esc(cat)+'\',-1)" title="Move category up">↑</button>' +
+      '<button class="btn small secondary" onclick="moveCategory(\''+esc(cat)+'\',1)" title="Move category down">↓</button></h3>' +
+      items.map(function(m){
+        if(editingMenuId===m.id){
+          return '<div class="panel owner-edit-form"><h3>Edit item</h3>' +
+            '<label>Name</label><input type="text" id="edit-name-'+m.id+'" value="'+esc(m.name)+'">' +
+            '<label>Category</label><input type="text" id="edit-cat-'+m.id+'" value="'+esc(m.cat)+'">' +
+            '<label>Price (₹)</label><input type="number" min="0" id="edit-price-'+m.id+'" value="'+m.price+'">' +
+            '<label class="veg-toggle"><input type="checkbox" id="edit-veg-'+m.id+'" '+(m.veg?'checked':'')+'> Veg</label>' +
+            '<p><button class="btn small" onclick="saveMenuItem(\''+m.id+'\')">Save</button> ' +
+            '<button class="btn small secondary" onclick="cancelMenuEdit()">Cancel</button></p></div>';
+        }
+        return '<div class="order-card"><h3>'+esc(m.name)+'</h3>' +
+          (m.photo ? '<img class="menu-thumb" src="'+esc(m.photo)+'" alt="Photo of '+esc(m.name)+'">' : '') +
+          '<p class="muted">'+esc(m.cat)+' &middot; '+rs(m.price)+(m.out?' &middot; Currently unavailable':'')+'</p>' +
+          '<p><button class="btn small" onclick="editMenuItem(\''+m.id+'\')">Edit</button> ' +
+          '<button class="btn small secondary" onclick="moveMenuItem(\''+m.id+'\',-1)" title="Move up in '+esc(m.cat)+'">↑</button>' +
+          '<button class="btn small secondary" onclick="moveMenuItem(\''+m.id+'\',1)" title="Move down in '+esc(m.cat)+'">↓</button> ' +
+          '<button class="btn small secondary" onclick="toggleOut(\''+m.id+'\')">'+(m.out?'Mark available':'Mark unavailable')+'</button> ' +
+          '<button class="btn small secondary" onclick="changeMenuPhoto(\''+m.id+'\')">'+(m.photo?'Change photo':'Add photo')+'</button>' +
+          (m.photo ? ' <button class="btn small secondary" onclick="removeMenuItemPhoto(\''+m.id+'\')">Remove photo</button>' : '') + ' ' +
+          '<button class="btn small secondary" onclick="deleteMenuItem(\''+m.id+'\')">Delete</button></p></div>';
+      }).join('') + '</div>';
+  }).join('');
+  /* Arrange categories — the order above, with up/down controls. */
+  document.getElementById('categoryArrange').innerHTML = cats.map(function(cat, i){
+    return '<div class="order-card"><h3>'+(i+1)+'. '+esc(cat)+'</h3>' +
+      '<p><button class="btn small secondary" onclick="moveCategory(\''+esc(cat)+'\',-1)">↑ Move up</button> ' +
+      '<button class="btn small secondary" onclick="moveCategory(\''+esc(cat)+'\',1)">↓ Move down</button></p></div>';
   }).join('');
   /* Packages editor */
   document.getElementById('packageEditor').innerHTML = packages.map(function(p){
-    return '<div class="panel"><h3>'+esc(p.name)+'</h3>' +
+    return '<div class="panel"><label>Name</label><input type="text" id="pkg-name-'+p.id+'" value="'+esc(p.name)+'">' +
       '<label>Price (₹)</label><input type="number" id="pkg-price-'+p.id+'" value="'+p.price+'">' +
       '<label>Features (one per line)</label><textarea rows="4" id="pkg-feat-'+p.id+'">'+esc(p.features.join('\n'))+'</textarea>' +
       '<p><button class="btn small" onclick="savePackage(\''+p.id+'\')">Save '+esc(p.name)+'</button></p></div>';
@@ -461,12 +545,23 @@ function renderOwner(){
     '<label class="veg-toggle"><input type="checkbox" id="loyalty-on" '+(loyalty.enabled?'checked':'')+'> Show Loyalty Offer on the site</label>' +
     '<p><button class="btn small" onclick="saveLoyalty()">Save Loyalty Offer</button></p></div>';
   document.getElementById('termsEditor').value = terms;
+  /* Contact details editor (Settings). */
+  var ce = document.getElementById('contactEditor');
+  if(ce) ce.innerHTML =
+    '<div class="panel"><label for="contact-phone">Phone</label><input type="text" id="contact-phone" value="'+esc(contact.phone)+'">' +
+    '<label for="contact-email">Email</label><input type="text" id="contact-email" value="'+esc(contact.email)+'">' +
+    '<label for="contact-address">Address</label><textarea rows="2" id="contact-address">'+esc(contact.address)+'</textarea>' +
+    '<label for="contact-hours">Opening hours</label><input type="text" id="contact-hours" value="'+esc(contact.hours)+'">' +
+    '<label for="contact-fortwo">Price for two</label><input type="text" id="contact-fortwo" value="'+esc(contact.forTwo)+'">' +
+    '<p><button class="btn small" onclick="saveContact()">Save contact details</button></p></div>';
   document.getElementById('ownerBookings').innerHTML = bookings.length ?
     bookings.map(function(b){ return '<div class="order-card"><h3>'+esc(b.pkg)+' — '+esc(b.date)+' '+esc(b.time)+'</h3><p>'+esc(b.name)+' &middot; '+esc(b.phone)+' &middot; Guests: '+esc(b.guests||'—')+'</p><p class="muted">'+esc(b.note||'')+'</p></div>'; }).join('') :
     '<p class="muted">No birthday enquiries yet in this browser.</p>';
 }
 function savePackage(id){
   var p = packages.find(function(x){return x.id===id;}); if(!p) return;
+  var nm = document.getElementById('pkg-name-'+id).value.trim();
+  if(nm) p.name = nm;
   p.price = Number(document.getElementById('pkg-price-'+id).value)||p.price;
   p.features = document.getElementById('pkg-feat-'+id).value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
   save(LS.pkgs, packages); renderPackages(); renderOwner(); alert('Package saved.');
@@ -512,6 +607,30 @@ function saveTerms(){
   terms = document.getElementById('termsEditor').value;
   save(LS.terms, terms); renderTerms();
   document.getElementById('termsSaved').textContent = 'Saved.';
+}
+/* Contact details — shown on the homepage (location panel, contact panel,
+   footer) via [data-contact-*] hooks in index.html. */
+function renderContact(){
+  var digits = contact.phone.replace(/\D/g, '');
+  document.querySelectorAll('[data-contact-phone]').forEach(function(el){
+    el.textContent = contact.phone;
+    if(el.tagName === 'A') el.href = 'tel:+91' + digits.replace(/^91/, '');
+  });
+  document.querySelectorAll('[data-contact-email]').forEach(function(el){
+    el.textContent = contact.email;
+    if(el.tagName === 'A') el.href = 'mailto:' + contact.email;
+  });
+  document.querySelectorAll('[data-contact-address]').forEach(function(el){ el.textContent = contact.address; });
+  document.querySelectorAll('[data-contact-hours]').forEach(function(el){ el.textContent = contact.hours; });
+  document.querySelectorAll('[data-contact-fortwo]').forEach(function(el){ el.textContent = contact.forTwo; });
+}
+function saveContact(){
+  contact.phone = document.getElementById('contact-phone').value.trim() || contact.phone;
+  contact.email = document.getElementById('contact-email').value.trim() || contact.email;
+  contact.address = document.getElementById('contact-address').value.trim() || contact.address;
+  contact.hours = document.getElementById('contact-hours').value.trim() || contact.hours;
+  contact.forTwo = document.getElementById('contact-fortwo').value.trim() || contact.forTwo;
+  save(LS.contact, contact); renderContact(); renderOwner(); alert('Contact details saved.');
 }
 
 /* ---------- Big, obvious scroll-in animations (19 Nov 2026) ----------
@@ -564,6 +683,7 @@ renderMenuPreview();
 renderGallery();
 renderPackages();
 renderTerms();
+renderContact();
 setInterval(renderBanners, 8000); /* rotate banners */
 /* Owner access: the hamburger menu's small bottom "Owner" link, plus the
    hidden #owner URL (index.html#owner) — no Owner button on the main page. */

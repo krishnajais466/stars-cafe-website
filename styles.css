@@ -553,3 +553,22 @@ footer a:not(.btn):hover{transform:translateY(-2px) scale(1.05)}
 .pure-veg-badge{display:inline-flex;align-items:center;gap:8px;background:#fffdf8;border:2px solid var(--green);border-radius:999px;padding:8px 16px;font-weight:900;font-size:16px;color:var(--green);margin:12px 0 0;box-shadow:0 6px 16px rgba(46,125,50,.2)}
 .pure-veg-badge.small{padding:6px 13px;font-size:14px;margin:6px 0}
 .hero .pure-veg-badge{animation:badgeBig .7s .58s ease backwards}
+
+/* ================= OWNER VIEW — production, NO animations =================
+   The owner dashboard is a tool, not a showpiece: while the owner view is
+   open (body.owner-mode, set by showView in app.js) EVERY animation and
+   transition is switched off, and reveal elements are shown immediately
+   instead of waiting for a scroll animation. The public site keeps all of
+   its animations — this rule only applies inside the owner view. */
+body.owner-mode,body.owner-mode *,#view-owner,#view-owner *{animation:none!important;transition:none!important}
+body.owner-mode .reveal,#view-owner .reveal{opacity:1!important;transform:none!important}
+body.owner-mode .reveal.visible:hover{transition-duration:0s}
+
+/* Organised owner dashboard — clear numbered sections, same cream/brown design */
+.owner-section{background:var(--paper);border:1.5px solid var(--border);border-radius:18px;padding:18px;margin:22px 0;box-shadow:var(--shadow)}
+.owner-section>h2{margin-top:0;border-bottom:2px solid var(--tan);padding-bottom:10px}
+.owner-section>h3{margin-top:20px}
+.owner-cat{border:1.5px solid var(--border);border-radius:14px;padding:12px 14px;margin:12px 0;background:var(--card)}
+.owner-cat>h3{margin-top:0}
+.owner-cat .btn.small{margin:2px}
+.owner-edit-form{margin:12px 0}

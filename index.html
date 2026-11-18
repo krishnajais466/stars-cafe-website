@@ -133,11 +133,11 @@
     <div class="panel" id="locationPanel">
       <h2>Visit us — Location &amp; basics</h2>
       <p><b>Star's Cafe — Since 2022</b></p>
-      <p>B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209</p>
-      <p>Open 9am&ndash;11pm, every day &middot; Veg cafe &middot; ₹350 for two</p>
+      <p data-contact-address>B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209</p>
+      <p><span data-contact-hours>Open 9am–11pm, every day</span> &middot; Veg cafe &middot; <span data-contact-fortwo>₹350 for two</span></p>
       <p class="pure-veg-badge"><span class="veg-mark" aria-hidden="true"></span>100% Pure Veg</p>
       <p>Dine-in &middot; Takeout &middot; Delivery &middot; Outdoor seating</p>
-      <p>Phone: <a href="tel:+919326222019">9326222019</a> &middot; Email: <a href="mailto:starscafe466@gmail.com">starscafe466@gmail.com</a></p>
+      <p>Phone: <a href="tel:+919326222019" data-contact-phone>9326222019</a> &middot; Email: <a href="mailto:starscafe466@gmail.com" data-contact-email>starscafe466@gmail.com</a></p>
       <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener">Get Directions on Google Maps &rarr;</a></p>
       <p><a href="https://www.instagram.com/stars_cafe_since2022" target="_blank" rel="noopener">Follow us on Instagram — @stars_cafe_since2022</a></p>
     </div>
@@ -145,7 +145,7 @@
     <div class="panel" id="contactPanel">
       <h2>Contact us</h2>
       <p>Call, WhatsApp or email us — or just walk in. We are open 9am&ndash;11pm, every day.</p>
-      <p>Phone: <a href="tel:+919326222019">9326222019</a> &middot; Email: <a href="mailto:starscafe466@gmail.com">starscafe466@gmail.com</a></p>
+      <p>Phone: <a href="tel:+919326222019" data-contact-phone>9326222019</a> &middot; Email: <a href="mailto:starscafe466@gmail.com" data-contact-email>starscafe466@gmail.com</a></p>
       <p><a class="btn" href="contact.html">Contact Us &rarr;</a></p>
     </div>
     <div class="panel" id="jobsPanel">
@@ -164,7 +164,6 @@
     <div id="ownerLogin" class="panel login-box">
       <h1>Owner login</h1>
       <p class="muted">The owner page is accessible to all owners, for editing the display website — menu, packages, banners, combo, loyalty offer and terms.</p>
-      <p class="notice"><b>Demo login:</b> username <b>owner</b> &middot; password <b>stars123</b> — demo only, not real security.</p>
       <label for="ownerUser">Username</label><input id="ownerUser" type="text" autocomplete="username">
       <label for="ownerPass">Password</label><input id="ownerPass" type="password" autocomplete="current-password">
       <p style="margin-top:14px"><button class="btn block" onclick="login('owner')">Log in as owner</button></p>
@@ -179,41 +178,67 @@
         <div class="stat"><b id="ownPkgCount">0</b>Birthday packages</div>
         <div class="stat"><b id="ownBookingCount">0</b>Birthday enquiries</div>
       </div>
-      <h2>Menu management</h2>
-      <div id="ownerMenu"></div>
-      <h2>Add a menu item</h2>
-      <div class="panel">
-        <div class="row">
-          <div><label for="newName">Name</label><input id="newName" type="text"></div>
-          <div><label for="newCat">Category</label><input id="newCat" type="text" placeholder="e.g. Pizza"></div>
-          <div><label for="newPrice">Price (₹)</label><input id="newPrice" type="number" min="0"></div>
+
+      <section class="owner-section" aria-label="Menu">
+        <h2>1. Menu</h2>
+        <p class="muted">Create, edit, delete and arrange menu items and categories. Changes show on the site immediately.</p>
+        <h3>Arrange categories</h3>
+        <p class="muted">Use ↑ / ↓ to change the order categories appear in on the menu page.</p>
+        <div id="categoryArrange"></div>
+        <h3>Menu items</h3>
+        <div id="ownerMenu"></div>
+        <h3>Add a menu item</h3>
+        <div class="panel">
+          <div class="row">
+            <div><label for="newName">Name</label><input id="newName" type="text"></div>
+            <div><label for="newCat">Category</label><input id="newCat" type="text" placeholder="e.g. Pizza"></div>
+            <div><label for="newPrice">Price (₹)</label><input id="newPrice" type="number" min="0"></div>
+          </div>
+          <label class="veg-toggle"><input type="checkbox" id="newVeg" checked> Veg</label>
+          <label for="newPhoto">Food photo (optional)</label>
+          <input id="newPhoto" type="file" accept="image/*" onchange="onMenuPhotoChange(this)">
+          <p class="muted">Optional — add a photo of the food if you want. It replaces the coloured placeholder on the menu card. Photos are shrunk to fit (max about 180 KB).</p>
+          <img id="newPhotoPreview" class="hidden food-photo-preview" alt="New item food photo preview">
+          <p><button type="button" id="newPhotoRemove" class="btn small secondary hidden" onclick="removeMenuPhoto()">Remove photo</button></p>
+          <p><button class="btn" onclick="addMenuItem()">Add item</button></p>
         </div>
-        <label class="veg-toggle"><input type="checkbox" id="newVeg" checked> Veg</label>
-        <label for="newPhoto">Food photo (optional)</label>
-        <input id="newPhoto" type="file" accept="image/*" onchange="onMenuPhotoChange(this)">
-        <p class="muted">Optional — add a photo of the food if you want. It replaces the coloured placeholder on the menu card. Photos are shrunk to fit (max about 180 KB).</p>
-        <img id="newPhotoPreview" class="hidden food-photo-preview" alt="New item food photo preview">
-        <p><button type="button" id="newPhotoRemove" class="btn small secondary hidden" onclick="removeMenuPhoto()">Remove photo</button></p>
-        <p><button class="btn" onclick="addMenuItem()">Add item</button></p>
-      </div>
-      <h2>Birthday packages — edit</h2>
-      <p class="muted">Edit package names, prices and what's included. Changes show on the site immediately.</p>
-      <div id="packageEditor"></div>
-      <h2>Banner offers — edit</h2>
-      <p class="muted">Add, edit, enable or disable offer banners and the birthday banner.</p>
-      <div id="bannerEditor"></div>
-      <p><button class="btn small" onclick="addBanner()">+ Add banner</button></p>
-      <h2>Combo of the Day — edit</h2>
-      <p class="muted">Set the combo name, what's in it, its price and its banner. Turn it off to hide it from the site.</p>
-      <div id="comboEditor"></div>
-      <h2>Loyalty Offer — edit</h2>
-      <p class="muted">Set the loyalty offer and its terms. Turn it off to hide it from the site.</p>
-      <div id="loyaltyEditor"></div>
-      <h2>Terms &amp; conditions — edit</h2>
-      <textarea id="termsEditor" rows="12"></textarea>
-      <p><button class="btn" onclick="saveTerms()">Save terms &amp; conditions</button> <span class="muted" id="termsSaved"></span></p>
-      <h2>Birthday enquiries</h2>
-      <div id="ownerBookings"></div>
+      </section>
+
+      <section class="owner-section" aria-label="Birthday packages">
+        <h2>2. Birthday Packages</h2>
+        <p class="muted">Edit package names, prices and what's included. Changes show on the site immediately.</p>
+        <div id="packageEditor"></div>
+      </section>
+
+      <section class="owner-section" aria-label="Offers">
+        <h2>3. Offers</h2>
+        <h3>Banner offers</h3>
+        <p class="muted">Add, edit, enable or disable offer banners and the birthday banner.</p>
+        <div id="bannerEditor"></div>
+        <p><button class="btn small" onclick="addBanner()">+ Add banner</button></p>
+        <h3>Combo of the Day</h3>
+        <p class="muted">Set the combo name, what's in it, its price and its banner. Turn it off to hide it from the site.</p>
+        <div id="comboEditor"></div>
+        <h3>Loyalty Offer</h3>
+        <p class="muted">Set the loyalty offer and its terms. Turn it off to hide it from the site.</p>
+        <div id="loyaltyEditor"></div>
+      </section>
+
+      <section class="owner-section" aria-label="Settings">
+        <h2>4. Settings</h2>
+        <h3>Contact details</h3>
+        <p class="muted">These are the phone, email, address and hours shown on the homepage.</p>
+        <div id="contactEditor"></div>
+        <h3>Terms &amp; conditions</h3>
+        <div id="termsEditorWrap"><textarea id="termsEditor" rows="12"></textarea></div>
+        <p><button class="btn" onclick="saveTerms()">Save terms &amp; conditions</button> <span class="muted" id="termsSaved"></span></p>
+      </section>
+
+      <section class="owner-section" aria-label="Birthday enquiries">
+        <h2>5. Birthday enquiries</h2>
+        <p class="muted">Enquiries made on this browser, newest first.</p>
+        <div id="ownerBookings"></div>
+      </section>
     </div>
   </section>
 </main>
@@ -237,10 +262,10 @@
       </div>
       <div class="footer-col">
         <h3>Contact</h3>
-        <p>B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209</p>
-        <p>Phone: <a href="tel:+919326222019">9326222019</a></p>
-        <p>Email: <a href="mailto:starscafe466@gmail.com">starscafe466@gmail.com</a></p>
-        <p>Open 9am&ndash;11pm, every day</p>
+        <p data-contact-address>B-01, Laxmi Dhule Complex, near Achole Talav Gate No. 2, Nalasopara East, Palghar 401209</p>
+        <p>Phone: <a href="tel:+919326222019" data-contact-phone>9326222019</a></p>
+        <p>Email: <a href="mailto:starscafe466@gmail.com" data-contact-email>starscafe466@gmail.com</a></p>
+        <p data-contact-hours>Open 9am&ndash;11pm, every day</p>
         <p class="pure-veg-badge small"><span class="veg-mark" aria-hidden="true"></span>100% Pure Veg</p>
         <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Star%27s+Cafe+Nalasopara+East" target="_blank" rel="noopener">Get Directions</a></p>
       </div>

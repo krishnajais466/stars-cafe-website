@@ -11,7 +11,7 @@ the cafe: hero, menu, birthday packages, offers, location and Instagram.
 
 Plain HTML/CSS/JS — no build step, no backend server, no heavy external libraries.
 All editable content (menu, banners, packages, terms, birthday enquiries) is stored in
-the browser with `localStorage`, so it works as a static deploy and demo.
+the browser with `localStorage`, so it works as a static deploy.
 
 ## Pages
 
@@ -54,7 +54,45 @@ There is **no Owner button** on the main page header or hero. Owner access is:
 1. **Hamburger menu, small link at the bottom** — open the three-line menu and the last, small "Owner" link at the bottom opens the owner login.
 2. **Hidden URL** — opening the site with `#owner` in the URL (e.g. https://stars-cafe-order-online.netlify.app/#owner) shows the owner login directly. This URL is documented here in the README only, not on the site itself.
 
-Owner login is still **owner / stars123** (demo only, not real security). The owner can edit: menu, birthday packages, banner offers, Combo of the Day, Loyalty Offer, terms & conditions, and see birthday enquiries. There is no staff view and no staff login.
+Owner login is **aashi / starcafe@456** — both username and password are
+case-insensitive ("Aashi", "AASHI", "STARCAFE@456" all work). The credentials
+are **not shown anywhere on the site** — they live only in the login check in
+`app.js` and in this README, for the owner. The owner can edit: menu, birthday
+packages, banner offers, Combo of the Day, Loyalty Offer, terms & conditions,
+and see birthday enquiries. There is no staff view and no staff login.
+
+## Owner — production-ready (19 Nov 2026)
+
+- **No animations in the owner view.** While the owner view is open, `showView()`
+  adds `owner-mode` to `<body>` and `styles.css` switches off every animation
+  and transition there (`body.owner-mode, body.owner-mode *, #view-owner,
+  #view-owner * { animation: none !important; transition: none !important; }`)
+  and forces reveal elements visible immediately. The public site keeps all of
+  its animations.
+- **No placeholder login or login hints anywhere.** The previous owner login
+  and the login hint that used to be shown on the login screen are removed.
+  No placeholder text remains on the site.
+- **Security note:** this is still a static site with `localStorage` — the
+  login is a simple gate, not server-side security. Real security would need a
+  backend with proper auth; do not treat the owner login as bank-grade
+  protection.
+- **Owner login: aashi / starcafe@456**, case-insensitive for both fields.
+  The credentials appear only in the login check in `app.js` and in this README
+  — never in any page text visitors can see.
+- **Organised owner dashboard** (all in `index.html` → `#view-owner` →
+  `#ownerApp`, rendered by `renderOwner()` in `app.js`):
+  1. **Menu** — "Arrange categories" (↑ / ↓ per category), menu items grouped
+     by category (each item: Edit name/category/price/veg inline, ↑ / ↓ move
+     within its category, Delete, Mark available/unavailable, Add/Change/
+     Remove photo), and "Add a menu item" (name, category, price, veg, photo).
+     Category order is stored in `localStorage` (`sc_cat_order`).
+  2. **Birthday Packages** — edit name, price and features per package.
+  3. **Offers** — banner offers (add / edit / enable / disable), Combo of the
+     Day, Loyalty Offer.
+  4. **Settings** — contact details (phone, email, address, hours, price for
+     two — saved in `localStorage` `sc_contact`, shown on the homepage via
+     `[data-contact-*]` hooks) and terms & conditions.
+  5. **Birthday enquiries** — enquiries made on this browser, newest first.
 
 ## Redesign — clean traditional website (19 Nov 2026)
 
@@ -130,14 +168,22 @@ After the user's feedback ("too many buttons everywhere", "footer is very poor",
 
 ## Owner only
 
-- **Owner** — login **owner / stars123** (shown on the login screen; **demo only, not real security**). The owner can edit: menu (add items, edit price, mark available/unavailable, add/change/remove food photos), birthday packages, banner offers (add / edit / enable / disable offer and birthday banners), **Combo of the Day** (name, items, price, banner, on/off), **Loyalty Offer** (offer, terms, on/off), terms & conditions, and see birthday enquiries.
+- **Owner** — login **aashi / starcafe@456** (case-insensitive, both fields;
+  not shown on the site — see "Owner login" above). The owner can edit: menu
+  (create items, edit name/category/price/veg, delete items, move items up/down
+  inside a category, arrange/reorder categories, mark available/unavailable,
+  add/change/remove food photos), birthday packages (name, price, features),
+  banner offers (add / edit / enable / disable offer and birthday banners),
+  **Combo of the Day** (name, items, price, banner, on/off), **Loyalty Offer**
+  (offer, terms, on/off), terms & conditions, contact details (phone, email,
+  address, hours, price for two), and see birthday enquiries.
 - There is **no staff view and no staff login** — staff order handling was removed with the ordering pivot.
 
 Terms & conditions (owner-editable) cover: advance payment confirms a booking, cancellation/refund rules, fixed time slot with extra time charged, damage to property charged, outside food/cake rules, guest count, and the cafe's right to cancel for safety reasons.
 
 ## What was removed in the ordering → display pivot (19 Nov 2026)
 
-Cart, Add to cart / quantity controls, order by table number, live order status (Received → Preparing → Ready → Served), staff live orders and order management, the entire Staff Admin view and staff login (staff / stars123), order totals / sales / best sellers, and all `sc_orders` order code. The site title changed from "Star's Cafe — Order Online" to "Star's Cafe — Nalasopara East". The live site at https://stars-cafe-order-online.netlify.app/ still serves the old ordering version until it is redeployed with these files.
+Cart, Add to cart / quantity controls, order by table number, live order status (Received → Preparing → Ready → Served), staff live orders and order management, the entire Staff Admin view and staff login, order totals / sales / best sellers, and all `sc_orders` order code. The site title changed from "Star's Cafe — Order Online" to "Star's Cafe — Nalasopara East". The live site at https://stars-cafe-order-online.netlify.app/ still serves the old ordering version until it is redeployed with these files.
 
 ## ⚠️ Prices are placeholders
 
